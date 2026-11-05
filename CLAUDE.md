@@ -42,7 +42,8 @@ docs/prompts.md  running log of user prompts and decisions/overrides (append eve
 ## Coding conventions
 - Python 3.14, pandas / numpy / scipy. Add a dependency only when it earns its place; record it in
   `requirements.txt`.
-- Run scripts with `python -P` (don't import from cwd). Paths resolved relative to the repo root.
+- Run scripts as `python src/<module>.py` from the repo root (modules import each other from `src/`).
+  Paths are resolved relative to the repo root.
 - Metric definitions live in one place (`src/metrics.py`) and are unit-tested.
 - Ratios across groups are **spend-weighted / pooled** (sum numerator ÷ sum denominator), not means of
   per-ad ratios. Uncertainty via bootstrap resampling of ads (resample creative clusters where a video

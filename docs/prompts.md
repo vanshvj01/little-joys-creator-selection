@@ -19,4 +19,31 @@ audit the data, write CLAUDE.md, propose a stack.
 5. Permission to download a sample of ad MP4s for label spot-checks.
 6. Stack choice.
 
-**User decisions:** _(pending)_
+**User decisions (2026-11-05): "Approve defaults"** — i.e.
+1. Drop the still-live signal; adjust for stop batch instead.
+2. Exclude LJ-089 from headline numbers, show it separately as a probable tracking break, and run a
+   sensitivity check with it included.
+3. Treat duplicate-video ads as one creative cluster when bootstrapping.
+4. Primary metric = spend-weighted CPA; ROAS as a diagnostic.
+5. Permission granted to download ~10 ad MP4s for label spot-checks.
+6. Stack: Python (pandas/numpy/scipy) + static Jinja2 HTML report + pytest + one-command rebuild.
+
+## Phase 1 — what wins in the brand's ads
+
+**Prompt (summary):** Per-ad funnel metrics, one primary metric, spend-weighted group comparisons with
+bootstrap CIs and minimum-n, confounder checks, transcript mining of top/bottom ads with ad_ids, label
+spot-check (~15–20) with agreement rate. Output: ranked "winning ingredients" with evidence strength.
+
+**Decisions taken during Phase 1 (assistant-proposed, flagged for user review at checkpoint):**
+- Added product_form as a confounder alongside stop batch: milk-mix ads have roughly half the CPA of
+  other products, and many creative choices correlate with product.
+- Added a leave-LJ-004-out check: one ad holds 29% of all purchases.
+- Duplicate creatives widened from "same video_url" to "transcript ≥ 80% similar" after the spot-check
+  found LJ-006/LJ-097 are the same script under different video files (3 extra pairs).
+- Verdict rules: strong = n≥10 both sides, 95% CI excludes no-effect raw and adjusted, BH q<0.10,
+  survives LJ-089 and LJ-004 checks; suggestive = adjusted 90% CI excludes no-effect and survives
+  dropping LJ-004; "driven by one ad" otherwise-suggestive but fails that; n<8 not tested.
+  Result: no ingredient reaches "strong" (best q = 0.13).
+- Post-hoc text features (taste-unchanged claim, ragi/jaggery template, etc.) were added after reading
+  top/bottom ads and are labelled "posthoc" — hypothesis-generating only.
+- Video spot-check done by viewing frames in the browser (no files downloaded).

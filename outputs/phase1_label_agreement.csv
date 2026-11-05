@@ -1,0 +1,12 @@
+label,agree,checked,rate,lo95,hi95,not_judgeable,disagreements
+language,20,20,1.0,0.8388698745050667,1.0,0,
+child_role=speaks,20,20,1.0,0.8388698745050667,1.0,0,
+brand_said_aloud,19,20,0.95,0.7638641064874331,0.9911187805671268,0,"LJ-014: only ""Nutrimix"" is said; LJ-099 says ""Nutrimix"" too but is labelled no - inconsistent"
+hook_driver,18,20,0.9,0.6989617935882066,0.9721341060158468,0,"LJ-006: near-identical script LJ-097 is labelled curiosity_gap - inconsistent; LJ-086: ""Jeshita doesn't like plain milk"" - a personal fussy-eater story, not fear"
+narratives=taste_better_than_other_brands,16,18,0.8888888888888888,0.6719975513339578,0.9689811315464172,2,"LJ-054: ""absolutely yummi-licious"" - taste is a selling point; LJ-098: blind taste test is the core of the ad"
+persuasion=authority_science,20,20,1.0,0.8388698745050667,1.0,0,
+child_on_screen,9,10,0.9,0.5958436145024278,0.9821242504842788,0,LJ-019: illustrated child; no real child appears
+child_in_first_3s,9,10,0.9,0.5958436145024278,0.9821242504842788,0,LJ-019: 
+child_role=reacts_to_taste,8,9,0.8888888888888888,0.5649937852319399,0.9801096286728695,1,LJ-019: no real child; no reaction
+first_frame,10,10,1.0,0.7224598312333834,1.0,0,
+ALL,149,157,0.9490445859872612,0.9026816513121643,0.9739572281816982,3,

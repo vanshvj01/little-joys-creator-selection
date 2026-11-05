@@ -1,0 +1,161 @@
+ad_id,label,ai_value,checked_value,agree,method,note
+LJ-005,language,no speech,no speech,yes,transcript,
+LJ-006,language,English,English,yes,transcript,
+LJ-009,language,Hinglish,Hinglish,yes,transcript,
+LJ-011,language,English,English,yes,transcript,
+LJ-014,language,Hindi,Hindi,yes,transcript,romanised Hindi with a few English words
+LJ-019,language,no speech,no speech,yes,transcript,
+LJ-022,language,Malayalam,Malayalam,yes,transcript,
+LJ-024,language,Hinglish,Hinglish,yes,transcript,
+LJ-043,language,English,English,yes,transcript,
+LJ-053,language,English,English,yes,transcript,
+LJ-054,language,English,English,yes,transcript,
+LJ-059,language,Malayalam,Malayalam,yes,transcript,
+LJ-075,language,Malayalam,Malayalam,yes,transcript,
+LJ-080,language,English,English,yes,transcript,one Hinglish line; sentence-level switching label also fits
+LJ-085,language,Hinglish,Hinglish,yes,transcript,
+LJ-086,language,Kannada,Kannada,yes,transcript,
+LJ-089,language,Hinglish,Hinglish,yes,transcript,
+LJ-097,language,English,English,yes,transcript,
+LJ-098,language,English,English,yes,transcript,
+LJ-099,language,Hinglish,Hinglish,yes,transcript,
+LJ-005,child_role=speaks,no,no,yes,transcript,no speech
+LJ-006,child_role=speaks,yes,yes,yes,transcript,child presents the whole ad
+LJ-009,child_role=speaks,yes,yes,yes,transcript,
+LJ-011,child_role=speaks,no,no,yes,transcript,
+LJ-014,child_role=speaks,yes,yes,yes,transcript,"""Par mumma..."""
+LJ-019,child_role=speaks,no,no,yes,transcript,
+LJ-022,child_role=speaks,no,no,yes,transcript,
+LJ-024,child_role=speaks,no,no,yes,transcript,
+LJ-043,child_role=speaks,no,no,yes,transcript,
+LJ-053,child_role=speaks,no,no,yes,transcript,
+LJ-054,child_role=speaks,no,no,yes,transcript,
+LJ-059,child_role=speaks,yes,yes,yes,transcript,child answers in dialogue
+LJ-075,child_role=speaks,no,no,yes,transcript,
+LJ-080,child_role=speaks,no,no,yes,transcript+video,opening question voice unclear; child is silent on screen
+LJ-085,child_role=speaks,no,no,yes,transcript,
+LJ-086,child_role=speaks,no,no,yes,transcript,
+LJ-089,child_role=speaks,no,no,yes,transcript,
+LJ-097,child_role=speaks,yes,yes,yes,transcript,
+LJ-098,child_role=speaks,yes,yes,yes,transcript,"""Mumma, both are same!"""
+LJ-099,child_role=speaks,no,no,yes,transcript,
+LJ-005,brand_said_aloud,no,no,yes,transcript,no speech
+LJ-006,brand_said_aloud,yes,yes,yes,transcript,
+LJ-009,brand_said_aloud,yes,yes,yes,transcript,
+LJ-011,brand_said_aloud,no,no,yes,transcript,
+LJ-014,brand_said_aloud,yes,no,no,transcript,"only ""Nutrimix"" is said; LJ-099 says ""Nutrimix"" too but is labelled no - inconsistent"
+LJ-019,brand_said_aloud,no,no,yes,transcript,
+LJ-022,brand_said_aloud,yes,yes,yes,transcript,
+LJ-024,brand_said_aloud,no,no,yes,transcript,
+LJ-043,brand_said_aloud,no,no,yes,transcript,
+LJ-053,brand_said_aloud,yes,yes,yes,transcript,
+LJ-054,brand_said_aloud,no,no,yes,transcript,
+LJ-059,brand_said_aloud,yes,yes,yes,transcript,
+LJ-075,brand_said_aloud,yes,yes,yes,transcript,
+LJ-080,brand_said_aloud,no,no,yes,transcript,
+LJ-085,brand_said_aloud,no,no,yes,transcript,
+LJ-086,brand_said_aloud,yes,yes,yes,transcript,
+LJ-089,brand_said_aloud,yes,yes,yes,transcript,
+LJ-097,brand_said_aloud,yes,yes,yes,transcript,
+LJ-098,brand_said_aloud,yes,yes,yes,transcript,
+LJ-099,brand_said_aloud,no,no,yes,transcript,
+LJ-005,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,"on-screen ""trick"" for summer milk"
+LJ-006,hook_driver,novelty_surprise,curiosity_gap,no,transcript,near-identical script LJ-097 is labelled curiosity_gap - inconsistent
+LJ-009,hook_driver,aspiration_identity,aspiration_identity,yes,transcript,
+LJ-011,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-014,hook_driver,personal_experience,personal_experience,yes,transcript,
+LJ-019,hook_driver,fear_pain_point,fear_pain_point,yes,video,calcium-deficiency symptoms
+LJ-022,hook_driver,personal_experience,personal_experience,yes,transcript,
+LJ-024,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-043,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-053,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-054,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-059,hook_driver,personal_experience,personal_experience,yes,transcript,
+LJ-075,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-080,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-085,hook_driver,fear_pain_point,fear_pain_point,yes,transcript,
+LJ-086,hook_driver,fear_pain_point,personal_experience,no,transcript,"""Jeshita doesn't like plain milk"" - a personal fussy-eater story, not fear"
+LJ-089,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-097,hook_driver,curiosity_gap,curiosity_gap,yes,transcript,
+LJ-098,hook_driver,fear_pain_point,fear_pain_point,yes,transcript,kid refuses dal/paneer
+LJ-099,hook_driver,fear_pain_point,fear_pain_point,yes,transcript,
+LJ-005,narratives=taste_better_than_other_brands,yes,,n/a,transcript,silent; cannot judge
+LJ-006,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-009,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-011,narratives=taste_better_than_other_brands,no,no,yes,transcript,
+LJ-014,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-019,narratives=taste_better_than_other_brands,no,no,yes,video,
+LJ-022,narratives=taste_better_than_other_brands,no,no,yes,transcript,"""favourite drink"" is borderline"
+LJ-024,narratives=taste_better_than_other_brands,no,no,yes,transcript,
+LJ-043,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-053,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-054,narratives=taste_better_than_other_brands,no,yes,no,transcript,"""absolutely yummi-licious"" - taste is a selling point"
+LJ-059,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-075,narratives=taste_better_than_other_brands,no,,n/a,transcript,long Malayalam recipe; cannot judge confidently
+LJ-080,narratives=taste_better_than_other_brands,no,no,yes,transcript,
+LJ-085,narratives=taste_better_than_other_brands,no,no,yes,transcript,
+LJ-086,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-089,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-097,narratives=taste_better_than_other_brands,yes,yes,yes,transcript,
+LJ-098,narratives=taste_better_than_other_brands,no,yes,no,transcript,blind taste test is the core of the ad
+LJ-099,narratives=taste_better_than_other_brands,no,no,yes,transcript,
+LJ-005,persuasion=authority_science,no,no,yes,transcript,
+LJ-006,persuasion=authority_science,no,no,yes,transcript,
+LJ-009,persuasion=authority_science,no,no,yes,transcript,
+LJ-011,persuasion=authority_science,yes,yes,yes,transcript,magnesium explainer
+LJ-014,persuasion=authority_science,no,no,yes,transcript,
+LJ-019,persuasion=authority_science,yes,yes,yes,video,deficiency symptoms graphic
+LJ-022,persuasion=authority_science,no,no,yes,transcript,
+LJ-024,persuasion=authority_science,yes,yes,yes,transcript,borderline: ingredient reasoning
+LJ-043,persuasion=authority_science,no,no,yes,transcript,
+LJ-053,persuasion=authority_science,no,no,yes,transcript,
+LJ-054,persuasion=authority_science,no,no,yes,transcript,
+LJ-059,persuasion=authority_science,no,no,yes,transcript,
+LJ-075,persuasion=authority_science,no,no,yes,transcript,
+LJ-080,persuasion=authority_science,yes,yes,yes,transcript+video,store expert explains
+LJ-085,persuasion=authority_science,yes,yes,yes,transcript,lab reports
+LJ-086,persuasion=authority_science,no,no,yes,transcript,
+LJ-089,persuasion=authority_science,no,no,yes,transcript,
+LJ-097,persuasion=authority_science,no,no,yes,transcript,
+LJ-098,persuasion=authority_science,no,no,yes,transcript,
+LJ-099,persuasion=authority_science,no,no,yes,transcript,
+LJ-004,child_on_screen,one,one,yes,video,
+LJ-014,child_on_screen,one,one,yes,video,
+LJ-019,child_on_screen,one,animated cartoon only,no,video,illustrated child; no real child appears
+LJ-022,child_on_screen,none,none,yes,video,
+LJ-043,child_on_screen,none,none,yes,video,
+LJ-059,child_on_screen,one,one,yes,video,
+LJ-075,child_on_screen,one,one,yes,video,
+LJ-080,child_on_screen,one,one,yes,video,
+LJ-086,child_on_screen,one,one,yes,video,
+LJ-099,child_on_screen,none,none,yes,video,
+LJ-004,child_in_first_3s,yes,yes,yes,video,
+LJ-014,child_in_first_3s,yes,yes,yes,video,
+LJ-019,child_in_first_3s,yes,no (cartoon),no,video,
+LJ-022,child_in_first_3s,no,no,yes,video,
+LJ-043,child_in_first_3s,no,no,yes,video,
+LJ-059,child_in_first_3s,yes,yes,yes,video,
+LJ-075,child_in_first_3s,no,no,yes,video,
+LJ-080,child_in_first_3s,no,no,yes,video,
+LJ-086,child_in_first_3s,yes,yes,yes,video,
+LJ-099,child_in_first_3s,no,no,yes,video,
+LJ-004,child_role=reacts_to_taste,yes,yes,yes,transcript+video,"""roti ka taste bilkul same"" on camera"
+LJ-014,child_role=reacts_to_taste,yes,yes,yes,video,child with glass at end
+LJ-019,child_role=reacts_to_taste,yes,no,no,video,no real child; no reaction
+LJ-022,child_role=reacts_to_taste,no,no,yes,video,
+LJ-043,child_role=reacts_to_taste,no,no,yes,video,
+LJ-059,child_role=reacts_to_taste,yes,,n/a,video,reaction not in sampled frames
+LJ-075,child_role=reacts_to_taste,yes,yes,yes,video,child drinking at end
+LJ-080,child_role=reacts_to_taste,yes,yes,yes,video,child eats gummy and gives OK sign
+LJ-086,child_role=reacts_to_taste,yes,yes,yes,video,child drinking alongside mother
+LJ-099,child_role=reacts_to_taste,no,no,yes,video,
+LJ-004,first_frame,child,child,yes,video,
+LJ-014,first_frame,face,face,yes,video,mother and child
+LJ-019,first_frame,text,text,yes,video,
+LJ-022,first_frame,product,product,yes,video,
+LJ-043,first_frame,product,product,yes,video,
+LJ-059,first_frame,face,face,yes,video,
+LJ-075,first_frame,action,action,yes,video,
+LJ-080,first_frame,product,product,yes,video,
+LJ-086,first_frame,action,action,yes,video,mother feeding child
+LJ-099,first_frame,product,product,yes,video,
