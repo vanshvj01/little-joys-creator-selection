@@ -104,3 +104,55 @@ README; one-page NOTE.md; keep this log.
 - Correction: the creative-cluster count is 94 for all 100 ads but **93 for the 99 analysed**; the Phase 1
   checkpoint message and CLAUDE.md had said 94 for the 99. Fixed in CLAUDE.md; the report computes it.
 - `run_all.py` deletes nothing itself; full rebuild verified by deleting `outputs/` and rerunning.
+
+## Phase 5 — independent review of the finished deliverable
+
+**Prompt (summary):** "Check if this task is completed and verify all things, also recommend changes if
+needed." A fresh session reviewed the published report against the assignment and listed trust issues.
+The user then said: **"do all the changes needed."**
+
+**Issues the review raised, and what was done:**
+1. *The audience data for #1 was presented as a bonus, but it is a red flag* (storiesbyvihaa's audience is
+   30% women). → Now a visible "check audience before booking" risk on her card and brief. Still not
+   scored (audience data exists for only 3 of 20 creators), as decided in Phase 2.
+2. *"No ad by this creator exists" contradicted the audience file*, which lists Little Joys among her
+   past-year brands. → Searched every ad's copy, transcript and on-screen text for her or her child's name:
+   no match. The brief now says she has worked with the brand, the ad can't be identified in this
+   export, and the brand team should be asked how it did.
+3. *All five briefs showed the same expected-performance block.* → Lookalike ads are now taken within the
+   brief's own product (Proteinmix or Nutrimix) and compared with that product's average.
+4. *The headline label was checked on only 9 ads.* → Every one of the 39 ads tagged
+   `child_role=reacts_to_taste` was checked against transcripts and video frames
+   (`annotations/reacts_to_taste_fullcheck.csv`): 26 yes, 4 no, 9 unclear. The 4 wrong labels are removed
+   before analysis (`metrics.correct_labels`); results are shown for AI label / corrected / hand-confirmed
+   only, and barely differ. Two "yes" ads (LJ-021, LJ-065) look AI-generated rather than real children; noted.
+5. *The lede overstated the finding.* → Lede now gives the range and says "pattern, not proof".
+6. *Adjusting for stop date can absorb the effect* (ads are stopped because they did badly). → Added a
+   third robustness check that adjusts for launch period instead (`metrics.launch_periods`, 4 equal
+   groups). Every "suggestive" finding survives it; shown on the page.
+7. *Bootstrap must resample creatives, not rows.* → Already the case (`cluster_bootstrap_weights`); the
+   page now says so.
+8. *Hindi vs Hinglish.* → Pure-Hindi ads (10) cost ₹780 vs ₹300 for Hinglish (adjusted: 25% dearer,
+   inconclusive). The #1 brief is now written in Hinglish, not "Hindi/Hinglish", and lists pure Hindi
+   under "avoid". New row in the ingredient table.
+9. *Weak claims were recommended.* → Each claim is now measured on its own product's ads and rated
+   (thin / cheaper / average / costlier than that product's average). Dropped: the 1-ad "24g protein /
+   katoris of dal" line from #5 and "no added sugar" from #1 and #3 (costlier than average). Kept with a
+   visible "thin evidence" tag: "kids keep coming back" (2 ads).
+10. *Spoken + on-screen hook has a tiny comparison group* (15 ads without it). → Any ingredient with fewer
+    than 20 ads on one side now carries a visible "small comparison group" caveat.
+11. Polish: "Your pick" → "Analyst's pick"; "only 0% of posts" → "no child in any recent post"; a
+    separate, softer chip style for "suggestive"; ad IDs link to their MP4s; ohmother.in vs
+    livesimply_withkripa described as a near-tie (36% vs 37% in top five); hello_ps8's "highest safety
+    score of the five" was false (the_mum_wife_playbook is higher) and now quotes her score instead.
+
+**Found during the review fixes (not in the original list) — biggest change to the numbers:**
+- The AI's `product_form` label files **13 of the 18 Proteinmix ads as "other"** (with sauces and
+  spreads), although Proteinmix is by far the cheapest product per purchase (₹190 vs Nutrimix ₹490,
+  gummies ₹570). Adjusting for that label let part of the Proteinmix advantage leak into every ingredient
+  common in Proteinmix ads (taste tests, child presenters). Product is now read from the ad text
+  (`metrics.products`) and used as the confounder. Effects shrink but keep their direction and verdicts:
+  child tasting on camera **40% → 27% cheaper** (as published → now) (95% range 5–38% cheaper), and it now holds at 23% without
+  LJ-004 instead of collapsing. Best q rises from 0.13 to 0.34; nothing is "strong". Science/authority
+  persuasion moves from "rests on one ad" to "inconclusive". The creator ranking does not depend on
+  effect sizes, so the five picks are unchanged.

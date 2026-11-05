@@ -25,8 +25,22 @@ def wilson(k, n, z=1.96):
     return centre - half, centre + half
 
 
+FULL_LABEL = "child_role=reacts_to_taste"
+
+
+def full_taste_rows() -> pd.DataFrame:
+    """Every ad the AI tagged reacts_to_taste, checked by hand (annotations/reacts_to_taste_fullcheck.csv).
+    'unclear' (a child consumes it, but no reaction can be seen in the sampled frames) is not judged."""
+    f = m.taste_check()
+    return pd.DataFrame({"ad_id": f.ad_id, "label": FULL_LABEL, "ai_value": "yes", "checked_value": f.checked_value,
+                         "agree": f.checked_value.map({"yes": "yes", "no": "no", "unclear": "n/a"}),
+                         "method": f.method, "note": f.note})
+
+
 def agreement() -> pd.DataFrame:
     ann = pd.read_csv(ANN, keep_default_na=False)  # keep the literal "n/a" marker
+    # The headline label was later checked on ALL ads carrying it; that replaces its 9-ad sample.
+    ann = pd.concat([ann[ann.label != FULL_LABEL], full_taste_rows()], ignore_index=True)
     judged = ann[ann.agree != "n/a"]
     rows = []
     for label, g in judged.groupby("label", sort=False):

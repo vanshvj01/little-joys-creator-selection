@@ -1,13 +1,13 @@
-key,claim,n_ads,ad_ids,pooled_cpa_inr,best_ads
-pm_12g,Proteinmix: 12g plant protein in one scoop,21,"LJ-001, LJ-004, LJ-006, LJ-012, LJ-016, LJ-017, LJ-021, LJ-026, LJ-034, LJ-036, LJ-046, LJ-056, LJ-061, LJ-069, LJ-071, LJ-074, LJ-077, LJ-094, LJ-097, LJ-098, LJ-100",288.7364873299214,"LJ-004, LJ-056, LJ-097"
-pm_taste,Proteinmix: no change in taste or smell of roti / pancakes,8,"LJ-004, LJ-006, LJ-036, LJ-056, LJ-071, LJ-077, LJ-097, LJ-098",173.2498820569272,"LJ-004, LJ-056, LJ-097"
-pm_source,"Proteinmix: made from pea, brown rice and soy protein",8,"LJ-001, LJ-004, LJ-016, LJ-026, LJ-052, LJ-094, LJ-098, LJ-100",155.47512291052115,"LJ-004, LJ-098, LJ-052"
-pm_uses,"Proteinmix: mixes into roti, paratha, dosa, chilla, pancakes",13,"LJ-002, LJ-004, LJ-012, LJ-017, LJ-026, LJ-036, LJ-056, LJ-061, LJ-069, LJ-071, LJ-094, LJ-098, LJ-100",254.1045707539214,"LJ-004, LJ-056, LJ-071"
-no_sugar,"No added sugar, no preservatives",16,"LJ-001, LJ-015, LJ-020, LJ-024, LJ-027, LJ-030, LJ-036, LJ-048, LJ-049, LJ-051, LJ-056, LJ-064, LJ-067, LJ-071, LJ-080, LJ-084",484.9244908097367,"LJ-056, LJ-020, LJ-048"
-nm7_eggs,Nutrimix 7+: two scoops with milk give almost as much protein as two eggs,4,"LJ-046, LJ-050, LJ-081, LJ-088",617.6636363636363,"LJ-050, LJ-081, LJ-046"
-nm7_dal,"A 9-year-old needs at least 24g protein a day, about 7-8 katoris of dal",1,LJ-050,254.42465753424656,LJ-050
-nm_source,"Nutrimix protein comes from skimmed milk powder, almonds and walnuts",4,"LJ-043, LJ-050, LJ-068, LJ-081",506.0021505376344,"LJ-050, LJ-068, LJ-081"
-nm2_5g,Nutrimix 2+: 5g protein in two scoops,8,"LJ-007, LJ-029, LJ-045, LJ-060, LJ-066, LJ-083, LJ-086, LJ-095",503.66864784546806,"LJ-095, LJ-007, LJ-029"
-nm_sweet,"Sweetened with jaggery and dates, no artificial sweeteners",23,"LJ-005, LJ-007, LJ-009, LJ-010, LJ-013, LJ-014, LJ-021, LJ-022, LJ-029, LJ-038, LJ-042, LJ-045, LJ-053, LJ-057, LJ-063, LJ-066, LJ-072, LJ-075, LJ-082, LJ-086, LJ-087, LJ-095, LJ-096",454.5681685196021,"LJ-021, LJ-063, LJ-095"
-nm_23,23 vitamins and minerals,10,"LJ-007, LJ-008, LJ-013, LJ-022, LJ-029, LJ-045, LJ-055, LJ-066, LJ-086, LJ-095",576.6460084033613,"LJ-055, LJ-095, LJ-013"
-kids_back,Kids keep coming back for more because they love the taste,2,"LJ-035, LJ-055",328.2686084142395,"LJ-055, LJ-035"
+key,claim,product,n_ads,ad_ids,pooled_cpa_inr,product_avg_cpa_inr,ratio_to_product_avg,strength,best_ads
+pm_12g,Proteinmix: 12g plant protein in one scoop,proteinmix,16,"LJ-001, LJ-004, LJ-006, LJ-012, LJ-016, LJ-026, LJ-034, LJ-036, LJ-056, LJ-061, LJ-071, LJ-077, LJ-094, LJ-097, LJ-098, LJ-100",182.38506186039407,192.92057545331934,0.9453893729677655,average,"LJ-004, LJ-097, LJ-056"
+pm_taste,Proteinmix: no change in taste or smell of roti / pancakes,proteinmix,8,"LJ-004, LJ-006, LJ-036, LJ-056, LJ-071, LJ-077, LJ-097, LJ-098",173.2498820569272,192.92057545331934,0.8980373485297226,cheaper,"LJ-004, LJ-097, LJ-056"
+pm_source,"Proteinmix: made from pea, brown rice and soy protein",proteinmix,8,"LJ-001, LJ-004, LJ-016, LJ-026, LJ-052, LJ-094, LJ-098, LJ-100",155.47512291052115,192.92057545331934,0.8059022348714754,cheaper,"LJ-004, LJ-098, LJ-052"
+pm_uses,"Proteinmix: mixes into roti, paratha, dosa, chilla, pancakes",proteinmix,11,"LJ-002, LJ-004, LJ-012, LJ-026, LJ-036, LJ-056, LJ-061, LJ-071, LJ-094, LJ-098, LJ-100",159.53270499528747,192.92057545331934,0.8269346316245533,cheaper,"LJ-004, LJ-056, LJ-036"
+no_sugar,"No added sugar, no preservatives",all,16,"LJ-001, LJ-015, LJ-020, LJ-024, LJ-027, LJ-030, LJ-036, LJ-048, LJ-049, LJ-051, LJ-056, LJ-064, LJ-067, LJ-071, LJ-080, LJ-084",484.9244908097367,405.6514000949217,1.195421711095451,costlier,"LJ-080, LJ-020, LJ-048"
+nm7_eggs,Nutrimix 7+: two scoops with milk give almost as much protein as two eggs,nutrimix,4,"LJ-046, LJ-050, LJ-081, LJ-088",617.6636363636363,493.53304705003734,1.2515142401416817,costlier,"LJ-050, LJ-081, LJ-046"
+nm7_dal,"A 9-year-old needs at least 24g protein a day, about 7-8 katoris of dal",nutrimix,1,LJ-050,254.42465753424656,493.53304705003734,0.5155169629571968,thin,LJ-050
+nm_source,"Nutrimix protein comes from skimmed milk powder, almonds and walnuts",nutrimix,4,"LJ-043, LJ-050, LJ-068, LJ-081",506.0021505376344,493.53304705003734,1.0252649818733068,average,"LJ-050, LJ-081, LJ-068"
+nm2_5g,Nutrimix 2+: 5g protein in two scoops,nutrimix,8,"LJ-007, LJ-029, LJ-045, LJ-060, LJ-066, LJ-083, LJ-086, LJ-095",503.66864784546806,493.53304705003734,1.0205368229260707,average,"LJ-095, LJ-007, LJ-060"
+nm_sweet,"Sweetened with jaggery and dates, no artificial sweeteners",nutrimix,21,"LJ-005, LJ-007, LJ-009, LJ-010, LJ-013, LJ-014, LJ-022, LJ-029, LJ-038, LJ-042, LJ-045, LJ-053, LJ-057, LJ-066, LJ-072, LJ-075, LJ-082, LJ-086, LJ-087, LJ-095, LJ-096",457.7149046793761,493.53304705003734,0.9274250375233134,average,"LJ-095, LJ-009, LJ-075"
+nm_23,23 vitamins and minerals,nutrimix,10,"LJ-007, LJ-008, LJ-013, LJ-022, LJ-029, LJ-045, LJ-055, LJ-066, LJ-086, LJ-095",576.6460084033613,493.53304705003734,1.1684040447749338,costlier,"LJ-055, LJ-095, LJ-013"
+kids_back,Kids keep coming back for more because they love the taste,nutrimix,2,"LJ-035, LJ-055",328.2686084142395,493.53304705003734,0.6651400759814928,thin,"LJ-055, LJ-035"

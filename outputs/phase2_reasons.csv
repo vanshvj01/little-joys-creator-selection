@@ -3,16 +3,16 @@ CR-20,storiesbyvihaa,1,robust,0.7200551481653666,0.5777272727272728,0.7947660472
 CR-04,hello_ps8,2,robust,0.6366253178714506,0.4658333333333333,0.6848346048191357,0.93,0.998,0.9882,never films children around food
 CR-13,mumma_and_ridhu,3,robust,0.6195751239157894,0.5459090909090909,0.5731187821667301,0.8133635316782457,0.889,0.5562,no single weakness; outscored on the combined total
 CR-08,the_mum_wife_playbook,4,marginal,0.6173899942944703,0.5953787878787878,0.3188024014203055,0.96,0.7848,0.48,small reach (median 38k plays)
-CR-02,livesimply_withkripa,5,out,0.5708334192308991,0.35,0.6333336769235965,0.9500000000000001,0.3652,0.6928,a child aged 3-12 appears in only 0% of posts
+CR-02,livesimply_withkripa,5,out,0.5708334192308991,0.35,0.6333336769235965,0.9500000000000001,0.3652,0.6928,no child aged 3-12 appears in any recent post
 CR-07,ohmother.in,6,out,0.5612641106679528,0.5781818181818181,0.23193551434068438,0.8567572919674904,0.3578,0.2418,small reach (median 43k plays); sponsored posts get 48% of organic plays
 CR-17,radhikabansal0908,7,out,0.5591741681247225,0.4678787878787879,0.5509390967413142,0.75,0.2112,0.0658,100% of recent posts are sponsored
-CR-06,thatkushalmistry,8,out,0.5541627319179528,0.18333333333333335,0.9099842610051447,0.9400000000000001,0.329,0.627,a child aged 3-12 appears in only 0% of posts; speaks mostly Gujarati on camera (untested in ads)
-CR-18,foodies_by_neha,9,out,0.5384048622372823,0.35,0.5202861156157961,0.9333333333333333,0.0258,0.0,a child aged 3-12 appears in only 0% of posts
-CR-14,parentingtips_surat,10,out,0.5377550159747948,0.30234848484848487,0.5963230942022094,0.9500000000000001,0.071,0.3464,a child aged 3-12 appears in only 15% of posts; 90% of posts are doctor-style explainers (science/authority ads did worse)
-CR-16,paediatrics_decoded,11,out,0.4863451063989274,0.28,0.43538042559570955,0.9500000000000001,0.0002,0.0048,a child aged 3-12 appears in only 10% of posts; 100% of posts are doctor-style explainers (science/authority ads did worse)
+CR-06,thatkushalmistry,8,out,0.5541627319179528,0.18333333333333335,0.9099842610051447,0.9400000000000001,0.329,0.627,no child aged 3-12 appears in any recent post; speaks mostly Gujarati on camera (untested in ads)
+CR-18,foodies_by_neha,9,out,0.5384048622372823,0.35,0.5202861156157961,0.9333333333333333,0.0258,0.0,no child aged 3-12 appears in any recent post
+CR-14,parentingtips_surat,10,out,0.5377550159747948,0.30234848484848487,0.5963230942022094,0.9500000000000001,0.071,0.3464,a child aged 3-12 appears in only 15% of posts; 90% of posts are doctor-style explainers (science/authority ads did not do better)
+CR-16,paediatrics_decoded,11,out,0.4863451063989274,0.28,0.43538042559570955,0.9500000000000001,0.0002,0.0048,a child aged 3-12 appears in only 10% of posts; 100% of posts are doctor-style explainers (science/authority ads did not do better)
 CR-15,tej.lil.diary,12,out,0.4485896891734653,0.32984848484848484,0.30617279588390883,0.8284889911129828,0.0,0.0,a child aged 3-12 appears in only 15% of posts; small reach (median 63k plays); sponsored posts get 44% of organic plays
-CR-01,drgarima_mehta,13,out,0.4426130860661178,0.27,0.30045234426447137,0.93,0.0,0.0,a child aged 3-12 appears in only 5% of posts; 95% of posts are doctor-style explainers (science/authority ads did worse); small reach (median 89k plays)
-CR-12,raising_zohran,14,out,0.40071187697709243,0.25625,0.20197097145954424,0.8883765364488256,0.0,0.0,a child aged 3-12 appears in only 0% of posts; small reach (median 14k plays); sponsored posts get 59% of organic plays
+CR-01,drgarima_mehta,13,out,0.4426130860661178,0.27,0.30045234426447137,0.93,0.0,0.0,a child aged 3-12 appears in only 5% of posts; 95% of posts are doctor-style explainers (science/authority ads did not do better); small reach (median 89k plays)
+CR-12,raising_zohran,14,out,0.40071187697709243,0.25625,0.20197097145954424,0.8883765364488256,0.0,0.0,no child aged 3-12 appears in any recent post; small reach (median 14k plays); sponsored posts get 59% of organic plays
 CR-05,sia_3vedi,15,excluded,0.7138281798697874,0.7988636363636363,0.9175854467518773,0.34,0.0,0.0,Excluded: paid direct-competitor post(s) Gritzo (2026-09-28).
 CR-03,ekamichildcare,15,excluded,0.4248317627099571,0.4127272727272727,0.5438725053852829,0.33000000000000007,0.0,0.0,Excluded: paid direct-competitor post(s) Troovy (2026-09-07).
 CR-10,couple_adishiv,15,excluded,0.4156243138941834,0.4131818181818182,0.6014547123217245,0.23467890689137283,0.0,0.0,Excluded: paid direct-competitor post(s) Gritzo (2026-09-06).

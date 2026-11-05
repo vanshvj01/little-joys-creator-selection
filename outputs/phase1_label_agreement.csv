@@ -7,6 +7,6 @@ narratives=taste_better_than_other_brands,16,18,0.8888888888888888,0.67199755133
 persuasion=authority_science,20,20,1.0,0.8388698745050667,1.0,0,
 child_on_screen,9,10,0.9,0.5958436145024278,0.9821242504842788,0,LJ-019: illustrated child; no real child appears
 child_in_first_3s,9,10,0.9,0.5958436145024278,0.9821242504842788,0,LJ-019: 
-child_role=reacts_to_taste,8,9,0.8888888888888888,0.5649937852319399,0.9801096286728695,1,LJ-019: no real child; no reaction
 first_frame,10,10,1.0,0.7224598312333834,1.0,0,
-ALL,149,157,0.9490445859872612,0.9026816513121643,0.9739572281816982,3,
+child_role=reacts_to_taste,26,30,0.8666666666666667,0.7031831605558306,0.9469043057578189,9,LJ-014: skit about the mother's shortcut; child is never seen drinking or tasting it; LJ-019: illustrated child; no real child appears (from the earlier spot-check); LJ-047: kids take gummies on the way to school; no tasting or reaction shown; LJ-075: girl eats the egg sandwich; the Nutrimix drink is shown but not tasted on camera
+ALL,167,178,0.9382022471910112,0.8927430154087829,0.9651464884231234,11,

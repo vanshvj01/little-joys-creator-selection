@@ -257,10 +257,12 @@ def reason(r) -> str:
     bits = []
     if r.excluded_competitor_deal:
         return f"Excluded: paid direct-competitor post(s) {r.direct_competitor_deals}."
-    if r.kids_3_12_on_camera < 0.2:
+    if r.kids_3_12_on_camera == 0:
+        bits.append("no child aged 3-12 appears in any recent post")
+    elif r.kids_3_12_on_camera < 0.2:
         bits.append(f"a child aged 3-12 appears in only {r.kids_3_12_on_camera:.0%} of posts")
     if r.authority_share >= 0.5:
-        bits.append(f"{r.authority_share:.0%} of posts are doctor-style explainers (science/authority ads did worse)")
+        bits.append(f"{r.authority_share:.0%} of posts are doctor-style explainers (science/authority ads did not do better)")
     if r.english_or_hinglish < 0.5:
         bits.append(f"speaks mostly {r.spoken_languages.split(' ')[0].title()} on camera (untested in ads)")
     if r.median_plays < 100_000:

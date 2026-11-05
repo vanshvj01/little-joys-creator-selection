@@ -23,6 +23,7 @@ INGREDIENTS = [
     ("'Overall growth' as the message", "narratives=kids_overall_growth", ["main_benefit=overall_growth"], "avoid"),
     ("Fear / deficiency appeal", "persuasion=fear_appeal", [], "avoid"),
     ("Regional-language voiceover (Kannada, Malayalam, Tamil, Punjabi)", "language=regional_Indian", [], "avoid"),
+    ("Spoken in pure Hindi (not Hinglish)", "language=Hindi", [], "unproven"),
     ("Child visible in the first 3 seconds", "child_in_first_3s=yes", [], "unproven"),
     ("Brand named within the first 5 seconds", "brand_first_said=within_5s", [], "unproven"),
     ("Hook line is a question", "text:hook_line_is_question", [], "unproven"),
@@ -53,6 +54,8 @@ def build() -> pd.DataFrame:
             "cpa_with_inr": r.cpa_with, "cpa_without_inr": r.cpa_without,
             "cpa_ratio_adjusted": r.cpa_ratio_adj, "ci95_lo": r.adj_lo95, "ci95_hi": r.adj_hi95,
             "cpa_ratio_without_LJ004": r.cpa_ratio_adj_without_top_ad,
+            "cpa_ratio_launch_timing": r.cpa_ratio_adj_launch,
+            "holds_with_launch_timing": bool(r.robust_to_launch_timing),
             "joint_model_ratio": None if j is None else j.cpa_multiplier,
             "joint_ci95": None if j is None else f"{j.lo95:.2f}-{j.hi95:.2f}",
             "supporting": "; ".join(f"{s} ({res.loc[s].cpa_ratio_adj:.2f}, {res.loc[s].verdict})" for s in support),
@@ -65,8 +68,23 @@ def build() -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def taste_label_check() -> pd.DataFrame:
+    """The headline ingredient three ways: AI label as delivered, corrected, and hand-confirmed only."""
+    res = pd.read_csv(m.OUT / "phase1_label_effects.csv").set_index("feature")
+    rows = []
+    for name, f in [("AI label as delivered", "check:ai_label_child_reacts_to_taste"),
+                    ("After hand corrections (used everywhere)", "child_role=reacts_to_taste"),
+                    ("Only ads a person confirmed", "check:child_taste_confirmed_by_hand")]:
+        r = res.loc[f]
+        rows.append({"version": name, "feature": f, "n_ads_with": int(r.n_with), "cpa_ratio_adjusted": r.cpa_ratio_adj,
+                     "ci95_lo": r.adj_lo95, "ci95_hi": r.adj_hi95, "cpa_ratio_without_LJ004": r.cpa_ratio_adj_without_top_ad,
+                     "cpa_ratio_launch_timing": r.cpa_ratio_adj_launch})
+    return pd.DataFrame(rows)
+
+
 if __name__ == "__main__":
     pd.set_option("display.width", 260)
     out = build()
     out.to_csv(m.OUT / "phase1_winning_ingredients.csv", index=False)
+    taste_label_check().to_csv(m.OUT / "phase1_taste_label_versions.csv", index=False)
     print(out.drop(columns=["feature", "supporting"]).round(2).to_string(index=False))

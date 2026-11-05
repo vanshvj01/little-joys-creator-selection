@@ -78,3 +78,33 @@ def test_real_data_integrity():
     # 3 shared-video pairs + 3 near-identical scripts (LJ-006/097, LJ-018/079, LJ-033/092)
     assert ads.cluster.nunique() == 94
     assert ads.set_index("ad_id").cluster["LJ-097"] == "LJ-006"
+
+
+def test_product_read_from_ad_text():
+    ads = m.load_ads()
+    # The AI's product_form files most Proteinmix ads under "other"; the product column must not.
+    pm = ads[ads["product"] == "proteinmix"]
+    assert len(pm) == 18
+    assert (pm.product_form == "other").sum() >= 10
+    assert set(ads["product"]) == {"proteinmix", "nutrimix", "gummies", "other"}
+
+
+def test_hand_corrections_remove_wrong_taste_labels():
+    ads = m.load_ads().set_index("ad_id")
+    raw = m.load_ads(corrected=False).set_index("ad_id")
+    wrong = set(m.taste_check().query("checked_value == 'no'").ad_id)
+    assert wrong == {"LJ-014", "LJ-019", "LJ-047", "LJ-075"}
+    for a in wrong:
+        assert "reacts_to_taste" in raw.child_role[a]
+        assert "reacts_to_taste" not in ads.child_role[a]
+    # every AI-tagged ad was checked, nothing else changed
+    tagged = set(raw.index[raw.child_role.fillna("").str.contains("reacts_to_taste")])
+    assert tagged == set(m.taste_check().ad_id)
+    same = raw.index.difference(list(wrong))
+    assert (ads.child_role[same].fillna("") == raw.child_role[same].fillna("")).all()
+
+
+def test_launch_periods_are_balanced():
+    ads = m.load_ads()
+    counts = ads.launch_period.value_counts()
+    assert len(counts) == m.LAUNCH_PERIODS and counts.min() >= 15

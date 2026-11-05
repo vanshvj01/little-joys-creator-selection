@@ -51,9 +51,13 @@ docs/prompts.md  running log of user prompts and decisions/overrides (append eve
 - Phase 1 analysis set excludes LJ-089 (decision 2); every finding is re-checked with LJ-089 back in,
   and with LJ-004 (29% of all purchases) removed. A finding that disappears without LJ-004 is labelled
   "driven by one ad".
-- Confounders adjusted for in every comparison: stop batch and product form (milk mix ≈ ₹318 CPA vs
-  ≈ ₹600 for the rest).
-- Hand annotations (label spot-checks) live in `annotations/` and are the only hand-entered data.
+- Confounders adjusted for in every comparison: stop batch and **product read from the ad text**
+  (`metrics.products`: Proteinmix ≈ ₹190 CPA, Nutrimix ≈ ₹490, gummies ≈ ₹570, other ≈ ₹650). Do not use
+  the AI `product_form` label for this: it files 13 of 18 Proteinmix ads as "other". Every finding is
+  also re-checked with launch period instead of stop batch (`LAUNCH_CONFOUNDERS`).
+- Hand annotations (label spot-checks, the full reacts_to_taste check) live in `annotations/` and are
+  the only hand-entered data. `metrics.load_ads()` applies the reacts_to_taste corrections by default;
+  `corrected=False` gives the AI labels as delivered.
 - Multi-value label cells are `; `-separated; explode them explicitly.
 - Round for display only, at the presentation layer. Show ranges, not false precision.
 - Keep weights and thresholds as named constants at the top of the module so they're editable.

@@ -1,0 +1,4 @@
+version,feature,n_ads_with,cpa_ratio_adjusted,ci95_lo,ci95_hi,cpa_ratio_without_LJ004,cpa_ratio_launch_timing
+AI label as delivered,check:ai_label_child_reacts_to_taste,39,0.7319077417487231,0.6109514891400877,0.9662899327715118,0.7831349212867956,0.7698720855609495
+After hand corrections (used everywhere),child_role=reacts_to_taste,35,0.728449742726338,0.6153728341443042,0.9523657985553778,0.7666008778271479,0.748735661382799
+Only ads a person confirmed,check:child_taste_confirmed_by_hand,26,0.6899356713294275,0.5900960296605918,0.8817672704020524,0.6874787259774204,0.7004818498720163

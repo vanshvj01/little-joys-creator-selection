@@ -16,6 +16,9 @@ import phase1_ads as p1
 import phase2_creators as p2
 
 TEMPLATE_DIR = m.ROOT / "src" / "templates"
+# Public repository with the code, NOTE.md and the AI session log. Set once the repo exists; blank hides the link.
+REPO_URL = "https://github.com/vanshvj01/little-joys-creator-selection"
+SMALL_GROUP = 20   # a comparison with fewer ads than this on one side gets a visible caveat
 
 VERDICT_LABEL = {
     "strong": "Strong",
@@ -49,6 +52,10 @@ def ingredient_rows():
             "effect": effect_words(r.cpa_ratio_adjusted),
             "range": f"{effect_words(r.ci95_lo)} to {effect_words(r.ci95_hi)}",
             "without_top": effect_words(r.cpa_ratio_without_LJ004),
+            "launch": effect_words(r.cpa_ratio_launch_timing),
+            "small_side": (f"only {min(r.n_ads_with, r.n_ads_without)} ads "
+                           f"{'without' if r.n_ads_without < r.n_ads_with else 'with'} it"
+                           if min(r.n_ads_with, r.n_ads_without) < SMALL_GROUP else ""),
             "examples": r.best_example_ads, "counter": r.weakest_example_ads,
             "per_click": r.purchase_per_click_ratio, "hook_rate": r.hook_rate_ratio,
         })
@@ -60,11 +67,13 @@ def forest_svg(rows, width=640, row_h=30, left=270, right=24):
     lo_lim, hi_lim = math.log(0.25), math.log(4)
     plot_w = width - left - right
     x = lambda v: left + (math.log(min(max(v, 0.25), 4)) - lo_lim) / (hi_lim - lo_lim) * plot_w
-    top = 34
+    top = 44
     h = top + row_h * len(rows) + 12
     out = [f'<svg viewBox="0 0 {width} {h}" role="img" aria-label="Cost per purchase with and without each '
            f'ingredient, with 95% ranges" class="forest">']
-    for v, lab in [(0.25, "75% cheaper"), (0.5, "50% cheaper"), (1, "same"), (2, "2× the cost"), (4, "4× the cost")]:
+    out.append(f'<text x="{left + plot_w / 2:.1f}" y="12" text-anchor="middle" class="tick">cost per purchase, '
+               f'relative to ads without it</text>')
+    for v, lab in [(0.25, "¼×"), (0.5, "½×"), (1, "same"), (2, "2×"), (4, "4×")]:
         out.append(f'<line x1="{x(v):.1f}" x2="{x(v):.1f}" y1="{top - 6}" y2="{h - 8}" class="{"axis0" if v == 1 else "grid"}"/>')
         anchor = "start" if v == 0.25 else "end" if v == 4 else "middle"
         out.append(f'<text x="{x(v):.1f}" y="{top - 14}" text-anchor="{anchor}" class="tick">{lab}</text>')
@@ -72,7 +81,7 @@ def forest_svg(rows, width=640, row_h=30, left=270, right=24):
         y = top + row_h * i + row_h / 2
         cls = "do" if r["ratio"] < 1 else "avoid"
         faint = " faint" if r["verdict_key"] not in ("strong", "suggestive") else ""
-        name = r["name"] if len(r["name"]) <= 40 else r["name"][:38] + "…"
+        name = r["name"] if len(r["name"]) <= 34 else r["name"][:33].rstrip() + "…"
         out.append(f'<text x="{left - 12}" y="{y + 4:.1f}" text-anchor="end" class="rowlab">{name}</text>')
         out.append(f'<line x1="{x(r["lo"]):.1f}" x2="{x(r["hi"]):.1f}" y1="{y:.1f}" y2="{y:.1f}" class="ci {cls}{faint}"/>')
         out.append(f'<circle cx="{x(r["ratio"]):.1f}" cy="{y:.1f}" r="5" class="pt {cls}{faint}"/>')
@@ -101,7 +110,7 @@ def audit_facts():
         "n_audience": len(aud),
         "n_video_dupes": len(raw) - raw.video_url.nunique(),
         "n_script_dupes": (len(raw) - m.load_ads(include_excluded=True).cluster.nunique()) - (len(raw) - raw.video_url.nunique()),
-        "regional_ratio": f"{pd.read_csv(m.OUT / 'phase1_label_effects.csv').set_index('feature').cpa_ratio_adj['language=regional_Indian']:.1f}",
+        "regional_pct": f"{pd.read_csv(m.OUT / 'phase1_label_effects.csv').set_index('feature').cpa_ratio_adj['language=regional_Indian'] - 1:.0%}",
         "n_boot": f"{p1.N_BOOT:,}", "n_sens": f"{p2.N_SENSITIVITY:,}",
         "spend_lakh": f"₹{raw.spend_inr.sum() / 1e5:.1f} lakh",
         "purchases": f"{raw.purchases.sum():,}", "account_cpa": inr(m.pooled(ads)["cpa"]),
@@ -110,17 +119,23 @@ def audit_facts():
         "top_ad": top.ad_id, "top_ad_share": f"{top.purchases / ads.purchases.sum():.0%}",
         "top_ad_cpa": inr(top.cpa),
         "date_min": raw.launch_date.min(), "date_max": "2026-10-26",
-        "milk_cpa": inr(m.pooled(ads[ads.product_form == "milk_mix_powder"])["cpa"]),
-        "other_cpa": inr(m.pooled(ads[ads.product_form != "milk_mix_powder"])["cpa"]),
+        "product_cpa": {k: inr(m.pooled(g)["cpa"]) for k, g in ads.groupby("product")},
+        "product_n": ads["product"].value_counts().to_dict(),
+        "pm_mislabelled": int(((ads["product"] == "proteinmix") & (ads.product_form != "milk_mix_powder")).sum()),
+        "pm_n": int((ads["product"] == "proteinmix").sum()),
         "n_tests": int(((pd.read_csv(m.OUT / "phase1_label_effects.csv")[["n_with", "n_without"]].min(axis=1) >= p1.MIN_N)
-                        & ~pd.read_csv(m.OUT / "phase1_label_effects.csv").label.isin(p1.CONFOUNDERS)).sum()),
+                        & ~pd.read_csv(m.OUT / "phase1_label_effects.csv").label.isin(p1.NOT_TESTED)
+                        & ~pd.read_csv(m.OUT / "phase1_label_effects.csv").feature.str.startswith("check:")).sum()),
         "best_q": f"{pd.read_csv(m.OUT / 'phase1_label_effects.csv').q_adj.min():.2f}",
     }
 
 
 def build():
     briefs = json.loads((m.OUT / "phase3_briefs.json").read_text(encoding="utf-8"))
-    comp = pd.read_csv(m.OUT / "phase3_comparable_ads.csv", index_col=0).iloc[:, 0]
+    comps = pd.read_csv(m.OUT / "phase3_comparable_ads.csv", index_col=0)
+    taste = pd.read_csv(m.OUT / "phase1_taste_label_versions.csv")
+    taste_check = m.taste_check().checked_value.value_counts().to_dict()
+    video = pd.read_csv(m.DATA / "ads.csv").set_index("ad_id").video_url.to_dict()
     agree = pd.read_csv(m.OUT / "phase1_label_agreement.csv")
     reasons, ranking, feats, scen_cols = creator_tables()
     ingredients = ingredient_rows()
@@ -135,8 +150,13 @@ def build():
         "forest": forest_svg(chart_rows),
         "agree": agree.to_dict("records"),
         "agree_all": agree[agree.label == "ALL"].iloc[0].to_dict(),
-        "comp": {k: (inr(float(v)) if k.endswith(("cpa", "lo90", "hi90", "min", "max", "median")) else v)
-                 for k, v in comp.items()},
+        "comps": {p: {k: (inr(float(v)) if k.endswith(("cpa", "lo90", "hi90", "min", "max", "median", "LJ004"))
+                          and not k.startswith("has") else v) for k, v in comps[p].items()} for p in comps.columns},
+        "taste": [{"version": r.version, "n": r.n_ads_with, "effect": effect_words(r.cpa_ratio_adjusted),
+                   "range": f"{effect_words(r.ci95_lo)} to {effect_words(r.ci95_hi)}",
+                   "without_top": effect_words(r.cpa_ratio_without_LJ004)} for r in taste.itertuples()],
+        "taste_check": taste_check,
+        "video": video, "repo_url": REPO_URL,
         "others": others.to_dict("records"),
         "ranking": ranking.reset_index().to_dict("records"),
         "picked": picked,

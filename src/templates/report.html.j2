@@ -56,7 +56,16 @@ section { display: grid; gap: 20px; }
 .bar i b { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: 3px; }
 .chip { display: inline-block; font: 600 0.74rem/1 var(--body); letter-spacing: 0.03em; padding: 5px 8px;
   border-radius: 999px; background: var(--neutral-soft); color: var(--fg); width: fit-content; }
-.chip.robust, .chip.suggestive, .chip.strong { background: var(--accent-soft); color: var(--accent); }
+.chip.robust, .chip.strong { background: var(--accent-soft); color: var(--accent); }
+.chip.suggestive { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.chip.thin, .chip.costlier { background: var(--avoid-soft); color: var(--avoid); }
+.chip.cheaper { background: var(--accent-soft); color: var(--accent); }
+.chip.average { background: var(--neutral-soft); color: var(--muted); }
+.chip.risk { background: var(--avoid-soft); color: var(--avoid); }
+.riskbox { background: var(--avoid-soft); border-radius: 8px; padding: 12px 16px; display: grid; gap: 6px; }
+.riskbox .eyebrow { color: var(--avoid); }
+.caveat { display: block; font-size: 0.8rem; color: var(--avoid); }
+.claims li { display: grid; gap: 4px; }
 .chip.marginal, .chip.driven, .chip.chosen { background: var(--avoid-soft); color: var(--avoid); }
 .chip.out, .chip.inconclusive, .chip.not, .chip.excluded { background: var(--neutral-soft); color: var(--muted); }
 
@@ -120,9 +129,10 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
 <header class="head">
   <span class="eyebrow">Little Joys · creator selection · data to 26 Oct 2026</span>
   <h1>Which five creators next, and what should they say?</h1>
-  <p class="lede">Work with these five creators, and have each one film a real child tasting a Little Joys milk mix on camera,
-    in English or Hinglish. In Little Joys' own ads, purchases from videos with a child tasting on camera were about
-    {{ ingredients[0].effect }}, after adjusting for product and timing.</p>
+  <p class="lede">Work with these five creators, and have each one film a real child tasting Proteinmix or Nutrimix on camera,
+    in English or Hinglish. In Little Joys' own ads, videos with a child tasting on camera got purchases about
+    {{ ingredients[0].effect }} than comparable ads of the same product (95% range: {{ ingredients[0].range }}).
+    That is a consistent pattern across our checks, not proof: the ad account is small.</p>
   <p class="muted">Built from Little Joys' own data only: {{ facts.n_ads }} ads, {{ facts.n_creators }} creators and
     their {{ facts.n_posts }} recent posts. Ad spend, purchases and revenue in this exercise are made-up numbers, treated here as if they were the real ad account.</p>
 </header>
@@ -135,8 +145,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
       <span class="rank">#{{ loop.index }}</span>
       <h3>@{{ b.handle }}</h3>
       <span class="product">{{ b.product }}</span>
-      {% if b.chosen_over_model %}<span class="chip chosen">Your pick over the model's #5</span>
+      {% if b.chosen_over_model %}<span class="chip chosen">Analyst's pick over the model's #5</span>
       {% else %}<span class="chip {{ b.robustness }}">{{ 'Holds under almost any weighting' if b.robustness == 'robust' else 'Holds under most weightings' }}</span>{% endif %}
+      {% if b.risks %}<span class="chip risk">Check audience before booking</span>{% endif %}
       <div class="bars" aria-label="Scores out of 1">
         {% for k in ['fit', 'reach', 'safety'] %}
         <div class="bar"><span>{{ k|capitalize }}</span><i><b style="width: {{ (b[k] * 100)|round(0) }}%"></b></i><span class="num">{{ '%.2f'|format(b[k]) }}</span></div>
@@ -154,9 +165,10 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
   <div class="head">
     <h2 id="works-h">What works in Little Joys' own ads</h2>
     <p>We compared ads with and without each ingredient on <strong>cost per purchase</strong> (spend ÷ purchases, all ads pooled).
-      Every comparison is adjusted for the product advertised (milk-mix ads ran at {{ facts.milk_cpa }} per purchase vs
-      {{ facts.other_cpa }} for everything else) and for when the ad was switched off. The bars are 95% ranges: where a bar crosses
-      "same", the data cannot tell the difference from zero.</p>
+      Every comparison is adjusted for the product advertised, because products differ a lot: Proteinmix
+      {{ facts.product_cpa.proteinmix }} per purchase, Nutrimix {{ facts.product_cpa.nutrimix }}, gummies
+      {{ facts.product_cpa.gummies }}, everything else {{ facts.product_cpa.other }}. It is also adjusted for when the ad was
+      switched off. The bars are 95% ranges: where a bar crosses "same", the data cannot tell the difference from zero.</p>
   </div>
   <div class="chartbox">
     {{ forest|safe }}
@@ -165,15 +177,16 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
 
   <div class="tablewrap">
   <table>
-    <thead><tr><th>Ingredient</th><th>Evidence</th><th class="num">Ads with it</th><th class="num">Cost per purchase<br>with / without</th><th>Adjusted effect (95% range)</th><th>Examples</th></tr></thead>
+    <thead><tr><th>Ingredient</th><th>Evidence</th><th class="num">Ads with it</th><th class="num">Cost per purchase<br>with / without</th><th>Adjusted effect (95% range)</th><th>Without {{ facts.top_ad }}</th><th>Examples</th></tr></thead>
     <tbody>
     {% for r in ingredients %}
       <tr>
-        <td>{{ r.name }}</td>
+        <td>{{ r.name }}{% if r.small_side %}<span class="caveat">Small comparison group: {{ r.small_side }}</span>{% endif %}</td>
         <td><span class="chip {{ r.verdict_key }}">{{ r.verdict }}</span></td>
         <td class="num">{{ r.n }}</td>
         <td class="num">{{ r.cpa_with }} / {{ r.cpa_without }}</td>
         <td>{{ r.effect }} <span class="muted">({{ r.range }})</span></td>
+        <td>{{ r.without_top }}</td>
         <td class="mono">{{ r.examples }}</td>
       </tr>
     {% endfor %}
@@ -184,9 +197,19 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
     <h3>Why nothing here says "proven"</h3>
     <p>With {{ facts.n_ads_used }} ads, about {{ facts.n_tests }} comparisons were tested. After allowing for that many tries, the
       best result still falls short of our bar for "strong" (q = {{ facts.best_q }}, bar 0.10). "Suggestive" means the effect held
-      after adjusting for product and timing, and still held with the single best ad removed. One ad, {{ facts.top_ad }}
-      ({{ facts.top_ad_cpa }} per purchase), brought in {{ facts.top_ad_share }} of all purchases. Without it, the child-tasting
-      effect shrinks from {{ ingredients[0].effect }} to {{ ingredients[0].without_top }}.</p>
+      after adjusting for product and stop date, held again when the launch date was used instead of the stop date, and
+      still held with the single best ad removed. One ad, {{ facts.top_ad }} ({{ facts.top_ad_cpa }} per purchase), brought in
+      {{ facts.top_ad_share }} of all purchases. Without it, the child-tasting effect is {{ ingredients[0].without_top }}.</p>
+  </div>
+  <div class="callout">
+    <h3>How much the label check matters for the headline</h3>
+    <p>The AI tagged {{ taste[0].n }} ads as "child reacts to the taste". A person checked every one of them against the transcript
+      and video frames: {{ taste_check.yes }} confirmed, {{ taste_check.no }} wrong (removed), {{ taste_check.unclear }} unclear
+      (a child drinks or eats, but no reaction is visible in the frames). The result barely moves:</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Which ads count</th><th class="num">Ads</th><th>Adjusted effect (95% range)</th><th>Without {{ facts.top_ad }}</th></tr></thead>
+      <tbody>{% for t in taste %}<tr><td>{{ t.version }}</td><td class="num">{{ t.n }}</td><td>{{ t.effect }} <span class="muted">({{ t.range }})</span></td><td>{{ t.without_top }}</td></tr>{% endfor %}</tbody>
+    </table></div>
   </div>
   <p class="source">Source: <code>outputs/phase1_winning_ingredients.csv</code>, <code>outputs/phase1_label_effects.csv</code> from <code>src/phase1_ads.py</code>.</p>
 </section>
@@ -201,6 +224,7 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
   <details class="brief" id="brief-{{ loop.index }}" {% if loop.first %}open{% endif %}>
     <summary><h3>#{{ loop.index }} {{ b.name }} <span class="muted">@{{ b.handle }}</span></h3><span>{{ b.product }}</span></summary>
     <div class="brief-body">
+      {% if b.risks %}<div class="riskbox"><span class="eyebrow">Risk to check before booking</span>{% for r in b.risks %}<p>{{ r }}</p>{% endfor %}</div>{% endif %}
       <div class="two">
         <div><span class="eyebrow">Why them</span><ul>{% for w in b.why %}<li>{{ w }}</li>{% endfor %}</ul></div>
         <div><span class="eyebrow">Suggested hook</span><p class="hookq">{{ b.hook }}</p>
@@ -210,13 +234,15 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <div class="tablewrap"><table class="script"><tbody>{% for t, beat in b.script %}<tr><td>{{ t }}</td><td>{{ beat }}</td></tr>{% endfor %}</tbody></table></div>
       </div>
       <div class="two">
-        <div><span class="eyebrow">Claims to make</span><ul>{% for c in b.claims %}<li>{{ c.text }} <span class="muted">({{ c.n_ads }} ad{{ 's' if c.n_ads > 1 }}, {{ c.cpa }} per purchase together; e.g. {{ c.examples }})</span></li>{% endfor %}</ul></div>
+        <div><span class="eyebrow">Claims to make, strongest first</span><ul class="claims">{% for c in b.claims %}<li><span>{{ c.text }}</span>
+          <span class="chip {{ c.strength }}">{{ c.strength_words }}</span>
+          <span class="muted">{{ c.n_ads }} ad{{ 's' if c.n_ads > 1 }}, {{ c.cpa }} per purchase together; e.g. {{ c.examples }}</span></li>{% endfor %}</ul></div>
         <div><span class="eyebrow">Avoid</span><ul>{% for a in b.avoid %}<li>{{ a }}</li>{% endfor %}</ul></div>
       </div>
       <div><span class="eyebrow">Expected performance</span><ul>{% for e in b.expected %}<li>{{ e }}</li>{% endfor %}</ul></div>
       <p class="links"><span class="eyebrow">Evidence</span><br>
-        Ads: {% for a in b.ad_refs %}<span class="mono">{{ a.ad_id }}</span> ({{ a.cpa }}){{ ', ' if not loop.last }}{% endfor %}<br>
-        Posts: {% for u in b.post_refs %}<a href="{{ u }}">{{ u|replace('https://www.instagram.com', '') }}</a>{{ ', ' if not loop.last }}{% endfor %}</p>
+        Ads (open the video): {% for a in b.ad_refs %}<a class="mono" href="{{ video[a.ad_id] }}">{{ a.ad_id }}</a> ({{ a.cpa }}){{ ', ' if not loop.last }}{% endfor %}<br>
+        Creator posts: {% for u in b.post_refs %}<a href="{{ u }}">{{ u|replace('https://www.', '') }}</a>{{ ', ' if not loop.last }}{% endfor %}</p>
     </div>
   </details>
   {% endfor %}
@@ -247,14 +273,20 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
     <li><strong>Checked the data.</strong> {{ facts.n_ads }} ads, {{ facts.spend_lakh }} spend, {{ facts.purchases }} purchases. Left out
       {% for k, v in facts.excluded %}{{ k }} ({{ v }}){% endfor %}. {{ facts.n_video_dupes }} videos had each run twice and {{ facts.n_script_dupes }} more scripts were near-copies,
       so the {{ facts.n_ads_used }} ads count as {{ facts.n_clusters }} independent creatives.</li>
+    <li><strong>Read the product from the ad itself.</strong> The AI's product label filed {{ facts.pm_mislabelled }} of the
+      {{ facts.pm_n }} Proteinmix ads under "other", next to sauces and spreads. Proteinmix is the cheapest product per purchase, so
+      the product is taken from each ad's own text instead. This roughly halved some earlier effect sizes; every number here uses the corrected product.</li>
     <li><strong>Compared ad ingredients</strong> on cost per purchase. Each comparison was adjusted for product and for the date the
-      ad was switched off, and resampled {{ facts.n_boot }} times to get the ranges. Every finding was then re-checked with the excluded ad put back
-      and with the single best ad removed.</li>
-    <li><strong>Checked the AI labels by hand</strong> against transcripts and video frames: {{ agree_all.agree }} of {{ agree_all.checked }}
-      checks agreed ({{ agree_all.rate|pct }}, 95% range {{ agree_all.lo95|pct }}–{{ agree_all.hi95|pct }}).</li>
+      ad was switched off, and resampled {{ facts.n_boot }} times to get the ranges, keeping re-used videos together so they never count twice.
+      Every finding was then re-checked three ways: with the excluded ad put back, with the single best ad removed, and adjusting for
+      launch date instead of stop date (ads are often stopped because they did badly, so the stop date partly reflects the result).</li>
+    <li><strong>Checked the AI labels by hand</strong> against transcripts and video frames, including every ad tagged with the headline
+      label: {{ agree_all.agree }} of {{ agree_all.checked }} checks agreed ({{ agree_all.rate|pct }}, 95% range {{ agree_all.lo95|pct }}–{{ agree_all.hi95|pct }}).
+      Wrong labels on the headline ingredient were corrected before the analysis.</li>
     <li><strong>Scored creators</strong> on fit with those ingredients, reach and safety, using the weights below, then re-ranked
       them {{ facts.n_sens }} times with the weights shifted at random.</li>
-    <li><strong>Wrote briefs</strong> using only claims Little Joys has already run, each linked to the ads and posts it rests on.</li>
+    <li><strong>Wrote briefs</strong> using only claims Little Joys has already run, each linked to the ads and posts it rests on. Each
+      claim is rated against ads for the same product, so a cheap product does not make its claims look good by itself.</li>
   </ol>
 
   <div class="tablewrap">
@@ -294,24 +326,31 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
 <section id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h">Confidence and limitations</h2>
   <ul class="plain">
-    <li><strong>Small sample.</strong> {{ facts.n_ads_used }} ads. No ingredient reaches "strong"; the top findings are "suggestive" and
-      depend partly on one very successful ad ({{ facts.top_ad }}).</li>
-    <li><strong>No creator has run a Little Joys ad</strong>, so each creator's results are inferred from ads with the same ingredients
-      ({{ comp.n }} ads: {{ comp.all_cpa }} per purchase together, range {{ comp.all_lo90 }}–{{ comp.all_hi90 }}; {{ comp.no_LJ004_cpa }}
-      without {{ facts.top_ad }}; individual ads {{ comp.per_ad_min }}–{{ comp.per_ad_max }}). Treat this as a direction, not a forecast.</li>
-    <li><strong>Telugu is untested.</strong> No ad ran in Telugu or Gujarati. Ads in other regional languages cost {{ facts.regional_ratio }}× as much per
-      purchase, so the #1 brief is written in Hindi, with a Telugu version suggested as a test.</li>
+    <li><strong>Small sample.</strong> {{ facts.n_ads_used }} ads. No ingredient reaches "strong"; the top findings are "suggestive".
+      One ad ({{ facts.top_ad }}) brought in {{ facts.top_ad_share }} of all purchases and dominates the Proteinmix numbers.</li>
+    <li><strong>No ad in this data features any of the five</strong>, so each creator's results are inferred from ads of the same product
+      built the same way. Proteinmix lookalikes: {{ comps.proteinmix.n }} ads, {{ comps.proteinmix.all_cpa }} per purchase together
+      (range {{ comps.proteinmix.all_lo90 }}–{{ comps.proteinmix.all_hi90 }}), {{ comps.proteinmix.no_LJ004_cpa }} without {{ facts.top_ad }}.
+      Nutrimix lookalikes: {{ comps.nutrimix.n }} ads, {{ comps.nutrimix.all_cpa }} (range {{ comps.nutrimix.all_lo90 }}–{{ comps.nutrimix.all_hi90 }})
+      against {{ comps.nutrimix.product_cpa }} for all Nutrimix ads. Treat these as a direction, not a forecast.
+      @storiesbyvihaa has worked with Little Joys before; that ad cannot be identified in this export, so ask the brand team for its results.</li>
+    <li><strong>Language.</strong> No ad ran in Telugu or Gujarati. Ads in other regional languages cost {{ facts.regional_pct }} more per
+      purchase after adjustment, and the 10 pure-Hindi ads also did worse (not conclusive), so every brief is in English or Hinglish,
+      with a Telugu cut of the #1 video as an optional side test.</li>
+    <li><strong>Audience fit is mostly unknown.</strong> Only {{ facts.n_audience }} of {{ facts.n_creators }} creators have audience data. For
+      @storiesbyvihaa it shows a mostly male audience, which is flagged on her card as a check before booking.</li>
     <li><strong>Performance numbers are synthetic</strong> for this exercise; the patterns are only as real as the export they come from.</li>
-    <li><strong>AI labels are mostly right</strong> ({{ agree_all.rate|pct }} on our checks). The post-level language label was wrong for spoken
-      language, so transcripts were used instead.</li>
-    <li><strong>Audience data covers {{ facts.n_audience }} of {{ facts.n_creators }} creators.</strong> It is shown as background and does not affect any score.</li>
+    <li><strong>AI labels are mostly right</strong> ({{ agree_all.rate|pct }} on our checks), with two exceptions that were fixed: the product
+      label (Proteinmix filed as "other") and the creator-post language label (it describes the caption, not the spoken language, so
+      transcripts were used instead).</li>
     <li><strong>Judgement calls</strong> are written down and editable: which brands count as competitors, the scoring weights,
-      and the choice of ohmother.in over the model's #5.</li>
+      and the choice of ohmother.in over the model's #5 (the two are close to a tie under shifted weights).</li>
   </ul>
 </section>
 
 <footer>
   Every number on this page is produced by <code>python run_all.py</code> from the four CSVs in <code>data/</code>.
-  Decisions and overrides are logged in <code>docs/prompts.md</code>.
+  Decisions and overrides are logged in <code>docs/prompts.md</code>; key choices are in <code>NOTE.md</code>.
+  {% if repo_url %}Code and method: <a href="{{ repo_url }}">{{ repo_url|replace('https://', '') }}</a>.{% endif %}
 </footer>
 </div>

@@ -46,3 +46,17 @@ def test_real_data_rules():
     assert ((sub.drop(columns="handle") >= 0) & (sub.drop(columns="handle") <= 1)).all().all()
     # Audience data must not move the score: it only exists for 3 creators.
     assert "audience_bonus_info" not in sub.columns
+
+
+def test_claims_measured_within_their_product():
+    import metrics as m
+    import phase3_briefs as p3
+    ads = m.load_ads()
+    eff = pd.DataFrame({"ad_id": ads.ad_id, "purchases": ads.purchases, "efficiency": 1.0})
+    lib = p3.claims_library(ads, eff)
+    pm_ids = set(ads.ad_id[ads["product"] == "proteinmix"])
+    assert set(lib.loc["pm_12g", "ad_ids"].split(", ")) <= pm_ids      # no oats / Nutrimix "12g" ads
+    assert lib.loc["kids_back", "strength"] == "thin"                   # 2 ads only
+    for b in p3.BRIEFS.values():
+        assert b["product_key"] in {"proteinmix", "nutrimix"}
+        assert "nm7_dal" not in b["claims"]                              # 1-ad, science-framed claim dropped

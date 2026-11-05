@@ -22,6 +22,14 @@ EXCLUDED_ADS = {"LJ-089": "₹4.3L spend, 1,544 add-to-carts, 0 purchases: proba
 SCRIPT_SIMILARITY = 0.80
 # Stop batches with < MIN_BATCH ads are merged into the nearest larger batch by date.
 MIN_BATCH = 5
+# Full hand check of every ad the AI labelled child_role=reacts_to_taste (Phase 5 review).
+# Ads checked as "no" have that value removed; "unclear" keeps the AI label.
+# The AI's product_form label files 13 of the 18 Proteinmix ads under "other", next to sauces and spreads,
+# although Proteinmix is the cheapest product per purchase. Product is therefore read from the ad's own
+# text (copy, transcript, on-screen text, claims): first matching pattern wins.
+PRODUCT_PATTERNS = [("proteinmix", r"protein\s?mix"), ("nutrimix", r"nutri\s?mix")]
+LAUNCH_PERIODS = 4   # launch-date periods used by the launch-timing sensitivity check
+TASTE_CHECK = ROOT / "annotations" / "reacts_to_taste_fullcheck.csv"
 
 # (numerator, denominator) for every pooled funnel metric.
 RATIOS = {
@@ -63,11 +71,30 @@ def pooled(df: pd.DataFrame) -> dict:
     return res
 
 
-def load_ads(include_excluded: bool = False) -> pd.DataFrame:
+def taste_check() -> pd.DataFrame:
+    return pd.read_csv(TASTE_CHECK)
+
+
+def correct_labels(ads: pd.DataFrame) -> pd.DataFrame:
+    """Apply the hand corrections: drop reacts_to_taste where the full check found no child tasting."""
+    out = ads.copy()
+    wrong = set(taste_check().query("checked_value == 'no'").ad_id)
+    fix = out.ad_id.isin(wrong)
+    out["child_role_ai"] = out.child_role
+    out.loc[fix, "child_role"] = out.loc[fix, "child_role"].apply(
+        lambda x: LIST_SEP.join(v for v in explode_labels(pd.Series([x])).iloc[0] if v != "reacts_to_taste") or "none")
+    return out
+
+
+def load_ads(include_excluded: bool = False, corrected: bool = True) -> pd.DataFrame:
     ads = pd.read_csv(DATA / "ads.csv")
     ads = add_ad_metrics(ads)
+    if corrected:
+        ads = correct_labels(ads)
     ads["cluster"] = video_clusters(ads)
     ads["stop_batch"] = stop_batches(ads.stopped_date)
+    ads["launch_period"] = launch_periods(ads.launch_date)
+    ads["product"] = products(ads)
     if not include_excluded:
         ads = ads[~ads.ad_id.isin(EXCLUDED_ADS)].reset_index(drop=True)
     return ads
@@ -114,6 +141,32 @@ def stop_batches(stopped: pd.Series) -> pd.Series:
             return x
         return min(big, key=lambda b: abs((b - x).days))
     return d.map(nearest).dt.strftime("%Y-%m-%d")
+
+
+def products(ads: pd.DataFrame) -> pd.Series:
+    """Product advertised: proteinmix / nutrimix from the ad text, otherwise the product_form label.
+
+    A Nutrimix mention outside a milk-mix ad (e.g. a gummies + Nutrimix kit) keeps its product_form.
+    """
+    text = ads[["ad_copy", "transcript", "on_screen_text", "hook_line", "claims_made"]].fillna("").agg(" ".join, axis=1)
+    out = ads.product_form.fillna("other").copy()
+    pm = text.str.contains(PRODUCT_PATTERNS[0][1], case=False, regex=True)
+    nm = text.str.contains(PRODUCT_PATTERNS[1][1], case=False, regex=True) & (ads.product_form == "milk_mix_powder")
+    out[nm & ~pm] = "nutrimix"
+    out[pm] = "proteinmix"
+    return out
+
+
+def launch_periods(launched: pd.Series, n: int = LAUNCH_PERIODS) -> pd.Series:
+    """Launch date cut into n roughly equal-sized periods (ads launched on the same day stay together).
+
+    Used as the alternative timing adjustment: unlike the stop date, the launch date is fixed before the
+    ad has any results, so adjusting for it cannot absorb the effect being measured.
+    """
+    d = pd.to_datetime(launched)
+    codes = pd.qcut(d.rank(method="dense"), n, labels=False, duplicates="drop")
+    first = d.groupby(codes).transform("min").dt.strftime("from %Y-%m-%d")
+    return first
 
 
 def cluster_bootstrap_weights(clusters: pd.Series, n_boot: int, seed: int = 0) -> np.ndarray:

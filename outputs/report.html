@@ -56,7 +56,16 @@ section { display: grid; gap: 20px; }
 .bar i b { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: 3px; }
 .chip { display: inline-block; font: 600 0.74rem/1 var(--body); letter-spacing: 0.03em; padding: 5px 8px;
   border-radius: 999px; background: var(--neutral-soft); color: var(--fg); width: fit-content; }
-.chip.robust, .chip.suggestive, .chip.strong { background: var(--accent-soft); color: var(--accent); }
+.chip.robust, .chip.strong { background: var(--accent-soft); color: var(--accent); }
+.chip.suggestive { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.chip.thin, .chip.costlier { background: var(--avoid-soft); color: var(--avoid); }
+.chip.cheaper { background: var(--accent-soft); color: var(--accent); }
+.chip.average { background: var(--neutral-soft); color: var(--muted); }
+.chip.risk { background: var(--avoid-soft); color: var(--avoid); }
+.riskbox { background: var(--avoid-soft); border-radius: 8px; padding: 12px 16px; display: grid; gap: 6px; }
+.riskbox .eyebrow { color: var(--avoid); }
+.caveat { display: block; font-size: 0.8rem; color: var(--avoid); }
+.claims li { display: grid; gap: 4px; }
 .chip.marginal, .chip.driven, .chip.chosen { background: var(--avoid-soft); color: var(--avoid); }
 .chip.out, .chip.inconclusive, .chip.not, .chip.excluded { background: var(--neutral-soft); color: var(--muted); }
 
@@ -120,9 +129,10 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
 <header class="head">
   <span class="eyebrow">Little Joys · creator selection · data to 26 Oct 2026</span>
   <h1>Which five creators next, and what should they say?</h1>
-  <p class="lede">Work with these five creators, and have each one film a real child tasting a Little Joys milk mix on camera,
-    in English or Hinglish. In Little Joys' own ads, purchases from videos with a child tasting on camera were about
-    40% cheaper, after adjusting for product and timing.</p>
+  <p class="lede">Work with these five creators, and have each one film a real child tasting Proteinmix or Nutrimix on camera,
+    in English or Hinglish. In Little Joys' own ads, videos with a child tasting on camera got purchases about
+    27% cheaper than comparable ads of the same product (95% range: 38% cheaper to 5% cheaper).
+    That is a consistent pattern across our checks, not proof: the ad account is small.</p>
   <p class="muted">Built from Little Joys' own data only: 100 ads, 20 creators and
     their 392 recent posts. Ad spend, purchases and revenue in this exercise are made-up numbers, treated here as if they were the real ad account.</p>
 </header>
@@ -136,6 +146,7 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
       <h3>@storiesbyvihaa</h3>
       <span class="product">Proteinmix (in Viha&#39;s roti / paratha)</span>
       <span class="chip robust">Holds under almost any weighting</span>
+      <span class="chip risk">Check audience before booking</span>
       <div class="bars" aria-label="Scores out of 1">
         
         <div class="bar"><span>Fit</span><i><b style="width: 58.0%"></b></i><span class="num">0.58</span></div>
@@ -154,6 +165,7 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
       <h3>@hello_ps8</h3>
       <span class="product">Nutrimix 2+ (chocolate milk)</span>
       <span class="chip robust">Holds under almost any weighting</span>
+      
       <div class="bars" aria-label="Scores out of 1">
         
         <div class="bar"><span>Fit</span><i><b style="width: 47.0%"></b></i><span class="num">0.47</span></div>
@@ -172,6 +184,7 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
       <h3>@mumma_and_ridhu</h3>
       <span class="product">Proteinmix (pancakes) — blind taste test with her two children</span>
       <span class="chip robust">Holds under almost any weighting</span>
+      
       <div class="bars" aria-label="Scores out of 1">
         
         <div class="bar"><span>Fit</span><i><b style="width: 55.0%"></b></i><span class="num">0.55</span></div>
@@ -190,6 +203,7 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
       <h3>@the_mum_wife_playbook</h3>
       <span class="product">Nutrimix 2+ (chocolate milk) — a skit with her daughter (&#39;Madam&#39;)</span>
       <span class="chip marginal">Holds under most weightings</span>
+      
       <div class="bars" aria-label="Scores out of 1">
         
         <div class="bar"><span>Fit</span><i><b style="width: 60.0%"></b></i><span class="num">0.60</span></div>
@@ -206,8 +220,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
     <article class="card">
       <span class="rank">#5</span>
       <h3>@ohmother.in</h3>
-      <span class="product">Proteinmix (dinner rotis); Nutrimix 7+ as a second post for her older daughter</span>
-      <span class="chip chosen">Your pick over the model's #5</span>
+      <span class="product">Proteinmix (dinner rotis)</span>
+      <span class="chip chosen">Analyst's pick over the model's #5</span>
+      
       
       <div class="bars" aria-label="Scores out of 1">
         
@@ -230,77 +245,81 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
   <div class="head">
     <h2 id="works-h">What works in Little Joys' own ads</h2>
     <p>We compared ads with and without each ingredient on <strong>cost per purchase</strong> (spend ÷ purchases, all ads pooled).
-      Every comparison is adjusted for the product advertised (milk-mix ads ran at ₹320 per purchase vs
-      ₹600 for everything else) and for when the ad was switched off. The bars are 95% ranges: where a bar crosses
-      "same", the data cannot tell the difference from zero.</p>
+      Every comparison is adjusted for the product advertised, because products differ a lot: Proteinmix
+      ₹190 per purchase, Nutrimix ₹490, gummies
+      ₹570, everything else ₹650. It is also adjusted for when the ad was
+      switched off. The bars are 95% ranges: where a bar crosses "same", the data cannot tell the difference from zero.</p>
   </div>
   <div class="chartbox">
-    <svg viewBox="0 0 640 346" role="img" aria-label="Cost per purchase with and without each ingredient, with 95% ranges" class="forest">
-<line x1="270.0" x2="270.0" y1="28" y2="338" class="grid"/>
-<text x="270.0" y="20" text-anchor="start" class="tick">75% cheaper</text>
-<line x1="356.5" x2="356.5" y1="28" y2="338" class="grid"/>
-<text x="356.5" y="20" text-anchor="middle" class="tick">50% cheaper</text>
-<line x1="443.0" x2="443.0" y1="28" y2="338" class="axis0"/>
-<text x="443.0" y="20" text-anchor="middle" class="tick">same</text>
-<line x1="529.5" x2="529.5" y1="28" y2="338" class="grid"/>
-<text x="529.5" y="20" text-anchor="middle" class="tick">2× the cost</text>
-<line x1="616.0" x2="616.0" y1="28" y2="338" class="grid"/>
-<text x="616.0" y="20" text-anchor="end" class="tick">4× the cost</text>
-<text x="258" y="53.0" text-anchor="end" class="rowlab">A child genuinely tastes the product o…</text>
-<line x1="352.8" x2="436.2" y1="49.0" y2="49.0" class="ci do"/>
-<circle cx="378.2" cy="49.0" r="5" class="pt do"/>
-<text x="258" y="83.0" text-anchor="end" class="rowlab">A child presents the ad (child-led)</text>
-<line x1="342.4" x2="439.2" y1="79.0" y2="79.0" class="ci do"/>
-<circle cx="363.7" cy="79.0" r="5" class="pt do"/>
-<text x="258" y="113.0" text-anchor="end" class="rowlab">Spoken in English or Hinglish</text>
-<line x1="339.1" x2="427.3" y1="109.0" y2="109.0" class="ci do"/>
-<circle cx="371.7" cy="109.0" r="5" class="pt do"/>
-<text x="258" y="143.0" text-anchor="end" class="rowlab">Hook opens a curiosity gap</text>
-<line x1="341.6" x2="436.7" y1="139.0" y2="139.0" class="ci do"/>
-<circle cx="361.1" cy="139.0" r="5" class="pt do"/>
-<text x="258" y="173.0" text-anchor="end" class="rowlab">Hook is both spoken and shown as on-sc…</text>
-<line x1="284.6" x2="425.2" y1="169.0" y2="169.0" class="ci do"/>
-<circle cx="340.6" cy="169.0" r="5" class="pt do"/>
-<text x="258" y="203.0" text-anchor="end" class="rowlab">Science / authority persuasion (explai…</text>
-<line x1="437.9" x2="530.4" y1="199.0" y2="199.0" class="ci avoid faint"/>
-<circle cx="481.7" cy="199.0" r="5" class="pt avoid faint"/>
-<text x="258" y="233.0" text-anchor="end" class="rowlab">Parent's personal-experience hook</text>
-<line x1="463.9" x2="534.8" y1="229.0" y2="229.0" class="ci avoid"/>
-<circle cx="510.3" cy="229.0" r="5" class="pt avoid"/>
-<text x="258" y="263.0" text-anchor="end" class="rowlab">'Overall growth' as the message</text>
-<line x1="454.1" x2="547.6" y1="259.0" y2="259.0" class="ci avoid"/>
-<circle cx="518.1" cy="259.0" r="5" class="pt avoid"/>
-<text x="258" y="293.0" text-anchor="end" class="rowlab">Fear / deficiency appeal</text>
-<line x1="456.1" x2="544.4" y1="289.0" y2="289.0" class="ci avoid"/>
-<circle cx="494.6" cy="289.0" r="5" class="pt avoid"/>
-<text x="258" y="323.0" text-anchor="end" class="rowlab">Regional-language voiceover (Kannada, …</text>
-<line x1="458.8" x2="577.6" y1="319.0" y2="319.0" class="ci avoid"/>
-<circle cx="529.7" cy="319.0" r="5" class="pt avoid"/>
+    <svg viewBox="0 0 640 356" role="img" aria-label="Cost per purchase with and without each ingredient, with 95% ranges" class="forest">
+<text x="443.0" y="12" text-anchor="middle" class="tick">cost per purchase, relative to ads without it</text>
+<line x1="270.0" x2="270.0" y1="38" y2="348" class="grid"/>
+<text x="270.0" y="30" text-anchor="start" class="tick">¼×</text>
+<line x1="356.5" x2="356.5" y1="38" y2="348" class="grid"/>
+<text x="356.5" y="30" text-anchor="middle" class="tick">½×</text>
+<line x1="443.0" x2="443.0" y1="38" y2="348" class="axis0"/>
+<text x="443.0" y="30" text-anchor="middle" class="tick">same</text>
+<line x1="529.5" x2="529.5" y1="38" y2="348" class="grid"/>
+<text x="529.5" y="30" text-anchor="middle" class="tick">2×</text>
+<line x1="616.0" x2="616.0" y1="38" y2="348" class="grid"/>
+<text x="616.0" y="30" text-anchor="end" class="tick">4×</text>
+<text x="258" y="63.0" text-anchor="end" class="rowlab">A child genuinely tastes the prod…</text>
+<line x1="382.4" x2="436.9" y1="59.0" y2="59.0" class="ci do"/>
+<circle cx="403.5" cy="59.0" r="5" class="pt do"/>
+<text x="258" y="93.0" text-anchor="end" class="rowlab">A child presents the ad (child-le…</text>
+<line x1="376.2" x2="439.4" y1="89.0" y2="89.0" class="ci do"/>
+<circle cx="402.3" cy="89.0" r="5" class="pt do"/>
+<text x="258" y="123.0" text-anchor="end" class="rowlab">Spoken in English or Hinglish</text>
+<line x1="388.5" x2="437.9" y1="119.0" y2="119.0" class="ci do"/>
+<circle cx="404.4" cy="119.0" r="5" class="pt do"/>
+<text x="258" y="153.0" text-anchor="end" class="rowlab">Hook opens a curiosity gap</text>
+<line x1="409.2" x2="439.1" y1="149.0" y2="149.0" class="ci do"/>
+<circle cx="421.2" cy="149.0" r="5" class="pt do"/>
+<text x="258" y="183.0" text-anchor="end" class="rowlab">Hook is both spoken and shown as…</text>
+<line x1="350.5" x2="437.1" y1="179.0" y2="179.0" class="ci do"/>
+<circle cx="381.4" cy="179.0" r="5" class="pt do"/>
+<text x="258" y="213.0" text-anchor="end" class="rowlab">Science / authority persuasion (e…</text>
+<line x1="436.6" x2="509.8" y1="209.0" y2="209.0" class="ci avoid faint"/>
+<circle cx="473.0" cy="209.0" r="5" class="pt avoid faint"/>
+<text x="258" y="243.0" text-anchor="end" class="rowlab">Parent's personal-experience hook</text>
+<line x1="452.1" x2="506.3" y1="239.0" y2="239.0" class="ci avoid"/>
+<circle cx="481.0" cy="239.0" r="5" class="pt avoid"/>
+<text x="258" y="273.0" text-anchor="end" class="rowlab">'Overall growth' as the message</text>
+<line x1="444.5" x2="487.7" y1="269.0" y2="269.0" class="ci avoid"/>
+<circle cx="467.9" cy="269.0" r="5" class="pt avoid"/>
+<text x="258" y="303.0" text-anchor="end" class="rowlab">Fear / deficiency appeal</text>
+<line x1="454.5" x2="520.9" y1="299.0" y2="299.0" class="ci avoid"/>
+<circle cx="491.9" cy="299.0" r="5" class="pt avoid"/>
+<text x="258" y="333.0" text-anchor="end" class="rowlab">Regional-language voiceover (Kann…</text>
+<line x1="446.1" x2="519.3" y1="329.0" y2="329.0" class="ci avoid"/>
+<circle cx="491.1" cy="329.0" r="5" class="pt avoid"/>
 </svg>
   </div>
   <div class="legend"><span class="l-do">Go with cheaper purchases</span><span class="l-avoid">Go with more expensive purchases</span><span class="l-faint">Not reliable (rests on one ad, or too few ads)</span></div>
 
   <div class="tablewrap">
   <table>
-    <thead><tr><th>Ingredient</th><th>Evidence</th><th class="num">Ads with it</th><th class="num">Cost per purchase<br>with / without</th><th>Adjusted effect (95% range)</th><th>Examples</th></tr></thead>
+    <thead><tr><th>Ingredient</th><th>Evidence</th><th class="num">Ads with it</th><th class="num">Cost per purchase<br>with / without</th><th>Adjusted effect (95% range)</th><th>Without LJ-004</th><th>Examples</th></tr></thead>
     <tbody>
     
       <tr>
         <td>A child genuinely tastes the product on camera and reacts</td>
         <td><span class="chip suggestive">Suggestive</span></td>
-        <td class="num">39</td>
-        <td class="num">₹290 / ₹610</td>
-        <td>40% cheaper <span class="muted">(51% cheaper to 5% cheaper)</span></td>
-        <td class="mono">LJ-062, LJ-050, LJ-065</td>
+        <td class="num">35</td>
+        <td class="num">₹280 / ₹600</td>
+        <td>27% cheaper <span class="muted">(38% cheaper to 5% cheaper)</span></td>
+        <td>23% cheaper</td>
+        <td class="mono">LJ-050, LJ-055, LJ-062</td>
       </tr>
     
       <tr>
-        <td>A child presents the ad (child-led)</td>
+        <td>A child presents the ad (child-led)<span class="caveat">Small comparison group: only 9 ads with it</span></td>
         <td><span class="chip suggestive">Suggestive</span></td>
         <td class="num">9</td>
         <td class="num">₹200 / ₹560</td>
-        <td>47% cheaper <span class="muted">(55% cheaper to 3% cheaper)</span></td>
-        <td class="mono">LJ-050, LJ-065, LJ-004</td>
+        <td>28% cheaper <span class="muted">(41% cheaper to 3% cheaper)</span></td>
+        <td>28% cheaper</td>
+        <td class="mono">LJ-050, LJ-065, LJ-009</td>
       </tr>
     
       <tr>
@@ -308,8 +327,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip suggestive">Suggestive</span></td>
         <td class="num">62</td>
         <td class="num">₹330 / ₹680</td>
-        <td>44% cheaper <span class="muted">(56% cheaper to 12% cheaper)</span></td>
-        <td class="mono">LJ-062, LJ-050, LJ-055</td>
+        <td>27% cheaper <span class="muted">(35% cheaper to 4% cheaper)</span></td>
+        <td>25% cheaper</td>
+        <td class="mono">LJ-050, LJ-055, LJ-025</td>
       </tr>
     
       <tr>
@@ -317,35 +337,39 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip suggestive">Suggestive</span></td>
         <td class="num">33</td>
         <td class="num">₹280 / ₹560</td>
-        <td>48% cheaper <span class="muted">(56% cheaper to 5% cheaper)</span></td>
-        <td class="mono">LJ-050, LJ-004, LJ-056</td>
+        <td>16% cheaper <span class="muted">(24% cheaper to 3% cheaper)</span></td>
+        <td>14% cheaper</td>
+        <td class="mono">LJ-050, LJ-076, LJ-080</td>
       </tr>
     
       <tr>
-        <td>Hook is both spoken and shown as on-screen text</td>
+        <td>Hook is both spoken and shown as on-screen text<span class="caveat">Small comparison group: only 15 ads without it</span></td>
         <td><span class="chip suggestive">Suggestive</span></td>
         <td class="num">84</td>
         <td class="num">₹390 / ₹720</td>
-        <td>56% cheaper <span class="muted">(72% cheaper to 13% cheaper)</span></td>
-        <td class="mono">LJ-062, LJ-050, LJ-065</td>
+        <td>39% cheaper <span class="muted">(52% cheaper to 5% cheaper)</span></td>
+        <td>30% cheaper</td>
+        <td class="mono">LJ-050, LJ-055, LJ-025</td>
       </tr>
     
       <tr>
-        <td>&#39;Taste unchanged / kids can&#39;t tell&#39; claim</td>
+        <td>&#39;Taste unchanged / kids can&#39;t tell&#39; claim<span class="caveat">Small comparison group: only 7 ads with it</span></td>
         <td><span class="chip not">Too few ads</span></td>
         <td class="num">7</td>
         <td class="num">₹170 / ₹550</td>
-        <td>53% cheaper <span class="muted">(58% cheaper to 9% more expensive)</span></td>
-        <td class="mono">LJ-004, LJ-056, LJ-097</td>
+        <td>18% cheaper <span class="muted">(34% cheaper to 3% more expensive)</span></td>
+        <td>17% cheaper</td>
+        <td class="mono">LJ-004, LJ-097, LJ-056</td>
       </tr>
     
       <tr>
         <td>Science / authority persuasion (explainers, lab talk)</td>
-        <td><span class="chip driven">Rests on one ad</span></td>
+        <td><span class="chip inconclusive">Inconclusive</span></td>
         <td class="num">24</td>
         <td class="num">₹590 / ₹370</td>
-        <td>36% more expensive <span class="muted">(4% cheaper to 102% more expensive)</span></td>
-        <td class="mono">LJ-080, LJ-015, LJ-063</td>
+        <td>27% more expensive <span class="muted">(5% cheaper to 71% more expensive)</span></td>
+        <td>16% more expensive</td>
+        <td class="mono">LJ-080, LJ-063, LJ-015</td>
       </tr>
     
       <tr>
@@ -353,8 +377,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip suggestive">Suggestive</span></td>
         <td class="num">29</td>
         <td class="num">₹690 / ₹360</td>
-        <td>71% more expensive <span class="muted">(18% more expensive to 109% more expensive)</span></td>
-        <td class="mono">LJ-062, LJ-025, LJ-014</td>
+        <td>36% more expensive <span class="muted">(8% more expensive to 66% more expensive)</span></td>
+        <td>44% more expensive</td>
+        <td class="mono">LJ-025, LJ-062, LJ-014</td>
       </tr>
     
       <tr>
@@ -362,17 +387,19 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip suggestive">Suggestive</span></td>
         <td class="num">46</td>
         <td class="num">₹590 / ₹340</td>
-        <td>83% more expensive <span class="muted">(9% more expensive to 131% more expensive)</span></td>
-        <td class="mono">LJ-020, LJ-080, LJ-037</td>
+        <td>22% more expensive <span class="muted">(1% more expensive to 43% more expensive)</span></td>
+        <td>25% more expensive</td>
+        <td class="mono">LJ-080, LJ-020, LJ-037</td>
       </tr>
     
       <tr>
-        <td>Fear / deficiency appeal</td>
+        <td>Fear / deficiency appeal<span class="caveat">Small comparison group: only 10 ads with it</span></td>
         <td><span class="chip suggestive">Suggestive</span></td>
         <td class="num">10</td>
         <td class="num">₹930 / ₹370</td>
-        <td>51% more expensive <span class="muted">(11% more expensive to 125% more expensive)</span></td>
-        <td class="mono">LJ-091, LJ-069, LJ-082</td>
+        <td>48% more expensive <span class="muted">(10% more expensive to 87% more expensive)</span></td>
+        <td>40% more expensive</td>
+        <td class="mono">LJ-091, LJ-082, LJ-069</td>
       </tr>
     
       <tr>
@@ -380,8 +407,19 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip suggestive">Suggestive</span></td>
         <td class="num">20</td>
         <td class="num">₹680 / ₹380</td>
-        <td>100% more expensive <span class="muted">(13% more expensive to 194% more expensive)</span></td>
-        <td class="mono">LJ-095, LJ-041, LJ-003</td>
+        <td>47% more expensive <span class="muted">(3% more expensive to 84% more expensive)</span></td>
+        <td>39% more expensive</td>
+        <td class="mono">LJ-095, LJ-041, LJ-075</td>
+      </tr>
+    
+      <tr>
+        <td>Spoken in pure Hindi (not Hinglish)<span class="caveat">Small comparison group: only 10 ads with it</span></td>
+        <td><span class="chip inconclusive">Inconclusive</span></td>
+        <td class="num">10</td>
+        <td class="num">₹780 / ₹370</td>
+        <td>25% more expensive <span class="muted">(14% cheaper to 51% more expensive)</span></td>
+        <td>25% more expensive</td>
+        <td class="mono">LJ-031, LJ-032, LJ-014</td>
       </tr>
     
       <tr>
@@ -389,8 +427,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip inconclusive">Inconclusive</span></td>
         <td class="num">40</td>
         <td class="num">₹330 / ₹540</td>
-        <td>24% cheaper <span class="muted">(41% cheaper to 5% more expensive)</span></td>
-        <td class="mono">LJ-050, LJ-055, LJ-004</td>
+        <td>20% cheaper <span class="muted">(34% cheaper to 4% more expensive)</span></td>
+        <td>13% cheaper</td>
+        <td class="mono">LJ-050, LJ-055, LJ-095</td>
       </tr>
     
       <tr>
@@ -398,8 +437,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip inconclusive">Inconclusive</span></td>
         <td class="num">45</td>
         <td class="num">₹340 / ₹480</td>
-        <td>36% cheaper <span class="muted">(49% cheaper to 11% more expensive)</span></td>
-        <td class="mono">LJ-062, LJ-055, LJ-004</td>
+        <td>15% cheaper <span class="muted">(26% cheaper to 12% more expensive)</span></td>
+        <td>0% more expensive</td>
+        <td class="mono">LJ-055, LJ-025, LJ-062</td>
       </tr>
     
       <tr>
@@ -407,8 +447,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip inconclusive">Inconclusive</span></td>
         <td class="num">32</td>
         <td class="num">₹530 / ₹370</td>
-        <td>0% cheaper <span class="muted">(16% cheaper to 24% more expensive)</span></td>
-        <td class="mono">LJ-050, LJ-020, LJ-080</td>
+        <td>4% more expensive <span class="muted">(16% cheaper to 36% more expensive)</span></td>
+        <td>6% cheaper</td>
+        <td class="mono">LJ-050, LJ-023, LJ-080</td>
       </tr>
     
       <tr>
@@ -416,17 +457,19 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip inconclusive">Inconclusive</span></td>
         <td class="num">26</td>
         <td class="num">₹250 / ₹520</td>
-        <td>33% cheaper <span class="muted">(47% cheaper to 37% more expensive)</span></td>
-        <td class="mono">LJ-062, LJ-050, LJ-004</td>
+        <td>14% cheaper <span class="muted">(27% cheaper to 33% more expensive)</span></td>
+        <td>12% more expensive</td>
+        <td class="mono">LJ-050, LJ-062, LJ-076</td>
       </tr>
     
       <tr>
-        <td>Humour</td>
-        <td><span class="chip driven">Rests on one ad</span></td>
+        <td>Humour<span class="caveat">Small comparison group: only 17 ads with it</span></td>
+        <td><span class="chip inconclusive">Inconclusive</span></td>
         <td class="num">17</td>
         <td class="num">₹580 / ₹380</td>
-        <td>61% more expensive <span class="muted">(2% cheaper to 127% more expensive)</span></td>
-        <td class="mono">LJ-050, LJ-037, LJ-031</td>
+        <td>19% more expensive <span class="muted">(11% cheaper to 65% more expensive)</span></td>
+        <td>19% more expensive</td>
+        <td class="mono">LJ-050, LJ-037, LJ-009</td>
       </tr>
     
       <tr>
@@ -434,8 +477,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip inconclusive">Inconclusive</span></td>
         <td class="num">26</td>
         <td class="num">₹670 / ₹350</td>
-        <td>38% more expensive <span class="muted">(5% cheaper to 88% more expensive)</span></td>
-        <td class="mono">LJ-062, LJ-055, LJ-076</td>
+        <td>19% more expensive <span class="muted">(6% cheaper to 44% more expensive)</span></td>
+        <td>19% more expensive</td>
+        <td class="mono">LJ-055, LJ-062, LJ-076</td>
       </tr>
     
       <tr>
@@ -443,8 +487,9 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
         <td><span class="chip inconclusive">Inconclusive</span></td>
         <td class="num">34</td>
         <td class="num">₹280 / ₹520</td>
-        <td>41% cheaper <span class="muted">(52% cheaper to 16% more expensive)</span></td>
-        <td class="mono">LJ-062, LJ-065, LJ-004</td>
+        <td>28% cheaper <span class="muted">(37% cheaper to 8% more expensive)</span></td>
+        <td>5% cheaper</td>
+        <td class="mono">LJ-062, LJ-065, LJ-095</td>
       </tr>
     
     </tbody>
@@ -453,10 +498,20 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
   <div class="callout key">
     <h3>Why nothing here says "proven"</h3>
     <p>With 99 ads, about 142 comparisons were tested. After allowing for that many tries, the
-      best result still falls short of our bar for "strong" (q = 0.13, bar 0.10). "Suggestive" means the effect held
-      after adjusting for product and timing, and still held with the single best ad removed. One ad, LJ-004
-      (₹140 per purchase), brought in 29% of all purchases. Without it, the child-tasting
-      effect shrinks from 40% cheaper to 24% cheaper.</p>
+      best result still falls short of our bar for "strong" (q = 0.34, bar 0.10). "Suggestive" means the effect held
+      after adjusting for product and stop date, held again when the launch date was used instead of the stop date, and
+      still held with the single best ad removed. One ad, LJ-004 (₹140 per purchase), brought in
+      29% of all purchases. Without it, the child-tasting effect is 23% cheaper.</p>
+  </div>
+  <div class="callout">
+    <h3>How much the label check matters for the headline</h3>
+    <p>The AI tagged 39 ads as "child reacts to the taste". A person checked every one of them against the transcript
+      and video frames: 26 confirmed, 4 wrong (removed), 9 unclear
+      (a child drinks or eats, but no reaction is visible in the frames). The result barely moves:</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Which ads count</th><th class="num">Ads</th><th>Adjusted effect (95% range)</th><th>Without LJ-004</th></tr></thead>
+      <tbody><tr><td>AI label as delivered</td><td class="num">39</td><td>27% cheaper <span class="muted">(39% cheaper to 3% cheaper)</span></td><td>22% cheaper</td></tr><tr><td>After hand corrections (used everywhere)</td><td class="num">35</td><td>27% cheaper <span class="muted">(38% cheaper to 5% cheaper)</span></td><td>23% cheaper</td></tr><tr><td>Only ads a person confirmed</td><td class="num">26</td><td>31% cheaper <span class="muted">(41% cheaper to 12% cheaper)</span></td><td>31% cheaper</td></tr></tbody>
+    </table></div>
   </div>
   <p class="source">Source: <code>outputs/phase1_winning_ingredients.csv</code>, <code>outputs/phase1_label_effects.csv</code> from <code>src/phase1_ads.py</code>.</p>
 </section>
@@ -471,110 +526,141 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
   <details class="brief" id="brief-1" open>
     <summary><h3>#1 Viha Dikonda <span class="muted">@storiesbyvihaa</span></h3><span>Proteinmix (in Viha&#39;s roti / paratha)</span></summary>
     <div class="brief-body">
+      <div class="riskbox"><span class="eyebrow">Risk to check before booking</span><p>Her audience is only 30% women (70% men; largest age group 25-34, at 44%). The buyer is usually a mother, so a large share of her reach may never buy. This is the only one of the five with audience data, so it is shown as a risk, not scored. Ask for her current audience split before booking.</p></div>
       <div class="two">
-        <div><span class="eyebrow">Why them</span><ul><li>Viha is the presenter in 70% of posts — the child-led format behind LJ-004 (the account&#39;s best ad, ₹140 per purchase) and LJ-050.</li><li>Her single most-played recent post is Viha trying to speak Hindi in a Telugu accent (6.5M plays), so a Hindi script plays to an existing strength rather than against her voice.</li><li>She already films Viha eating and reacting to food (e.g. the restaurant spicy-food reaction, 3.3M plays).</li><li>Bonus signal (not scored): the audience file lists Little Joys among her past-year brands, and her audience is 30% women.</li><li>Followers 827,496; typical video reach 771k-3,096k plays (middle half of their last 16 videos).</li></ul></div>
-        <div><span class="eyebrow">Suggested hook</span><p class="hookq">Viha, to camera, holding her plate, in her Telugu-accented Hindi: &#34;Aaj dekho meri plate mein kya kya hai!&#34; On screen: &#34;Viha ki roti mein ek secret hai 🤫&#34;. Spoken and on-screen together (LJ-004 opened the same way; ads with a spoken + on-screen hook did better).</p>
-             <span class="eyebrow">Format</span><p>30-35s Reel, 9:16, home setting, Hindi/Hinglish. Produce a Telugu cut of the same video as an A/B test.</p></div>
+        <div><span class="eyebrow">Why them</span><ul><li>Viha is the presenter in 70% of posts — the child-led format behind LJ-004 (the account&#39;s best ad, ₹140 per purchase) and LJ-050.</li><li>Her single most-played recent post is Viha trying to speak Hindi in a Telugu accent (6.5M plays), so a Hinglish script plays to an existing strength.</li><li>She already films Viha eating and reacting to food (e.g. the restaurant spicy-food reaction, 3.3M plays).</li><li>She has worked with Little Joys before: the audience file lists it among her past-year brands. No ad in this export names her, so whichever ad that was cannot be identified here; ask the brand team how it performed before booking.</li><li>Followers 827,496; typical video reach 771k-3,096k plays (middle half of their last 16 videos).</li></ul></div>
+        <div><span class="eyebrow">Suggested hook</span><p class="hookq">Viha, to camera, holding her plate, in her Telugu-accented Hinglish: &#34;Aaj dekho meri plate mein kya kya hai!&#34; On screen: &#34;Viha ki roti mein ek secret hai 🤫&#34;. Spoken and on-screen together, as LJ-004 opened.</p>
+             <span class="eyebrow">Format</span><p>30-35s Reel, 9:16, home setting, Hinglish (Hindi-English mix, not pure Hindi). A Telugu cut of the same video can run as a small side test.</p></div>
       </div>
       <div><span class="eyebrow">Script outline</span>
-        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Viha with her lunch plate, spoken + text hook (above).</td></tr><tr><td>3-10s</td><td>Cut to Mom&#39;s hands adding one scoop of Proteinmix to the atta; Viha peeks in suspiciously.</td></tr><tr><td>10-20s</td><td>Viha bites the roti, does her signature exaggerated chewing face, then: &#34;Taste toh bilkul same hai!&#34; This is the core moment — a real child genuinely tasting on camera.</td></tr><tr><td>20-30s</td><td>Mom voiceover (Hinglish): 12g plant protein in one scoop, from pea, brown rice and soy; no added sugar, no preservatives.</td></tr><tr><td>30-35s</td><td>Viha asks for a second roti; packshot with &#34;Little Joys Proteinmix&#34; on screen.</td></tr></tbody></table></div>
+        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Viha with her lunch plate, spoken + text hook (above).</td></tr><tr><td>3-10s</td><td>Cut to Mom&#39;s hands adding one scoop of Proteinmix to the atta; Viha peeks in suspiciously.</td></tr><tr><td>10-20s</td><td>Viha bites the roti, does her signature exaggerated chewing face, then: &#34;Taste toh bilkul same hai!&#34; This is the core moment — a real child genuinely tasting on camera.</td></tr><tr><td>20-30s</td><td>Mom voiceover (Hinglish): 12g plant protein in one scoop, from pea, brown rice and soy; no change in taste.</td></tr><tr><td>30-35s</td><td>Viha asks for a second roti; packshot with &#34;Little Joys Proteinmix&#34; on screen.</td></tr></tbody></table></div>
       </div>
       <div class="two">
-        <div><span class="eyebrow">Claims to make</span><ul><li>Proteinmix: 12g plant protein in one scoop <span class="muted">(21 ads, ₹290 per purchase together; e.g. LJ-004, LJ-056, LJ-097)</span></li><li>Proteinmix: no change in taste or smell of roti / pancakes <span class="muted">(8 ads, ₹170 per purchase together; e.g. LJ-004, LJ-056, LJ-097)</span></li><li>Proteinmix: made from pea, brown rice and soy protein <span class="muted">(8 ads, ₹160 per purchase together; e.g. LJ-004, LJ-098, LJ-052)</span></li><li>No added sugar, no preservatives <span class="muted">(16 ads, ₹480 per purchase together; e.g. LJ-056, LJ-020, LJ-048)</span></li></ul></div>
-        <div><span class="eyebrow">Avoid</span><ul><li>An adult script read by Viha about nutrients (her profile: an adult reading marketing copy feels foreign).</li><li>Studio lighting; keep the home-video look.</li><li>Height / &#39;overall growth&#39; promises and deficiency fear (both did worse in the ads).</li><li>Telugu as the only version — no Telugu ad has ever been tested; regional-language ads cost 2.0x as much per purchase.</li></ul></div>
+        <div><span class="eyebrow">Claims to make, strongest first</span><ul class="claims"><li><span>Proteinmix: no change in taste or smell of roti / pancakes</span>
+          <span class="chip cheaper">Ads using it were cheaper than the Proteinmix average (₹190)</span>
+          <span class="muted">8 ads, ₹170 per purchase together; e.g. LJ-004, LJ-097, LJ-056</span></li><li><span>Proteinmix: made from pea, brown rice and soy protein</span>
+          <span class="chip cheaper">Ads using it were cheaper than the Proteinmix average (₹190)</span>
+          <span class="muted">8 ads, ₹160 per purchase together; e.g. LJ-004, LJ-098, LJ-052</span></li><li><span>Proteinmix: 12g plant protein in one scoop</span>
+          <span class="chip average">No better than the Proteinmix average (₹190): fine to say, don&#39;t lead with it</span>
+          <span class="muted">16 ads, ₹180 per purchase together; e.g. LJ-004, LJ-097, LJ-056</span></li></ul></div>
+        <div><span class="eyebrow">Avoid</span><ul><li>An adult script read by Viha about nutrients (her profile: an adult reading marketing copy feels foreign).</li><li>Studio lighting; keep the home-video look.</li><li>Height / &#39;overall growth&#39; promises and deficiency fear (both did worse in the ads).</li><li>Pure Hindi: the 10 pure-Hindi ads cost ₹780 per purchase vs ₹300 for Hinglish (not conclusive, but no reason to risk it). Keep English words in the script.</li><li>Telugu as the only version — no Telugu ad has ever been tested; regional-language ads cost 47% more per purchase after adjustment.</li></ul></div>
       </div>
-      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).</li><li>Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).</li><li>Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as &#39;likely at or better than the account average&#39;, not a forecast.</li><li>Organic reach: their typical video gets 771k-3,096k plays; too few sponsored videos to say whether sponsored posts get fewer plays.</li></ul></div>
+      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator is in the data, so there is no direct measurement. The estimate comes from the 7 Proteinmix ads built the same way (a child reacts to the taste on camera, spoken in English or Hinglish).</li><li>Those ads cost ₹170 per purchase together (90% range ₹140-₹420), against ₹190 for all 18 Proteinmix ads and ₹410 for the whole account.</li><li>Without the single best ad (LJ-004) the lookalikes cost ₹300 (₹270-₹560) against ₹350 for Proteinmix overall.</li><li>Individual lookalike ads ranged from ₹140 to ₹1,050: execution matters as much as the recipe. Most of the advantage over the account average comes from Proteinmix itself being cheap to sell; the format adds about 10% on top. Read this as a direction, not a forecast.</li><li>Organic reach: their typical video gets 771k-3,096k plays; too few sponsored videos to say whether sponsored posts get fewer plays.</li></ul></div>
       <p class="links"><span class="eyebrow">Evidence</span><br>
-        Ads: <span class="mono">LJ-004</span> (₹140), <span class="mono">LJ-056</span> (₹270), <span class="mono">LJ-098</span> (₹350), <span class="mono">LJ-050</span> (₹250)<br>
-        Posts: <a href="https://www.instagram.com/p/DdfhprMBiO0/">/p/DdfhprMBiO0/</a>, <a href="https://www.instagram.com/p/DdqBtBgqW-q/">/p/DdqBtBgqW-q/</a>, <a href="https://www.instagram.com/p/DeIwMiYhtVN/">/p/DeIwMiYhtVN/</a></p>
+        Ads (open the video): <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_085.mp4">LJ-004</a> (₹140), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_041.mp4">LJ-056</a> (₹270), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_051.mp4">LJ-098</a> (₹350), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_087.mp4">LJ-050</a> (₹250)<br>
+        Creator posts: <a href="https://www.instagram.com/p/DdfhprMBiO0/">instagram.com/p/DdfhprMBiO0/</a>, <a href="https://www.instagram.com/p/DdqBtBgqW-q/">instagram.com/p/DdqBtBgqW-q/</a>, <a href="https://www.instagram.com/p/DeIwMiYhtVN/">instagram.com/p/DeIwMiYhtVN/</a></p>
     </div>
   </details>
   
   <details class="brief" id="brief-2" >
     <summary><h3>#2 Pratibha Soni <span class="muted">@hello_ps8</span></h3><span>Nutrimix 2+ (chocolate milk)</span></summary>
     <div class="brief-body">
+      
       <div class="two">
-        <div><span class="eyebrow">Why them</span><ul><li>Her child (3-7) is on camera in 50% of posts, in warm candid moments — her native format is &#39;a candid interaction with her child, then a natural transition into a product in her routine&#39;.</li><li>Highest safety score of the five: no competitor deals and only 2 sponsored posts in her last 20.</li><li>Gap to fix in the brief: a child is shown around food in 0% of her posts, so the taste moment must be designed in, not assumed.</li><li>Followers 216,882; typical video reach 432k-1,490k plays (middle half of their last 13 videos).</li></ul></div>
+        <div><span class="eyebrow">Why them</span><ul><li>Her child (3-7) is on camera in 50% of posts, in warm candid moments — her native format is &#39;a candid interaction with her child, then a natural transition into a product in her routine&#39;.</li><li>Safety score 0.93: no competitor deals and only 2 sponsored posts in her last 20.</li><li>Gap to fix in the brief: a child is shown around food in 0% of her posts, so the taste moment must be designed in, not assumed.</li><li>Followers 216,882; typical video reach 432k-1,490k plays (middle half of their last 13 videos).</li></ul></div>
         <div><span class="eyebrow">Suggested hook</span><p class="hookq">Post-workout, she reaches for her shake — it&#39;s gone. Text: &#34;Someone stole my protein shake 👀&#34;. Reveal: her child with a chocolate moustache. A curiosity gap (curiosity hooks did better) in her own fitness-mom world.</p>
              <span class="eyebrow">Format</span><p>30-35s Reel, bright high-contrast home look, Hinglish voiceover with English text overlays.</p></div>
       </div>
       <div><span class="eyebrow">Script outline</span>
-        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Gym-wear, empty glass, spoken + text hook.</td></tr><tr><td>3-12s</td><td>Reveal the child mid-sip; she asks what&#39;s in the glass; the child refuses to give it back.</td></tr><tr><td>12-22s</td><td>She makes the child their own glass: two scoops of Nutrimix 2+ in milk. Child tastes and reacts on camera.</td></tr><tr><td>22-30s</td><td>Voiceover: kids keep asking for it because of the taste; 5g protein in two scoops.</td></tr><tr><td>30-35s</td><td>Close on the two of them clinking glasses; packshot.</td></tr></tbody></table></div>
+        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Gym-wear, empty glass, spoken + text hook.</td></tr><tr><td>3-12s</td><td>Reveal the child mid-sip; she asks what&#39;s in the glass; the child refuses to give it back.</td></tr><tr><td>12-22s</td><td>She makes the child their own glass: two scoops of Nutrimix 2+ in milk. Child tastes and reacts on camera.</td></tr><tr><td>22-30s</td><td>Voiceover: kids keep asking for it because of the taste. One product fact at most (5g protein in two scoops).</td></tr><tr><td>30-35s</td><td>Close on the two of them clinking glasses; packshot.</td></tr></tbody></table></div>
       </div>
       <div class="two">
-        <div><span class="eyebrow">Claims to make</span><ul><li>Kids keep coming back for more because they love the taste <span class="muted">(2 ads, ₹330 per purchase together; e.g. LJ-055, LJ-035)</span></li><li>Nutrimix 2+: 5g protein in two scoops <span class="muted">(8 ads, ₹500 per purchase together; e.g. LJ-095, LJ-007, LJ-029)</span></li></ul></div>
-        <div><span class="eyebrow">Avoid</span><ul><li>Leading with her own fitness — the child&#39;s taste reaction must be the centre (it is the strongest signal).</li><li>Listing the ingredient template (ragi, bajra, jaggery, dates, 23 vitamins): the 19 ads that did cost ₹560 per purchase vs ₹390 for the rest.</li><li>Corporate language or a stiff studio set (her profile flags both as foreign).</li><li>Overall-growth framing.</li></ul></div>
+        <div><span class="eyebrow">Claims to make, strongest first</span><ul class="claims"><li><span>Kids keep coming back for more because they love the taste</span>
+          <span class="chip thin">Thin evidence: only 2 ads used it</span>
+          <span class="muted">2 ads, ₹330 per purchase together; e.g. LJ-055, LJ-035</span></li><li><span>Nutrimix 2+: 5g protein in two scoops</span>
+          <span class="chip average">No better than the Nutrimix average (₹490): fine to say, don&#39;t lead with it</span>
+          <span class="muted">8 ads, ₹500 per purchase together; e.g. LJ-095, LJ-007, LJ-060</span></li></ul></div>
+        <div><span class="eyebrow">Avoid</span><ul><li>Leading with her own fitness — the child&#39;s taste reaction must be the centre (it is the strongest signal).</li><li>Listing the ingredient template (ragi, bajra, jaggery, dates, 23 vitamins): the 19 ads that did cost ₹560 per purchase vs ₹390 for the rest (a pattern spotted after reading the ads, not a proven effect).</li><li>Corporate language or a stiff studio set (her profile flags both as foreign).</li><li>Overall-growth framing.</li></ul></div>
       </div>
-      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).</li><li>Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).</li><li>Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as &#39;likely at or better than the account average&#39;, not a forecast.</li><li>Organic reach: their typical video gets 432k-1,490k plays; too few sponsored videos to say whether sponsored posts get fewer plays.</li></ul></div>
+      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator is in the data, so there is no direct measurement. The estimate comes from the 7 Nutrimix ads built the same way (a child reacts to the taste on camera, spoken in English or Hinglish).</li><li>Those ads cost ₹370 per purchase together (90% range ₹290-₹540), against ₹490 for all 45 Nutrimix ads and ₹410 for the whole account.</li><li>Individual lookalike ads ranged from ₹250 to ₹730: execution matters as much as the recipe. Ads in this format were 25% cheaper per purchase than the Nutrimix average. Read this as a direction, not a forecast.</li><li>Organic reach: their typical video gets 432k-1,490k plays; too few sponsored videos to say whether sponsored posts get fewer plays.</li></ul></div>
       <p class="links"><span class="eyebrow">Evidence</span><br>
-        Ads: <span class="mono">LJ-055</span> (₹270), <span class="mono">LJ-035</span> (₹340), <span class="mono">LJ-009</span> (₹300), <span class="mono">LJ-025</span> (₹350)<br>
-        Posts: <a href="https://www.instagram.com/p/DdtrfP4S4Vu/">/p/DdtrfP4S4Vu/</a>, <a href="https://www.instagram.com/p/Dc00F5_S4Ki/">/p/Dc00F5_S4Ki/</a></p>
+        Ads (open the video): <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_093.mp4">LJ-055</a> (₹270), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_089.mp4">LJ-035</a> (₹340), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_083.mp4">LJ-009</a> (₹300), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_015.mp4">LJ-025</a> (₹350)<br>
+        Creator posts: <a href="https://www.instagram.com/p/DdtrfP4S4Vu/">instagram.com/p/DdtrfP4S4Vu/</a>, <a href="https://www.instagram.com/p/Dc00F5_S4Ki/">instagram.com/p/Dc00F5_S4Ki/</a></p>
     </div>
   </details>
   
   <details class="brief" id="brief-3" >
     <summary><h3>#3 Mital Dhingani <span class="muted">@mumma_and_ridhu</span></h3><span>Proteinmix (pancakes) — blind taste test with her two children</span></summary>
     <div class="brief-body">
+      
       <div class="two">
         <div><span class="eyebrow">Why them</span><ul><li>Two children on camera (ages 3-7 and 8-12) in 55% of posts, and children around food in 25% — among the highest of the 20.</li><li>Her proven format is the problem-solution &#39;mom hack&#39; demo, which matches the recipe/hack ads (LJ-056, LJ-076, LJ-097).</li><li>Caution: her sponsored videos get 67% of the plays her organic ones get, and 12 of her last 20 posts are sponsored.</li><li>Followers 115,612; typical video reach 96k-196k plays (middle half of their last 16 videos).</li></ul></div>
         <div><span class="eyebrow">Suggested hook</span><p class="hookq">Two plates of pancakes. Spoken + text: &#34;Ek pancake mein 12g extra protein hai. Dekhte hain bacche pakad paate hain ya nahi?&#34; — the exact structure of LJ-056 (₹270 per purchase).</p>
              <span class="eyebrow">Format</span><p>30-40s Reel, warm domestic lighting, Hinglish.</p></div>
       </div>
       <div><span class="eyebrow">Script outline</span>
-        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Two plates, spoken + text hook.</td></tr><tr><td>3-15s</td><td>Both kids taste both pancakes; genuine guessing and reactions — let them disagree.</td></tr><tr><td>15-25s</td><td>Reveal: the Proteinmix one. Her calm direct-to-camera: 12g plant protein in one scoop, no change in taste or smell, no added sugar.</td></tr><tr><td>25-35s</td><td>Quick montage: same scoop in roti and chilla; ends on the kids asking for more.</td></tr></tbody></table></div>
+        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Two plates, spoken + text hook.</td></tr><tr><td>3-15s</td><td>Both kids taste both pancakes; genuine guessing and reactions — let them disagree.</td></tr><tr><td>15-25s</td><td>Reveal: the Proteinmix one. Her calm direct-to-camera: 12g plant protein in one scoop, no change in taste or smell.</td></tr><tr><td>25-35s</td><td>Quick montage: same scoop in roti and chilla; ends on the kids asking for more.</td></tr></tbody></table></div>
       </div>
       <div class="two">
-        <div><span class="eyebrow">Claims to make</span><ul><li>Proteinmix: 12g plant protein in one scoop <span class="muted">(21 ads, ₹290 per purchase together; e.g. LJ-004, LJ-056, LJ-097)</span></li><li>Proteinmix: no change in taste or smell of roti / pancakes <span class="muted">(8 ads, ₹170 per purchase together; e.g. LJ-004, LJ-056, LJ-097)</span></li><li>Proteinmix: mixes into roti, paratha, dosa, chilla, pancakes <span class="muted">(13 ads, ₹250 per purchase together; e.g. LJ-004, LJ-056, LJ-071)</span></li><li>No added sugar, no preservatives <span class="muted">(16 ads, ₹480 per purchase together; e.g. LJ-056, LJ-020, LJ-048)</span></li></ul></div>
+        <div><span class="eyebrow">Claims to make, strongest first</span><ul class="claims"><li><span>Proteinmix: no change in taste or smell of roti / pancakes</span>
+          <span class="chip cheaper">Ads using it were cheaper than the Proteinmix average (₹190)</span>
+          <span class="muted">8 ads, ₹170 per purchase together; e.g. LJ-004, LJ-097, LJ-056</span></li><li><span>Proteinmix: mixes into roti, paratha, dosa, chilla, pancakes</span>
+          <span class="chip cheaper">Ads using it were cheaper than the Proteinmix average (₹190)</span>
+          <span class="muted">11 ads, ₹160 per purchase together; e.g. LJ-004, LJ-056, LJ-036</span></li><li><span>Proteinmix: 12g plant protein in one scoop</span>
+          <span class="chip average">No better than the Proteinmix average (₹190): fine to say, don&#39;t lead with it</span>
+          <span class="muted">16 ads, ₹180 per purchase together; e.g. LJ-004, LJ-097, LJ-056</span></li></ul></div>
         <div><span class="eyebrow">Avoid</span><ul><li>Over-polishing with cinematic slow-motion over the tasting — the reaction must look unscripted.</li><li>High-pressure sales language (her profile flags it).</li><li>Science-explainer framing of protein needs.</li></ul></div>
       </div>
-      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).</li><li>Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).</li><li>Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as &#39;likely at or better than the account average&#39;, not a forecast.</li><li>Organic reach: their typical video gets 96k-196k plays; their sponsored videos have drawn 67% of organic plays.</li></ul></div>
+      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator is in the data, so there is no direct measurement. The estimate comes from the 7 Proteinmix ads built the same way (a child reacts to the taste on camera, spoken in English or Hinglish).</li><li>Those ads cost ₹170 per purchase together (90% range ₹140-₹420), against ₹190 for all 18 Proteinmix ads and ₹410 for the whole account.</li><li>Without the single best ad (LJ-004) the lookalikes cost ₹300 (₹270-₹560) against ₹350 for Proteinmix overall.</li><li>Individual lookalike ads ranged from ₹140 to ₹1,050: execution matters as much as the recipe. Most of the advantage over the account average comes from Proteinmix itself being cheap to sell; the format adds about 10% on top. Read this as a direction, not a forecast.</li><li>Organic reach: their typical video gets 96k-196k plays; their sponsored videos have drawn 67% of organic plays.</li></ul></div>
       <p class="links"><span class="eyebrow">Evidence</span><br>
-        Ads: <span class="mono">LJ-056</span> (₹270), <span class="mono">LJ-098</span> (₹350), <span class="mono">LJ-004</span> (₹140), <span class="mono">LJ-097</span> (₹250)<br>
-        Posts: <a href="https://www.instagram.com/p/DaiBXLwqFi1/">/p/DaiBXLwqFi1/</a>, <a href="https://www.instagram.com/p/DdBwgfXKM2S/">/p/DdBwgfXKM2S/</a></p>
+        Ads (open the video): <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_041.mp4">LJ-056</a> (₹270), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_051.mp4">LJ-098</a> (₹350), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_085.mp4">LJ-004</a> (₹140), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_084.mp4">LJ-097</a> (₹250)<br>
+        Creator posts: <a href="https://www.instagram.com/p/DaiBXLwqFi1/">instagram.com/p/DaiBXLwqFi1/</a>, <a href="https://www.instagram.com/p/DdBwgfXKM2S/">instagram.com/p/DdBwgfXKM2S/</a></p>
     </div>
   </details>
   
   <details class="brief" id="brief-4" >
     <summary><h3>#4 Akshi Bhardwaj <span class="muted">@the_mum_wife_playbook</span></h3><span>Nutrimix 2+ (chocolate milk) — a skit with her daughter (&#39;Madam&#39;)</span></summary>
     <div class="brief-body">
+      
       <div class="two">
         <div><span class="eyebrow">Why them</span><ul><li>Her daughter (3-7) is on camera in 70% of posts, mostly in playful parent-child dialogue skits — she already talks on camera, so the taste reaction can be spoken.</li><li>Her skits occasionally break out (2 posts above 20M plays), but her median is only 38k — the most volatile reach of the five.</li><li>Caution: her one food sponsorship (a kids&#39; yogurt) got 11.5k plays, well under her median.</li><li>Followers 39,571; typical video reach 13k-226k plays (middle half of their last 19 videos).</li></ul></div>
         <div><span class="eyebrow">Suggested hook</span><p class="hookq">Text: &#34;Madam ki doodh wali negotiation 🙄&#34;. Madam, to camera: &#34;Mumma, doodh nahi piyungi.&#34; Child-first, spoken + on-screen, in her existing Madam-and-Mumma dialogue style.</p>
              <span class="eyebrow">Format</span><p>25-30s Reel, handheld home video, natural light, Hinglish.</p></div>
       </div>
       <div><span class="eyebrow">Script outline</span>
-        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Madam&#39;s refusal, spoken + text hook.</td></tr><tr><td>3-12s</td><td>Back-and-forth negotiation, her signature repetitive comic dialogue.</td></tr><tr><td>12-22s</td><td>Mumma stirs in two scoops of chocolate Nutrimix 2+; Madam tastes, pauses, and finishes the glass.</td></tr><tr><td>22-30s</td><td>Madam holds out the empty glass: &#34;Aur?&#34; Voiceover: kids keep coming back for the taste; 5g protein in two scoops.</td></tr></tbody></table></div>
+        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Madam&#39;s refusal, spoken + text hook.</td></tr><tr><td>3-12s</td><td>Back-and-forth negotiation, her signature repetitive comic dialogue.</td></tr><tr><td>12-22s</td><td>Mumma stirs in two scoops of chocolate Nutrimix 2+; Madam tastes, pauses, and finishes the glass.</td></tr><tr><td>22-30s</td><td>Madam holds out the empty glass: &#34;Aur?&#34; Voiceover: kids keep coming back for the taste. One product fact at most (5g protein in two scoops).</td></tr></tbody></table></div>
       </div>
       <div class="two">
-        <div><span class="eyebrow">Claims to make</span><ul><li>Kids keep coming back for more because they love the taste <span class="muted">(2 ads, ₹330 per purchase together; e.g. LJ-055, LJ-035)</span></li><li>Nutrimix 2+: 5g protein in two scoops <span class="muted">(8 ads, ₹500 per purchase together; e.g. LJ-095, LJ-007, LJ-029)</span></li></ul></div>
-        <div><span class="eyebrow">Avoid</span><ul><li>Relying on the joke alone — humour was not a proven ingredient; the taste moment carries the ad.</li><li>Listing the ingredient template (ragi, bajra, jaggery, dates, 23 vitamins): the 19 ads that did cost ₹560 per purchase vs ₹390 for the rest.</li><li>Studio lighting or a script without Madam in frame (her profile flags both).</li><li>Fear about &#39;nutrition gaps&#39;.</li></ul></div>
+        <div><span class="eyebrow">Claims to make, strongest first</span><ul class="claims"><li><span>Kids keep coming back for more because they love the taste</span>
+          <span class="chip thin">Thin evidence: only 2 ads used it</span>
+          <span class="muted">2 ads, ₹330 per purchase together; e.g. LJ-055, LJ-035</span></li><li><span>Nutrimix 2+: 5g protein in two scoops</span>
+          <span class="chip average">No better than the Nutrimix average (₹490): fine to say, don&#39;t lead with it</span>
+          <span class="muted">8 ads, ₹500 per purchase together; e.g. LJ-095, LJ-007, LJ-060</span></li></ul></div>
+        <div><span class="eyebrow">Avoid</span><ul><li>Relying on the joke alone — humour was not a proven ingredient; the taste moment carries the ad.</li><li>Listing the ingredient template (ragi, bajra, jaggery, dates, 23 vitamins): the 19 ads that did cost ₹560 per purchase vs ₹390 for the rest (a pattern spotted after reading the ads, not a proven effect).</li><li>Studio lighting or a script without Madam in frame (her profile flags both).</li><li>Fear about &#39;nutrition gaps&#39;.</li></ul></div>
       </div>
-      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).</li><li>Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).</li><li>Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as &#39;likely at or better than the account average&#39;, not a forecast.</li><li>Organic reach: their typical video gets 13k-226k plays; their sponsored videos have drawn 2.3x the plays of organic ones.</li></ul></div>
+      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator is in the data, so there is no direct measurement. The estimate comes from the 7 Nutrimix ads built the same way (a child reacts to the taste on camera, spoken in English or Hinglish).</li><li>Those ads cost ₹370 per purchase together (90% range ₹290-₹540), against ₹490 for all 45 Nutrimix ads and ₹410 for the whole account.</li><li>Individual lookalike ads ranged from ₹250 to ₹730: execution matters as much as the recipe. Ads in this format were 25% cheaper per purchase than the Nutrimix average. Read this as a direction, not a forecast.</li><li>Organic reach: their typical video gets 13k-226k plays; their sponsored videos have drawn 2.3x the plays of organic ones.</li></ul></div>
       <p class="links"><span class="eyebrow">Evidence</span><br>
-        Ads: <span class="mono">LJ-055</span> (₹270), <span class="mono">LJ-035</span> (₹340), <span class="mono">LJ-009</span> (₹300)<br>
-        Posts: <a href="https://www.instagram.com/p/DXrlSXEDKMJ/">/p/DXrlSXEDKMJ/</a>, <a href="https://www.instagram.com/p/DeJUa9bsS-K/">/p/DeJUa9bsS-K/</a>, <a href="https://www.instagram.com/p/DeYypNeTkm8/">/p/DeYypNeTkm8/</a></p>
+        Ads (open the video): <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_093.mp4">LJ-055</a> (₹270), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_089.mp4">LJ-035</a> (₹340), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_083.mp4">LJ-009</a> (₹300)<br>
+        Creator posts: <a href="https://www.instagram.com/p/DXrlSXEDKMJ/">instagram.com/p/DXrlSXEDKMJ/</a>, <a href="https://www.instagram.com/p/DeJUa9bsS-K/">instagram.com/p/DeJUa9bsS-K/</a>, <a href="https://www.instagram.com/p/DeYypNeTkm8/">instagram.com/p/DeYypNeTkm8/</a></p>
     </div>
   </details>
   
   <details class="brief" id="brief-5" >
-    <summary><h3>#5 Oh Mother <span class="muted">@ohmother.in</span></h3><span>Proteinmix (dinner rotis); Nutrimix 7+ as a second post for her older daughter</span></summary>
+    <summary><h3>#5 Oh Mother <span class="muted">@ohmother.in</span></h3><span>Proteinmix (dinner rotis)</span></summary>
     <div class="brief-body">
+      
       <div class="two">
-        <div><span class="eyebrow">Why them</span><ul><li>Children aged 3-12 in 70% of her posts, filmed in real-time routines; speaks English on camera.</li><li>Her own food post already uses a curiosity hook: &#34;you won&#39;t believe what I&#39;m feeding my kids for dinner&#34;.</li><li>Picked for #5 over the model&#39;s choice (livesimply_withkripa, no child of product age) on fit. Trade-off: small reach (median 43k plays) and sponsored videos get 48% of organic plays.</li><li>Note: she promoted an adult protein supplement (one.science) in October — not a kids-nutrition competitor, but check exclusivity.</li><li>Followers 34,672; typical video reach 29k-246k plays (middle half of their last 19 videos).</li></ul></div>
+        <div><span class="eyebrow">Why them</span><ul><li>Children aged 3-12 in 70% of her posts, filmed in real-time routines; speaks English on camera.</li><li>Her own food post already uses a curiosity hook: &#34;you won&#39;t believe what I&#39;m feeding my kids for dinner&#34;.</li><li>Picked for #5 over the model&#39;s #5 (livesimply_withkripa, who has no child of product age) on fit. The two are close to a tie: under shifted weights each makes the top five about as often (36% vs 37%). Trade-off: small reach (median 43k plays) and sponsored videos get 48% of organic plays.</li><li>Note: she promoted an adult protein supplement (one.science) in October — not a kids-nutrition competitor, but check exclusivity.</li><li>Followers 34,672; typical video reach 29k-246k plays (middle half of their last 19 videos).</li></ul></div>
         <div><span class="eyebrow">Suggested hook</span><p class="hookq">Her own line, adapted: &#34;The cook cancelled again — and you won&#39;t believe how much protein I just hid in tonight&#39;s rotis.&#34; Spoken to camera + on-screen text.</p>
              <span class="eyebrow">Format</span><p>30s Reel, handheld kitchen footage, English with a few Hindi words.</p></div>
       </div>
       <div><span class="eyebrow">Script outline</span>
-        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Direct to camera in the kitchen, spoken + text hook.</td></tr><tr><td>3-12s</td><td>Time-stamped speed montage: one scoop of Proteinmix into the atta, rolling, puffing roti.</td></tr><tr><td>12-22s</td><td>Kids at the table; she asks if they notice anything; they don&#39;t — real reactions.</td></tr><tr><td>22-32s</td><td>Voiceover: 12g plant protein in one scoop, no change in taste, made from pea, brown rice and soy. Optional line for the older child: a 9-year-old needs 24g protein a day, about 7-8 katoris of dal.</td></tr></tbody></table></div>
+        <div class="tablewrap"><table class="script"><tbody><tr><td>0-3s</td><td>Direct to camera in the kitchen, spoken + text hook.</td></tr><tr><td>3-12s</td><td>Time-stamped speed montage: one scoop of Proteinmix into the atta, rolling, puffing roti.</td></tr><tr><td>12-22s</td><td>Kids at the table; she asks if they notice anything; they don&#39;t — real reactions.</td></tr><tr><td>22-32s</td><td>Voiceover: 12g plant protein in one scoop, no change in taste, made from pea, brown rice and soy.</td></tr></tbody></table></div>
       </div>
       <div class="two">
-        <div><span class="eyebrow">Claims to make</span><ul><li>Proteinmix: 12g plant protein in one scoop <span class="muted">(21 ads, ₹290 per purchase together; e.g. LJ-004, LJ-056, LJ-097)</span></li><li>Proteinmix: no change in taste or smell of roti / pancakes <span class="muted">(8 ads, ₹170 per purchase together; e.g. LJ-004, LJ-056, LJ-097)</span></li><li>Proteinmix: made from pea, brown rice and soy protein <span class="muted">(8 ads, ₹160 per purchase together; e.g. LJ-004, LJ-098, LJ-052)</span></li><li>A 9-year-old needs at least 24g protein a day, about 7-8 katoris of dal <span class="muted">(1 ad, ₹250 per purchase together; e.g. LJ-050)</span></li></ul></div>
-        <div><span class="eyebrow">Avoid</span><ul><li>Adult-protein framing from her one.science post — keep it about the kids.</li><li>Scripted, formal delivery; keep the handheld domestic style.</li><li>Deficiency or immunity fear.</li></ul></div>
+        <div><span class="eyebrow">Claims to make, strongest first</span><ul class="claims"><li><span>Proteinmix: no change in taste or smell of roti / pancakes</span>
+          <span class="chip cheaper">Ads using it were cheaper than the Proteinmix average (₹190)</span>
+          <span class="muted">8 ads, ₹170 per purchase together; e.g. LJ-004, LJ-097, LJ-056</span></li><li><span>Proteinmix: made from pea, brown rice and soy protein</span>
+          <span class="chip cheaper">Ads using it were cheaper than the Proteinmix average (₹190)</span>
+          <span class="muted">8 ads, ₹160 per purchase together; e.g. LJ-004, LJ-098, LJ-052</span></li><li><span>Proteinmix: 12g plant protein in one scoop</span>
+          <span class="chip average">No better than the Proteinmix average (₹190): fine to say, don&#39;t lead with it</span>
+          <span class="muted">16 ads, ₹180 per purchase together; e.g. LJ-004, LJ-097, LJ-056</span></li></ul></div>
+        <div><span class="eyebrow">Avoid</span><ul><li>Adult-protein framing from her one.science post — keep it about the kids.</li><li>Scripted, formal delivery; keep the handheld domestic style.</li><li>Deficiency or immunity fear, and protein-requirement maths (science framing did not do better).</li></ul></div>
       </div>
-      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).</li><li>Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).</li><li>Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as &#39;likely at or better than the account average&#39;, not a forecast.</li><li>Organic reach: their typical video gets 29k-246k plays; their sponsored videos have drawn 48% of organic plays.</li></ul></div>
+      <div><span class="eyebrow">Expected performance</span><ul><li>No ad by this creator is in the data, so there is no direct measurement. The estimate comes from the 7 Proteinmix ads built the same way (a child reacts to the taste on camera, spoken in English or Hinglish).</li><li>Those ads cost ₹170 per purchase together (90% range ₹140-₹420), against ₹190 for all 18 Proteinmix ads and ₹410 for the whole account.</li><li>Without the single best ad (LJ-004) the lookalikes cost ₹300 (₹270-₹560) against ₹350 for Proteinmix overall.</li><li>Individual lookalike ads ranged from ₹140 to ₹1,050: execution matters as much as the recipe. Most of the advantage over the account average comes from Proteinmix itself being cheap to sell; the format adds about 10% on top. Read this as a direction, not a forecast.</li><li>Organic reach: their typical video gets 29k-246k plays; their sponsored videos have drawn 48% of organic plays.</li></ul></div>
       <p class="links"><span class="eyebrow">Evidence</span><br>
-        Ads: <span class="mono">LJ-098</span> (₹350), <span class="mono">LJ-004</span> (₹140), <span class="mono">LJ-071</span> (₹330), <span class="mono">LJ-050</span> (₹250)<br>
-        Posts: <a href="https://www.instagram.com/p/DeRBAZvNScx/">/p/DeRBAZvNScx/</a>, <a href="https://www.instagram.com/p/DXtcPVSjX2h/">/p/DXtcPVSjX2h/</a></p>
+        Ads (open the video): <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_051.mp4">LJ-098</a> (₹350), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_085.mp4">LJ-004</a> (₹140), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_091.mp4">LJ-071</a> (₹330), <a class="mono" href="https://storage.googleapis.com/galvor-report-assets-cloud-galvor/intern-task-adc0f5e948c2/ads/ad_087.mp4">LJ-050</a> (₹250)<br>
+        Creator posts: <a href="https://www.instagram.com/p/DeRBAZvNScx/">instagram.com/p/DeRBAZvNScx/</a>, <a href="https://www.instagram.com/p/DXtcPVSjX2h/">instagram.com/p/DXtcPVSjX2h/</a></p>
     </div>
   </details>
   
@@ -590,7 +676,7 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
     
       <tr><td class="num">5</td><td>@livesimply_withkripa</td>
         <td><span class="chip out">Not picked</span></td>
-        <td>a child aged 3-12 appears in only 0% of posts</td></tr>
+        <td>no child aged 3-12 appears in any recent post</td></tr>
     
       <tr><td class="num">7</td><td>@radhikabansal0908</td>
         <td><span class="chip out">Not picked</span></td>
@@ -598,19 +684,19 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
     
       <tr><td class="num">8</td><td>@thatkushalmistry</td>
         <td><span class="chip out">Not picked</span></td>
-        <td>a child aged 3-12 appears in only 0% of posts; speaks mostly Gujarati on camera (untested in ads)</td></tr>
+        <td>no child aged 3-12 appears in any recent post; speaks mostly Gujarati on camera (untested in ads)</td></tr>
     
       <tr><td class="num">9</td><td>@foodies_by_neha</td>
         <td><span class="chip out">Not picked</span></td>
-        <td>a child aged 3-12 appears in only 0% of posts</td></tr>
+        <td>no child aged 3-12 appears in any recent post</td></tr>
     
       <tr><td class="num">10</td><td>@parentingtips_surat</td>
         <td><span class="chip out">Not picked</span></td>
-        <td>a child aged 3-12 appears in only 15% of posts; 90% of posts are doctor-style explainers (science/authority ads did worse)</td></tr>
+        <td>a child aged 3-12 appears in only 15% of posts; 90% of posts are doctor-style explainers (science/authority ads did not do better)</td></tr>
     
       <tr><td class="num">11</td><td>@paediatrics_decoded</td>
         <td><span class="chip out">Not picked</span></td>
-        <td>a child aged 3-12 appears in only 10% of posts; 100% of posts are doctor-style explainers (science/authority ads did worse)</td></tr>
+        <td>a child aged 3-12 appears in only 10% of posts; 100% of posts are doctor-style explainers (science/authority ads did not do better)</td></tr>
     
       <tr><td class="num">12</td><td>@tej.lil.diary</td>
         <td><span class="chip out">Not picked</span></td>
@@ -618,11 +704,11 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
     
       <tr><td class="num">13</td><td>@drgarima_mehta</td>
         <td><span class="chip out">Not picked</span></td>
-        <td>a child aged 3-12 appears in only 5% of posts; 95% of posts are doctor-style explainers (science/authority ads did worse); small reach (median 89k plays)</td></tr>
+        <td>a child aged 3-12 appears in only 5% of posts; 95% of posts are doctor-style explainers (science/authority ads did not do better); small reach (median 89k plays)</td></tr>
     
       <tr><td class="num">14</td><td>@raising_zohran</td>
         <td><span class="chip out">Not picked</span></td>
-        <td>a child aged 3-12 appears in only 0% of posts; small reach (median 14k plays); sponsored posts get 59% of organic plays</td></tr>
+        <td>no child aged 3-12 appears in any recent post; small reach (median 14k plays); sponsored posts get 59% of organic plays</td></tr>
     
       <tr><td class="num">—</td><td>@sia_3vedi</td>
         <td><span class="chip excluded">Excluded</span></td>
@@ -661,14 +747,20 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
     <li><strong>Checked the data.</strong> 100 ads, ₹72.6 lakh spend, 16,856 purchases. Left out
       LJ-089 (₹4.3L spend, 1,544 add-to-carts, 0 purchases: probable tracking break). 3 videos had each run twice and 3 more scripts were near-copies,
       so the 99 ads count as 93 independent creatives.</li>
+    <li><strong>Read the product from the ad itself.</strong> The AI's product label filed 13 of the
+      18 Proteinmix ads under "other", next to sauces and spreads. Proteinmix is the cheapest product per purchase, so
+      the product is taken from each ad's own text instead. This roughly halved some earlier effect sizes; every number here uses the corrected product.</li>
     <li><strong>Compared ad ingredients</strong> on cost per purchase. Each comparison was adjusted for product and for the date the
-      ad was switched off, and resampled 2,000 times to get the ranges. Every finding was then re-checked with the excluded ad put back
-      and with the single best ad removed.</li>
-    <li><strong>Checked the AI labels by hand</strong> against transcripts and video frames: 149 of 157
-      checks agreed (95%, 95% range 90%–97%).</li>
+      ad was switched off, and resampled 2,000 times to get the ranges, keeping re-used videos together so they never count twice.
+      Every finding was then re-checked three ways: with the excluded ad put back, with the single best ad removed, and adjusting for
+      launch date instead of stop date (ads are often stopped because they did badly, so the stop date partly reflects the result).</li>
+    <li><strong>Checked the AI labels by hand</strong> against transcripts and video frames, including every ad tagged with the headline
+      label: 167 of 178 checks agreed (94%, 95% range 89%–97%).
+      Wrong labels on the headline ingredient were corrected before the analysis.</li>
     <li><strong>Scored creators</strong> on fit with those ingredients, reach and safety, using the weights below, then re-ranked
       them 5,000 times with the weights shifted at random.</li>
-    <li><strong>Wrote briefs</strong> using only claims Little Joys has already run, each linked to the ads and posts it rests on.</li>
+    <li><strong>Wrote briefs</strong> using only claims Little Joys has already run, each linked to the ads and posts it rests on. Each
+      claim is rated against ads for the same product, so a cheap product does not make its claims look good by itself.</li>
   </ol>
 
   <div class="tablewrap">
@@ -700,11 +792,11 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
       <tr><td class="mono">child_in_first_3s</td><td class="num">9 / 10</td>
         <td class="num">90% (60%–98%)</td><td class="muted">LJ-019: </td></tr>
     
-      <tr><td class="mono">child_role=reacts_to_taste</td><td class="num">8 / 9</td>
-        <td class="num">89% (56%–98%)</td><td class="muted">LJ-019: no real child; no reaction</td></tr>
-    
       <tr><td class="mono">first_frame</td><td class="num">10 / 10</td>
         <td class="num">100% (72%–100%)</td><td class="muted"></td></tr>
+    
+      <tr><td class="mono">child_role=reacts_to_taste</td><td class="num">26 / 30</td>
+        <td class="num">87% (70%–95%)</td><td class="muted">LJ-014: skit about the mother&#39;s shortcut; child is never seen drinking or tasting it; LJ-019: illustrated child; no real child appears (from the earlier spot-check); LJ-047: kids take gummies on the way to school; no tasting or reaction shown; LJ-075: girl eats the egg sandwich; the Nutrimix drink is shown but not tasted on camera</td></tr>
     
     </tbody>
   </table>
@@ -762,24 +854,31 @@ footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--ru
 <section id="limits" aria-labelledby="limits-h">
   <h2 id="limits-h">Confidence and limitations</h2>
   <ul class="plain">
-    <li><strong>Small sample.</strong> 99 ads. No ingredient reaches "strong"; the top findings are "suggestive" and
-      depend partly on one very successful ad (LJ-004).</li>
-    <li><strong>No creator has run a Little Joys ad</strong>, so each creator's results are inferred from ads with the same ingredients
-      (12 ads: ₹200 per purchase together, range ₹160–₹380; ₹330
-      without LJ-004; individual ads ₹140–₹730). Treat this as a direction, not a forecast.</li>
-    <li><strong>Telugu is untested.</strong> No ad ran in Telugu or Gujarati. Ads in other regional languages cost 2.0× as much per
-      purchase, so the #1 brief is written in Hindi, with a Telugu version suggested as a test.</li>
+    <li><strong>Small sample.</strong> 99 ads. No ingredient reaches "strong"; the top findings are "suggestive".
+      One ad (LJ-004) brought in 29% of all purchases and dominates the Proteinmix numbers.</li>
+    <li><strong>No ad in this data features any of the five</strong>, so each creator's results are inferred from ads of the same product
+      built the same way. Proteinmix lookalikes: 7 ads, ₹170 per purchase together
+      (range ₹140–₹420), ₹300 without LJ-004.
+      Nutrimix lookalikes: 7 ads, ₹370 (range ₹290–₹540)
+      against ₹490 for all Nutrimix ads. Treat these as a direction, not a forecast.
+      @storiesbyvihaa has worked with Little Joys before; that ad cannot be identified in this export, so ask the brand team for its results.</li>
+    <li><strong>Language.</strong> No ad ran in Telugu or Gujarati. Ads in other regional languages cost 47% more per
+      purchase after adjustment, and the 10 pure-Hindi ads also did worse (not conclusive), so every brief is in English or Hinglish,
+      with a Telugu cut of the #1 video as an optional side test.</li>
+    <li><strong>Audience fit is mostly unknown.</strong> Only 3 of 20 creators have audience data. For
+      @storiesbyvihaa it shows a mostly male audience, which is flagged on her card as a check before booking.</li>
     <li><strong>Performance numbers are synthetic</strong> for this exercise; the patterns are only as real as the export they come from.</li>
-    <li><strong>AI labels are mostly right</strong> (95% on our checks). The post-level language label was wrong for spoken
-      language, so transcripts were used instead.</li>
-    <li><strong>Audience data covers 3 of 20 creators.</strong> It is shown as background and does not affect any score.</li>
+    <li><strong>AI labels are mostly right</strong> (94% on our checks), with two exceptions that were fixed: the product
+      label (Proteinmix filed as "other") and the creator-post language label (it describes the caption, not the spoken language, so
+      transcripts were used instead).</li>
     <li><strong>Judgement calls</strong> are written down and editable: which brands count as competitors, the scoring weights,
-      and the choice of ohmother.in over the model's #5.</li>
+      and the choice of ohmother.in over the model's #5 (the two are close to a tie under shifted weights).</li>
   </ul>
 </section>
 
 <footer>
   Every number on this page is produced by <code>python run_all.py</code> from the four CSVs in <code>data/</code>.
-  Decisions and overrides are logged in <code>docs/prompts.md</code>.
+  Decisions and overrides are logged in <code>docs/prompts.md</code>; key choices are in <code>NOTE.md</code>.
+  Code and method: <a href="https://github.com/vanshvj01/little-joys-creator-selection">github.com/vanshvj01/little-joys-creator-selection</a>.
 </footer>
 </div>

@@ -8,8 +8,8 @@ Two versions:
   raw       straight pooled comparison.
   adjusted  each ad's purchases are compared to what a baseline model expects for its stop batch and
             product (Poisson model, log-spend offset). This removes the two big confounders found in the
-            audit: some stop batches converted ~2x better than others, and milk-mix ads convert far
-            better than gummies / other products.
+            audit: some stop batches converted ~2x better than others, and products differ ~3x in cost per
+            purchase (Proteinmix cheapest, then Nutrimix, gummies, others). Product comes from the ad text.
 
 Uncertainty: cluster bootstrap over creatives (duplicate videos resampled together), N_BOOT draws.
 Verdicts are rule-based (see `verdict`) and the thresholds are constants below.
@@ -36,7 +36,11 @@ SINGLE = ["hook_type", "hook_driver", "hook_delivered_by", "ad_format", "story_s
           "brand_said_aloud", "product_form", "product_shown_as", "production", "audio", "music",
           "captions", "language", "language_mixing", "first_frame", "setting", "cta_type", "offer"]
 MULTI = ["child_role", "demo_shown", "proof_used", "persuasion", "narratives", "ad_categories"]
-CONFOUNDERS = ["stop_batch", "product_form"]
+# Product is read from the ad text (metrics.products), not the AI's product_form label, which files most
+# Proteinmix ads under "other". product_form is then not tested as an ingredient (it is the confounder).
+CONFOUNDERS = ["stop_batch", "product"]
+LAUNCH_CONFOUNDERS = ["launch_period", "product"]   # alternative timing adjustment (sensitivity 3)
+NOT_TESTED = CONFOUNDERS + ["product_form"]
 
 # Features derived from the transcript / hook_line text itself (not from AI labels).
 TEXT_FEATURES = {
@@ -202,9 +206,10 @@ def bh(p: pd.Series) -> pd.Series:
     return q.reindex(p.index)
 
 
-def sensitivity(res: pd.DataFrame, ads_alt: pd.DataFrame, level: float):
+def sensitivity(res: pd.DataFrame, ads_alt: pd.DataFrame, level: float, confounders=CONFOUNDERS):
     """Rerun on an alternative ad set; return (adjusted ratio, holds-with-same-direction flag)."""
-    alt = effects(ads_alt, feature_matrix(ads_alt), n_boot=1000).set_index("feature").reindex(res.feature)
+    alt = effects(ads_alt, add_check_features(ads_alt, feature_matrix(ads_alt)), n_boot=1000,
+                  confounders=confounders).set_index("feature").reindex(res.feature)
     lo = alt.adj_lo95 if level == 0.95 else alt.adj_lo90
     hi = alt.adj_hi95 if level == 0.95 else alt.adj_hi90
     same = np.sign(np.log(alt.cpa_ratio_adj.to_numpy())) == np.sign(np.log(res.cpa_ratio_adj.to_numpy()))
@@ -216,7 +221,7 @@ def excludes_one(lo, hi):
 
 
 def verdict(r) -> str:
-    if r.label in CONFOUNDERS:
+    if r.label in NOT_TESTED:
         return "adjusted for (see confounder table)"
     if min(r.n_with, r.n_without) < MIN_N:
         return "not tested (too few ads)"
@@ -260,18 +265,31 @@ def joint_model(ads: pd.DataFrame, feats: pd.DataFrame, n_boot: int = N_BOOT, se
 def confounder_table(ads: pd.DataFrame) -> pd.DataFrame:
     """Product effect adjusted for stop batch only, and stop-batch effect adjusted for product only."""
     out = []
-    for conf, other in [("product_form", ["stop_batch"]), ("stop_batch", ["product_form"])]:
+    for conf, other in [("product", ["stop_batch"]), ("stop_batch", ["product"])]:
         f = pd.DataFrame({f"{conf}={v}": ads[conf] == v for v in sorted(ads[conf].unique())})
         out.append(effects(ads, f, confounders=other))
     return pd.concat(out, ignore_index=True)
 
 
+def add_check_features(ads: pd.DataFrame, feats: pd.DataFrame) -> pd.DataFrame:
+    """Two versions of the headline label, so the report can show how much the label error matters:
+    the AI's original label, and only the ads a person confirmed (a child visibly or audibly reacts)."""
+    raw = m.load_ads(corrected=False).set_index("ad_id").child_role.reindex(ads.ad_id)
+    chk = m.taste_check().set_index("ad_id").checked_value
+    out = feats.copy()
+    out["check:ai_label_child_reacts_to_taste"] = raw.fillna("").str.contains("reacts_to_taste").to_numpy()
+    out["check:child_taste_confirmed_by_hand"] = ads.ad_id.map(chk).eq("yes").to_numpy()
+    out.attrs = feats.attrs
+    return out
+
+
 def run():
     ads = m.load_ads()
-    feats = feature_matrix(ads)
+    feats = add_check_features(ads, feature_matrix(ads))
     res = effects(ads, feats)
     res["aliases"] = res.feature.map(lambda f: ", ".join(feats.attrs["aliases"].get(f, [])))
-    testable = (np.minimum(res.n_with, res.n_without) >= MIN_N) & ~res.label.isin(CONFOUNDERS)
+    testable = ((np.minimum(res.n_with, res.n_without) >= MIN_N) & ~res.label.isin(NOT_TESTED)
+                & ~res.feature.str.startswith("check:"))   # re-cuts of one label, not extra tests
     res["q_adj"] = bh(res.p_adj.where(testable))
 
     # Sensitivity 1: put LJ-089 (excluded tracking break) back in. Needs 95% CI to hold.
@@ -284,6 +302,11 @@ def run():
     res.attrs["top_ad"] = top_ad
     res[f"cpa_ratio_adj_without_top_ad"], res["robust_to_top_ad"] = sensitivity(
         res, ads[ads.ad_id != top_ad].reset_index(drop=True), 0.90)
+
+    # Sensitivity 3: adjust for launch timing instead of stop date. Ads are often stopped BECAUSE they
+    # did badly, so the stop date partly reflects the result; the launch date cannot. Needs 90% CI to hold.
+    res["cpa_ratio_adj_launch"], res["robust_to_launch_timing"] = sensitivity(
+        res, ads, 0.90, confounders=LAUNCH_CONFOUNDERS)
 
     res["verdict"] = res.apply(verdict, axis=1)
     res["direction"] = np.where(res.cpa_ratio_adj < 1, "cheaper", "more expensive")
