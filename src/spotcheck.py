@@ -45,6 +45,11 @@ def agreement() -> pd.DataFrame:
 
 if __name__ == "__main__":
     pd.set_option("display.width", 250)
+    # Regenerate the transcript sample and confirm the annotations cover exactly that sample.
+    sample = pd.read_csv(m.DATA / "ads.csv").sample(20, random_state=2026).sort_values("ad_id")[["ad_id"]]
+    sample.to_csv(m.OUT / "spotcheck_sample_ids.csv", index=False)
+    ann = pd.read_csv(ANN, keep_default_na=False)
+    assert set(ann.ad_id[ann.label == "language"]) == set(sample.ad_id), "annotations do not match the sample"
     res = agreement()
     res.to_csv(m.OUT / "phase1_label_agreement.csv", index=False)
     print(res.round(2).to_string(index=False, max_colwidth=110))

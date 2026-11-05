@@ -6,6 +6,7 @@ exist. Claims may only come from CLAIMS, and each CLAIMS entry must match the br
 
 Run (after phases 1-2):  python src/phase3_briefs.py
 """
+import json
 import re
 
 import numpy as np
@@ -263,45 +264,64 @@ def fmt_inr(x):
     return f"₹{round(x, -1):,.0f}"
 
 
-def render(handle, brief, r, ctx, lib, comp, rank_row, ads):
-    name = re.split(r"\s*[|]\s*|-\s", r["name"])[0].strip().title()
-    L = [f"## {name} — @{handle}", "",
-         f"**Product:** {brief['product']}  ",
-         f"**Score:** {rank_row.total:.2f} (fit {rank_row.fit:.2f} · reach {rank_row.reach:.2f} · safety "
-         f"{rank_row.safety:.2f}) — model rank #{rank_row['rank']}, in the top 5 in "
-         f"{rank_row.top5_share_local:.0%} of weight perturbations ({rank_row.robustness})"
-         + (" — **chosen by the decision-maker over the model's #5**" if rank_row["rank"] > 5 else ""),
-         "", "### Why them", ""]
-    L += [f"- {line.format(**ctx)}" for line in brief["why_extra"]]
-    brief = {**brief, "hook": brief["hook"].format(**ctx), "avoid": [a.format(**ctx) for a in brief["avoid"]]}
-    L += [f"- Followers {r.followers:,}; typical video reach {ctx['q25']/1000:,.0f}k-{ctx['q75']/1000:,.0f}k plays "
-          f"(middle half of their last {int(r.video_posts)} videos).", "",
-          "### Suggested hook", "", brief["hook"], "", "### Script outline", ""]
-    L += [f"| {t} | {beat} |" if i else f"| Time | Beat |\n|---|---|\n| {t} | {beat} |"
-          for i, (t, beat) in enumerate(brief["script"])]
+def build_brief(handle, brief, r, ctx, lib, comp, rank_row, ads) -> dict:
+    """All brief content with numbers filled in. Markdown and the HTML report both render from this."""
+    cpa = ads.set_index("ad_id").cpa
+    spon = ("too few sponsored videos to say whether sponsored posts get fewer plays" if pd.isna(ctx["spon_ratio"])
+            else f"their sponsored videos have drawn {ctx['spon_ratio']:.0%} of organic plays" if ctx["spon_ratio"] < 1
+            else f"their sponsored videos have drawn {ctx['spon_ratio']:.1f}x the plays of organic ones")
+    return {
+        "handle": handle,
+        "name": re.split(r"\s*[|]\s*|-\s", r["name"])[0].strip().title(),
+        "product": brief["product"],
+        "model_rank": int(rank_row["rank"]), "chosen_over_model": bool(rank_row["rank"] > 5),
+        "total": rank_row.total, "fit": rank_row.fit, "reach": rank_row.reach, "safety": rank_row.safety,
+        "top5_share": rank_row.top5_share_local, "robustness": rank_row.robustness,
+        "followers": int(r.followers), "reach_q25": ctx["q25"], "reach_q75": ctx["q75"],
+        "why": [line.format(**ctx) for line in brief["why_extra"]]
+               + [f"Followers {r.followers:,}; typical video reach {ctx['q25']/1000:,.0f}k-{ctx['q75']/1000:,.0f}k "
+                  f"plays (middle half of their last {int(r.video_posts)} videos)."],
+        "hook": brief["hook"].format(**ctx),
+        "script": [list(x) for x in brief["script"]],
+        "claims": [{"text": lib.loc[k, "claim"], "n_ads": int(lib.loc[k, "n_ads"]),
+                    "cpa": fmt_inr(lib.loc[k, "pooled_cpa_inr"]),
+                    "examples": lib.loc[k, "best_ads"] or lib.loc[k, "ad_ids"]} for k in brief["claims"]],
+        "avoid": [a.format(**ctx) for a in brief["avoid"]],
+        "format": brief["fmt"],
+        "expected": [
+            f"No ad by this creator exists, so there is no direct measurement. The estimate comes from the "
+            f"{comp['n']} Little Joys ads built the same way ({COMPARABLE}).",
+            f"Those ads cost {fmt_inr(comp['all_cpa'])} per purchase together (90% range "
+            f"{fmt_inr(comp['all_lo90'])}-{fmt_inr(comp['all_hi90'])}), versus {fmt_inr(comp['account_cpa'])} for "
+            f"the whole account. Without the single best ad (LJ-004) it is {fmt_inr(comp['no_LJ004_cpa'])} "
+            f"({fmt_inr(comp['no_LJ004_lo90'])}-{fmt_inr(comp['no_LJ004_hi90'])}).",
+            f"Individual ads in that group ranged from {fmt_inr(comp['per_ad_min'])} to "
+            f"{fmt_inr(comp['per_ad_max'])}: execution matters as much as the recipe. Read this as 'likely at or "
+            f"better than the account average', not a forecast.",
+            f"Organic reach: their typical video gets {ctx['q25']/1000:,.0f}k-{ctx['q75']/1000:,.0f}k plays; {spon}.",
+        ],
+        "ad_refs": [{"ad_id": a, "cpa": fmt_inr(cpa[a])} for a in brief["ad_refs"]],
+        "post_refs": brief["post_refs"],
+    }
+
+
+def to_markdown(d: dict) -> str:
+    L = [f"## {d['name']} — @{d['handle']}", "", f"**Product:** {d['product']}  ",
+         f"**Score:** {d['total']:.2f} (fit {d['fit']:.2f} · reach {d['reach']:.2f} · safety {d['safety']:.2f}) — "
+         f"model rank #{d['model_rank']}, in the top 5 in {d['top5_share']:.0%} of weight perturbations "
+         f"({d['robustness']})" + (" — **chosen by the decision-maker over the model's #5**" if d["chosen_over_model"] else ""),
+         "", "### Why them", ""] + [f"- {w}" for w in d["why"]]
+    L += ["", "### Suggested hook", "", d["hook"], "", "### Script outline", "", "| Time | Beat |", "|---|---|"]
+    L += [f"| {t} | {beat} |" for t, beat in d["script"]]
     L += ["", "### Claims to make (all already used in Little Joys ads)", ""]
-    L += [f"- {lib.loc[k, 'claim']} — used in {lib.loc[k, 'n_ads']} ad{'s' if lib.loc[k, 'n_ads'] > 1 else ''} "
-          f"(together {fmt_inr(lib.loc[k, 'pooled_cpa_inr'])} per purchase), e.g. "
-          f"{lib.loc[k, 'best_ads'] or lib.loc[k, 'ad_ids']}" for k in brief["claims"]]
-    L += ["", "### What to avoid", ""] + [f"- {a}" for a in brief["avoid"]]
-    L += ["", "### Format", "", brief["fmt"], "", "### Expected performance (and how sure we are)", "",
-          f"- **No ad by this creator exists**, so there is no direct measurement. The estimate comes from the "
-          f"{comp['n']} Little Joys ads built the same way ({COMPARABLE}).",
-          f"- Those ads cost {fmt_inr(comp['all_cpa'])} per purchase together (90% range "
-          f"{fmt_inr(comp['all_lo90'])}-{fmt_inr(comp['all_hi90'])}), versus {fmt_inr(comp['account_cpa'])} for the "
-          f"whole account. Without the single best ad (LJ-004) it is {fmt_inr(comp['no_LJ004_cpa'])} "
-          f"({fmt_inr(comp['no_LJ004_lo90'])}-{fmt_inr(comp['no_LJ004_hi90'])}).",
-          f"- Individual ads in that group ranged from {fmt_inr(comp['per_ad_min'])} to {fmt_inr(comp['per_ad_max'])}: "
-          f"execution matters as much as the recipe. Read this as 'likely at or better than the account average', "
-          f"not a forecast.",
-          f"- Organic reach: their typical video gets {ctx['q25']/1000:,.0f}k-{ctx['q75']/1000:,.0f}k plays"
-          + ((f"; their sponsored videos have drawn {ctx['spon_ratio']:.0%} of organic plays." if ctx["spon_ratio"] < 1
-              else f"; their sponsored videos have drawn {ctx['spon_ratio']:.1f}x the plays of organic ones.")
-             if pd.notna(ctx["spon_ratio"])
-             else "; too few sponsored videos to say whether sponsored posts get fewer plays."),
-          "", "### Evidence links", "",
-          "- Ads: " + ", ".join(f"{a} ({fmt_inr(ads.set_index('ad_id').cpa[a])}/purchase)" for a in brief["ad_refs"]),
-          "- Creator posts: " + ", ".join(brief["post_refs"]), ""]
+    L += [f"- {c['text']} — used in {c['n_ads']} ad{'s' if c['n_ads'] > 1 else ''} (together {c['cpa']} per "
+          f"purchase), e.g. {c['examples']}" for c in d["claims"]]
+    L += ["", "### What to avoid", ""] + [f"- {a}" for a in d["avoid"]]
+    L += ["", "### Format", "", d["format"], "", "### Expected performance (and how sure we are)", ""]
+    L += [f"- {e}" for e in d["expected"]]
+    L += ["", "### Evidence links", "",
+          "- Ads: " + ", ".join(f"{a['ad_id']} ({a['cpa']}/purchase)" for a in d["ad_refs"]),
+          "- Creator posts: " + ", ".join(d["post_refs"]), ""]
     return "\n".join(L)
 
 
@@ -322,11 +342,15 @@ def run():
     parts = ["# Creator briefs — Little Joys", "",
              "Five creators, in score order. Every number below is computed by `src/phase3_briefs.py` from the "
              "raw CSVs; claims are limited to ones Little Joys has already run in its ads.", ""]
+    built = []
     for h, b in BRIEFS.items():
         r, ctx = creator_context(h, f, posts, audience)
         ctx.update(evidence_context(ads))
-        parts.append(render(h, b, r, ctx, lib, comp, reasons.loc[h], ads))
+        built.append(build_brief(h, b, r, ctx, lib, comp, reasons.loc[h], ads))
+    parts += [to_markdown(d) for d in built]
     (m.OUT / "phase3_briefs.md").write_text("\n".join(parts), encoding="utf-8")
+    (m.OUT / "phase3_briefs.json").write_text(json.dumps(built, indent=1, ensure_ascii=False, default=float),
+                                              encoding="utf-8")
     lib.to_csv(m.OUT / "phase3_claims_library.csv")
     pd.Series(comp).to_csv(m.OUT / "phase3_comparable_ads.csv")
     return lib, comp

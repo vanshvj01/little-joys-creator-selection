@@ -1,0 +1,317 @@
+<title>Little Joys Next Five Creators</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; the answer (five cards) first, then evidence that can be opened as needed. */
+:root {
+  --bg: #f6f7f3; --surface: #ffffff; --fg: #1c2229; --muted: #5a6470; --rule: #dde2da;
+  --accent: #2c6a58; --accent-soft: #e2efe9; --avoid: #9a5a12; --avoid-soft: #f6ead9;
+  --neutral-soft: #eceee9; --mark: #f1d77a;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121614; --surface: #1a1f1c; --fg: #e5e9e3; --muted: #9aa49d; --rule: #2c3430;
+  --accent: #7cc3aa; --accent-soft: #1f3a31; --avoid: #e2a85c; --avoid-soft: #3a2c19;
+  --neutral-soft: #242a26; --mark: #6b5a1f; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121614; --surface: #1a1f1c; --fg: #e5e9e3; --muted: #9aa49d; --rule: #2c3430;
+  --accent: #7cc3aa; --accent-soft: #1f3a31; --avoid: #e2a85c; --avoid-soft: #3a2c19;
+  --neutral-soft: #242a26; --mark: #6b5a1f; color-scheme: dark }
+
+body { background: var(--bg); color: var(--fg); font: 400 17px/1.55 var(--body); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 40px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 56px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: -0.01em; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.15rem; }
+p { margin: 0; max-width: 68ch; }
+a { color: var(--accent); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font: 600 0.78rem/1 var(--body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 1.2rem; color: var(--fg); }
+.muted { color: var(--muted); }
+.mono, code { font-family: var(--mono); font-size: 0.88em; }
+.num { font-variant-numeric: tabular-nums; }
+section { display: grid; gap: 20px; }
+.head { display: grid; gap: 14px; }
+.source { font-size: 0.85rem; color: var(--muted); }
+.source code { background: var(--neutral-soft); padding: 1px 5px; border-radius: 3px; }
+
+/* answer cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px;
+  display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card .rank { font: 700 0.85rem var(--mono); color: var(--muted); }
+.card h3 { font-size: 1.1rem; overflow-wrap: anywhere; }
+.card .product { font-weight: 600; font-size: 0.95rem; }
+.card .hook { font-size: 0.93rem; color: var(--muted); }
+.bars { display: grid; gap: 5px; font-size: 0.78rem; color: var(--muted); }
+.bar { display: grid; grid-template-columns: 46px 1fr 30px; align-items: center; gap: 8px; }
+.bar i { display: block; height: 6px; border-radius: 3px; background: var(--neutral-soft); position: relative; overflow: hidden; }
+.bar i b { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: 3px; }
+.chip { display: inline-block; font: 600 0.74rem/1 var(--body); letter-spacing: 0.03em; padding: 5px 8px;
+  border-radius: 999px; background: var(--neutral-soft); color: var(--fg); width: fit-content; }
+.chip.robust, .chip.suggestive, .chip.strong { background: var(--accent-soft); color: var(--accent); }
+.chip.marginal, .chip.driven, .chip.chosen { background: var(--avoid-soft); color: var(--avoid); }
+.chip.out, .chip.inconclusive, .chip.not, .chip.excluded { background: var(--neutral-soft); color: var(--muted); }
+
+.callout { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 20px;
+  display: grid; gap: 8px; }
+.callout.key { border-left: 4px solid var(--accent); }
+
+/* tables */
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.93rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 600 0.78rem var(--body); letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.picked td { background: var(--accent-soft); }
+
+/* chart */
+.forest { width: 100%; height: auto; min-width: 560px; display: block; }
+.forest .tick { font: 500 11px var(--body); fill: var(--muted); }
+.forest .rowlab { font: 500 13px var(--body); fill: var(--fg); }
+.forest .grid { stroke: var(--rule); stroke-width: 1; }
+.forest .axis0 { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+.forest .ci { stroke-width: 3; stroke-linecap: round; }
+.forest .ci.do { stroke: var(--accent); } .forest .ci.avoid { stroke: var(--avoid); }
+.forest .pt.do { fill: var(--accent); } .forest .pt.avoid { fill: var(--avoid); }
+.forest .faint { opacity: 0.4; }
+.chartbox { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 16px 12px; overflow-x: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+.legend .l-do::before { background: var(--accent); } .legend .l-avoid::before { background: var(--avoid); }
+.legend .l-faint::before { background: var(--muted); opacity: 0.4; }
+
+/* creator drill-down */
+details.brief { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; }
+details.brief > summary { cursor: pointer; padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 8px 16px;
+  align-items: baseline; list-style: none; }
+details.brief > summary::-webkit-details-marker { display: none; }
+details.brief > summary::before { content: "▸"; color: var(--muted); }
+details.brief[open] > summary::before { content: "▾"; }
+details.brief > summary h3 { font-size: 1.2rem; }
+.brief-body { padding: 4px 20px 22px; display: grid; gap: 22px; border-top: 1px solid var(--rule); padding-top: 18px; }
+.brief-body .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+.brief-body .two > div { min-width: 0; display: grid; gap: 8px; align-content: start; }
+.brief-body ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.hookq { font-size: 1.05rem; background: var(--accent-soft); border-radius: 8px; padding: 14px 16px; }
+.script td:first-child { font-family: var(--mono); white-space: nowrap; color: var(--muted); }
+.links { font-size: 0.88rem; overflow-wrap: anywhere; }
+
+ol.method { margin: 0; padding-left: 1.2em; display: grid; gap: 12px; max-width: 72ch; }
+ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; max-width: 72ch; }
+.weights { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.weights div { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 14px; font-size: 0.9rem; min-width: 0; }
+.weights dl { margin: 6px 0 0; display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; }
+.weights dd { margin: 0; font-variant-numeric: tabular-nums; }
+footer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 16px; }
+@media (prefers-reduced-motion: no-preference) { details.brief > summary::before { transition: transform .15s; } }
+</style>
+
+<div class="wrap">
+
+<header class="head">
+  <span class="eyebrow">Little Joys · creator selection · data to 26 Oct 2026</span>
+  <h1>Which five creators next, and what should they say?</h1>
+  <p class="lede">Work with these five creators, and have each one film a real child tasting a Little Joys milk mix on camera,
+    in English or Hinglish. In Little Joys' own ads, purchases from videos with a child tasting on camera were about
+    {{ ingredients[0].effect }}, after adjusting for product and timing.</p>
+  <p class="muted">Built from Little Joys' own data only: {{ facts.n_ads }} ads, {{ facts.n_creators }} creators and
+    their {{ facts.n_posts }} recent posts. Ad spend, purchases and revenue in this exercise are made-up numbers, treated here as if they were the real ad account.</p>
+</header>
+
+<section id="answer" aria-labelledby="answer-h">
+  <h2 id="answer-h">The five</h2>
+  <div class="cards">
+  {% for b in briefs %}
+    <article class="card">
+      <span class="rank">#{{ loop.index }}</span>
+      <h3>@{{ b.handle }}</h3>
+      <span class="product">{{ b.product }}</span>
+      {% if b.chosen_over_model %}<span class="chip chosen">Your pick over the model's #5</span>
+      {% else %}<span class="chip {{ b.robustness }}">{{ 'Holds under almost any weighting' if b.robustness == 'robust' else 'Holds under most weightings' }}</span>{% endif %}
+      <div class="bars" aria-label="Scores out of 1">
+        {% for k in ['fit', 'reach', 'safety'] %}
+        <div class="bar"><span>{{ k|capitalize }}</span><i><b style="width: {{ (b[k] * 100)|round(0) }}%"></b></i><span class="num">{{ '%.2f'|format(b[k]) }}</span></div>
+        {% endfor %}
+      </div>
+      <p class="hook">{{ b.why[0] }}</p>
+      <a href="#brief-{{ loop.index }}">Read the brief</a>
+    </article>
+  {% endfor %}
+  </div>
+  <p class="source">Scores: <code>outputs/phase2_reasons.csv</code> from <code>src/phase2_creators.py</code>. Briefs: <code>outputs/phase3_briefs.json</code> from <code>src/phase3_briefs.py</code>.</p>
+</section>
+
+<section id="what-works" aria-labelledby="works-h">
+  <div class="head">
+    <h2 id="works-h">What works in Little Joys' own ads</h2>
+    <p>We compared ads with and without each ingredient on <strong>cost per purchase</strong> (spend ÷ purchases, all ads pooled).
+      Every comparison is adjusted for the product advertised (milk-mix ads ran at {{ facts.milk_cpa }} per purchase vs
+      {{ facts.other_cpa }} for everything else) and for when the ad was switched off. The bars are 95% ranges: where a bar crosses
+      "same", the data cannot tell the difference from zero.</p>
+  </div>
+  <div class="chartbox">
+    {{ forest|safe }}
+  </div>
+  <div class="legend"><span class="l-do">Go with cheaper purchases</span><span class="l-avoid">Go with more expensive purchases</span><span class="l-faint">Not reliable (rests on one ad, or too few ads)</span></div>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Ingredient</th><th>Evidence</th><th class="num">Ads with it</th><th class="num">Cost per purchase<br>with / without</th><th>Adjusted effect (95% range)</th><th>Examples</th></tr></thead>
+    <tbody>
+    {% for r in ingredients %}
+      <tr>
+        <td>{{ r.name }}</td>
+        <td><span class="chip {{ r.verdict_key }}">{{ r.verdict }}</span></td>
+        <td class="num">{{ r.n }}</td>
+        <td class="num">{{ r.cpa_with }} / {{ r.cpa_without }}</td>
+        <td>{{ r.effect }} <span class="muted">({{ r.range }})</span></td>
+        <td class="mono">{{ r.examples }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <div class="callout key">
+    <h3>Why nothing here says "proven"</h3>
+    <p>With {{ facts.n_ads_used }} ads, about {{ facts.n_tests }} comparisons were tested. After allowing for that many tries, the
+      best result still falls short of our bar for "strong" (q = {{ facts.best_q }}, bar 0.10). "Suggestive" means the effect held
+      after adjusting for product and timing, and still held with the single best ad removed. One ad, {{ facts.top_ad }}
+      ({{ facts.top_ad_cpa }} per purchase), brought in {{ facts.top_ad_share }} of all purchases. Without it, the child-tasting
+      effect shrinks from {{ ingredients[0].effect }} to {{ ingredients[0].without_top }}.</p>
+  </div>
+  <p class="source">Source: <code>outputs/phase1_winning_ingredients.csv</code>, <code>outputs/phase1_label_effects.csv</code> from <code>src/phase1_ads.py</code>.</p>
+</section>
+
+<section id="briefs" aria-labelledby="briefs-h">
+  <div class="head">
+    <h2 id="briefs-h">Briefs</h2>
+    <p>Each brief builds the winning ingredients into something the creator already films. Claims are limited to ones Little Joys
+      has already run in its ads.</p>
+  </div>
+  {% for b in briefs %}
+  <details class="brief" id="brief-{{ loop.index }}" {% if loop.first %}open{% endif %}>
+    <summary><h3>#{{ loop.index }} {{ b.name }} <span class="muted">@{{ b.handle }}</span></h3><span>{{ b.product }}</span></summary>
+    <div class="brief-body">
+      <div class="two">
+        <div><span class="eyebrow">Why them</span><ul>{% for w in b.why %}<li>{{ w }}</li>{% endfor %}</ul></div>
+        <div><span class="eyebrow">Suggested hook</span><p class="hookq">{{ b.hook }}</p>
+             <span class="eyebrow">Format</span><p>{{ b.format }}</p></div>
+      </div>
+      <div><span class="eyebrow">Script outline</span>
+        <div class="tablewrap"><table class="script"><tbody>{% for t, beat in b.script %}<tr><td>{{ t }}</td><td>{{ beat }}</td></tr>{% endfor %}</tbody></table></div>
+      </div>
+      <div class="two">
+        <div><span class="eyebrow">Claims to make</span><ul>{% for c in b.claims %}<li>{{ c.text }} <span class="muted">({{ c.n_ads }} ad{{ 's' if c.n_ads > 1 }}, {{ c.cpa }} per purchase together; e.g. {{ c.examples }})</span></li>{% endfor %}</ul></div>
+        <div><span class="eyebrow">Avoid</span><ul>{% for a in b.avoid %}<li>{{ a }}</li>{% endfor %}</ul></div>
+      </div>
+      <div><span class="eyebrow">Expected performance</span><ul>{% for e in b.expected %}<li>{{ e }}</li>{% endfor %}</ul></div>
+      <p class="links"><span class="eyebrow">Evidence</span><br>
+        Ads: {% for a in b.ad_refs %}<span class="mono">{{ a.ad_id }}</span> ({{ a.cpa }}){{ ', ' if not loop.last }}{% endfor %}<br>
+        Posts: {% for u in b.post_refs %}<a href="{{ u }}">{{ u|replace('https://www.instagram.com', '') }}</a>{{ ', ' if not loop.last }}{% endfor %}</p>
+    </div>
+  </details>
+  {% endfor %}
+  <p class="source">Source: <code>outputs/phase3_briefs.json</code>, <code>outputs/phase3_claims_library.csv</code> from <code>src/phase3_briefs.py</code>.</p>
+</section>
+
+<section id="others" aria-labelledby="others-h">
+  <h2 id="others-h">Why not the other {{ others|length }}</h2>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th class="num">Model rank</th><th>Creator</th><th>Status</th><th>Main reason</th></tr></thead>
+    <tbody>
+    {% for o in others %}
+      <tr><td class="num">{{ '—' if o.robustness == 'excluded' else o.rank }}</td><td>@{{ o.handle }}</td>
+        <td><span class="chip {{ o.robustness }}">{{ {'excluded': 'Excluded', 'out': 'Not picked', 'marginal': 'Close call', 'robust': 'Close call'}[o.robustness] }}</span></td>
+        <td>{{ o.one_line_reason }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="muted">Excluded means a paid post for a direct kids-nutrition competitor in the last {{ recent_days }} days (decision taken at review).</p>
+  <p class="source">Source: <code>outputs/phase2_reasons.csv</code>; competitor brands classified in <code>annotations/brand_categories.csv</code>.</p>
+</section>
+
+<section id="how" aria-labelledby="how-h">
+  <h2 id="how-h">How we know this</h2>
+  <ol class="method">
+    <li><strong>Checked the data.</strong> {{ facts.n_ads }} ads, {{ facts.spend_lakh }} spend, {{ facts.purchases }} purchases. Left out
+      {% for k, v in facts.excluded %}{{ k }} ({{ v }}){% endfor %}. {{ facts.n_video_dupes }} videos had each run twice and {{ facts.n_script_dupes }} more scripts were near-copies,
+      so the {{ facts.n_ads_used }} ads count as {{ facts.n_clusters }} independent creatives.</li>
+    <li><strong>Compared ad ingredients</strong> on cost per purchase. Each comparison was adjusted for product and for the date the
+      ad was switched off, and resampled {{ facts.n_boot }} times to get the ranges. Every finding was then re-checked with the excluded ad put back
+      and with the single best ad removed.</li>
+    <li><strong>Checked the AI labels by hand</strong> against transcripts and video frames: {{ agree_all.agree }} of {{ agree_all.checked }}
+      checks agreed ({{ agree_all.rate|pct }}, 95% range {{ agree_all.lo95|pct }}–{{ agree_all.hi95|pct }}).</li>
+    <li><strong>Scored creators</strong> on fit with those ingredients, reach and safety, using the weights below, then re-ranked
+      them {{ facts.n_sens }} times with the weights shifted at random.</li>
+    <li><strong>Wrote briefs</strong> using only claims Little Joys has already run, each linked to the ads and posts it rests on.</li>
+  </ol>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Label we relied on</th><th class="num">Agreed / checked</th><th class="num">Rate (95% range)</th><th>Where it went wrong</th></tr></thead>
+    <tbody>
+    {% for a in agree if a.label != 'ALL' %}
+      <tr><td class="mono">{{ a.label }}</td><td class="num">{{ a.agree }} / {{ a.checked }}</td>
+        <td class="num">{{ a.rate|pct }} ({{ a.lo95|pct }}–{{ a.hi95|pct }})</td><td class="muted">{{ a.disagreements if a.disagreements == a.disagreements else '' }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Scoring weights</h3>
+  <div class="weights">
+    {% for group, ws in weights.items() %}
+    <div><strong>{{ group }}</strong><dl>{% for k, v in ws.items() %}<dt>{{ k|replace('_', ' ') }}</dt><dd>{{ '%.2f'|format(v) }}</dd>{% endfor %}</dl></div>
+    {% endfor %}
+  </div>
+
+  <h3>Does the top five survive other weightings?</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Creator</th><th class="num">In top 5 when weights are shifted</th>{% for c in scen_cols %}<th class="num">{{ scen_labels[c] }}</th>{% endfor %}</tr></thead>
+    <tbody>
+    {% for r in ranking if r.handle in picked or (r.rank_base <= 8 and not r.excluded_competitor_deal) %}
+      <tr class="{{ 'picked' if r.handle in picked }}"><td>@{{ r.handle }}</td><td class="num">{{ r.top5_share_local|pct }}</td>
+        {% for c in scen_cols %}<td class="num">#{{ r[c] }}</td>{% endfor %}</tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="source">Source: <code>outputs/phase2_ranking.csv</code>, <code>outputs/phase1_label_agreement.csv</code>, <code>annotations/label_spotcheck.csv</code>.</p>
+</section>
+
+<section id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">Confidence and limitations</h2>
+  <ul class="plain">
+    <li><strong>Small sample.</strong> {{ facts.n_ads_used }} ads. No ingredient reaches "strong"; the top findings are "suggestive" and
+      depend partly on one very successful ad ({{ facts.top_ad }}).</li>
+    <li><strong>No creator has run a Little Joys ad</strong>, so each creator's results are inferred from ads with the same ingredients
+      ({{ comp.n }} ads: {{ comp.all_cpa }} per purchase together, range {{ comp.all_lo90 }}–{{ comp.all_hi90 }}; {{ comp.no_LJ004_cpa }}
+      without {{ facts.top_ad }}; individual ads {{ comp.per_ad_min }}–{{ comp.per_ad_max }}). Treat this as a direction, not a forecast.</li>
+    <li><strong>Telugu is untested.</strong> No ad ran in Telugu or Gujarati. Ads in other regional languages cost {{ facts.regional_ratio }}× as much per
+      purchase, so the #1 brief is written in Hindi, with a Telugu version suggested as a test.</li>
+    <li><strong>Performance numbers are synthetic</strong> for this exercise; the patterns are only as real as the export they come from.</li>
+    <li><strong>AI labels are mostly right</strong> ({{ agree_all.rate|pct }} on our checks). The post-level language label was wrong for spoken
+      language, so transcripts were used instead.</li>
+    <li><strong>Audience data covers {{ facts.n_audience }} of {{ facts.n_creators }} creators.</strong> It is shown as background and does not affect any score.</li>
+    <li><strong>Judgement calls</strong> are written down and editable: which brands count as competitors, the scoring weights,
+      and the choice of ohmother.in over the model's #5.</li>
+  </ul>
+</section>
+
+<footer>
+  Every number on this page is produced by <code>python run_all.py</code> from the four CSVs in <code>data/</code>.
+  Decisions and overrides are logged in <code>docs/prompts.md</code>.
+</footer>
+</div>

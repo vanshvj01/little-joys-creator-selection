@@ -86,3 +86,21 @@ Final five: storiesbyvihaa, hello_ps8, mumma_and_ridhu, the_mum_wife_playbook, o
   plus the creator's typical reach, explicitly not a per-creator forecast.
 - Corrected during writing: removed an unsupported "child speaks → cheaper" claim (that feature was
   "driven by one ad" in Phase 1); swapped a weak supporting ad (LJ-043, ₹770) out of a brief.
+
+**User decision at Phase 3 checkpoint (2026-11-05): "Approve, start Phase 4"** — briefs approved as written.
+
+## Phase 4 — deliverable + repo
+
+**Prompt (summary):** Manager-facing answer (top 5 first, per-creator drill-down, "how we know this",
+confidence & limitations, sensible rounding and ranges); tests for core metrics; one-command rebuild;
+README; one-page NOTE.md; keep this log.
+
+**Decisions taken during Phase 4:**
+- Deliverable is a static, self-contained HTML page rendered from the phase outputs by `src/report.py`
+  (Jinja2), published as a private claude.ai artifact for sharing. No hand-typed numbers in the template;
+  counts like "3 videos ran twice" and "2,000 resamples" are computed.
+- Phase 3 briefs refactored to a structured JSON so the Markdown briefs and the report render from the
+  same data.
+- Correction: the creative-cluster count is 94 for all 100 ads but **93 for the 99 analysed**; the Phase 1
+  checkpoint message and CLAUDE.md had said 94 for the 99. Fixed in CLAUDE.md; the report computes it.
+- `run_all.py` deletes nothing itself; full rebuild verified by deleting `outputs/` and rerunning.

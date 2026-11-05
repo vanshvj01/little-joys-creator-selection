@@ -47,7 +47,7 @@ docs/prompts.md  running log of user prompts and decisions/overrides (append eve
 - Metric definitions live in one place (`src/metrics.py`) and are unit-tested.
 - Ratios across groups are **spend-weighted / pooled** (sum numerator ÷ sum denominator), not means of
   per-ad ratios. Uncertainty via bootstrap resampling of creative clusters (same video_url, or
-  transcripts >= 80% similar, count as one creative: 94 clusters from 99 ads).
+  transcripts >= 80% similar, count as one creative: 94 clusters from all 100 ads, 93 from the 99 analysed).
 - Phase 1 analysis set excludes LJ-089 (decision 2); every finding is re-checked with LJ-089 back in,
   and with LJ-004 (29% of all purchases) removed. A finding that disappears without LJ-004 is labelled
   "driven by one ad".

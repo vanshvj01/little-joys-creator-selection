@@ -306,7 +306,33 @@ def run():
     ads_all.to_csv(m.OUT / "phase1_ad_metrics.csv", index=False)
     baseline = pd.Series(m.pooled(ads)).rename("all_ads_ex_LJ089")
     baseline.to_csv(m.OUT / "phase1_account_baseline.csv")
+    eff = ad_efficiency(ads)
+    eff.to_csv(m.OUT / "phase1_ad_efficiency.csv", index=False)
+    write_top_bottom(ads, eff)
     return res, ads, joint, conf
+
+
+def ad_efficiency(ads: pd.DataFrame) -> pd.DataFrame:
+    """Each ad's purchases vs what the batch + product baseline expects for its spend (>1 = better)."""
+    expected = poisson_rates(design(ads), ads.purchases.to_numpy(float), ads.spend_inr.to_numpy(float),
+                             np.ones(len(ads)))
+    return ads[["ad_id", "spend_inr", "purchases", "cpa"]].assign(
+        efficiency=ads.purchases / expected, expected=expected)
+
+
+def write_top_bottom(ads: pd.DataFrame, eff: pd.DataFrame, k: int = 12, min_purchases: int = 20):
+    """Transcripts of the k best and k worst ads (by efficiency, ads with >= min_purchases) for reading."""
+    e = ads.merge(eff[["ad_id", "efficiency"]], on="ad_id")
+    e = e[e.purchases >= min_purchases].sort_values("efficiency", ascending=False)
+    lines = [f"eligible {len(e)}"]
+    for name, grp in [("TOP", e.head(k)), ("BOTTOM", e.tail(k))]:
+        lines.append("#" * 30 + " " + name)
+        for r in grp.itertuples():
+            lines += ["", f"[{r.ad_id}] eff={r.efficiency:.2f} cpa={r.cpa:.0f} spend={r.spend_inr} {r.language} "
+                          f"{r.product_form} {r.duration_s}s | {r.hook_type}/{r.hook_driver} | {r.ad_format} | "
+                          f"child:{r.child_role} | claims:{r.claims_made}",
+                      f"HOOK: {r.hook_line}", f"TX: {str(r.transcript)[:700]}"]
+    (m.OUT / "phase1_top_bottom_transcripts.txt").write_text("\n".join(lines), encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -49,7 +49,7 @@ Viha, to camera, holding her plate, in her Telugu-accented Hindi: "Aaj dekho mer
 
 ### Expected performance (and how sure we are)
 
-- **No ad by this creator exists**, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
+- No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
 - Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).
 - Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as 'likely at or better than the account average', not a forecast.
 - Organic reach: their typical video gets 771k-3,096k plays; too few sponsored videos to say whether sponsored posts get fewer plays.
@@ -103,7 +103,7 @@ Post-workout, she reaches for her shake — it's gone. Text: "Someone stole my p
 
 ### Expected performance (and how sure we are)
 
-- **No ad by this creator exists**, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
+- No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
 - Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).
 - Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as 'likely at or better than the account average', not a forecast.
 - Organic reach: their typical video gets 432k-1,490k plays; too few sponsored videos to say whether sponsored posts get fewer plays.
@@ -157,7 +157,7 @@ Two plates of pancakes. Spoken + text: "Ek pancake mein 12g extra protein hai. D
 
 ### Expected performance (and how sure we are)
 
-- **No ad by this creator exists**, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
+- No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
 - Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).
 - Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as 'likely at or better than the account average', not a forecast.
 - Organic reach: their typical video gets 96k-196k plays; their sponsored videos have drawn 67% of organic plays.
@@ -210,7 +210,7 @@ Text: "Madam ki doodh wali negotiation 🙄". Madam, to camera: "Mumma, doodh na
 
 ### Expected performance (and how sure we are)
 
-- **No ad by this creator exists**, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
+- No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
 - Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).
 - Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as 'likely at or better than the account average', not a forecast.
 - Organic reach: their typical video gets 13k-226k plays; their sponsored videos have drawn 2.3x the plays of organic ones.
@@ -265,7 +265,7 @@ Her own line, adapted: "The cook cancelled again — and you won't believe how m
 
 ### Expected performance (and how sure we are)
 
-- **No ad by this creator exists**, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
+- No ad by this creator exists, so there is no direct measurement. The estimate comes from the 12 Little Joys ads built the same way (child reacts to taste on camera + English/Hinglish + milk-mix product).
 - Those ads cost ₹200 per purchase together (90% range ₹160-₹380), versus ₹410 for the whole account. Without the single best ad (LJ-004) it is ₹330 (₹280-₹450).
 - Individual ads in that group ranged from ₹140 to ₹730: execution matters as much as the recipe. Read this as 'likely at or better than the account average', not a forecast.
 - Organic reach: their typical video gets 29k-246k plays; their sponsored videos have drawn 48% of organic plays.

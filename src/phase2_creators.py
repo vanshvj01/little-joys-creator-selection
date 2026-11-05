@@ -18,6 +18,7 @@ import metrics as m
 
 AS_OF = pd.Timestamp("2026-10-27")          # latest post date in the file
 RECENT_COMPETITOR_DAYS = 120
+N_SENSITIVITY = 5000                         # random weight draws per sensitivity run
 # "hard_exclude": a paid deal with a direct kids-nutrition competitor in the last RECENT_COMPETITOR_DAYS
 # removes the creator. "penalty": it only lowers the safety pillar. (Decision pending at Phase 2 checkpoint.)
 COMPETITOR_RULE = "hard_exclude"
@@ -183,7 +184,7 @@ def excluded(f: pd.DataFrame, rule: str = None) -> pd.Index:
     return f.index[f.days_since_competitor_deal <= RECENT_COMPETITOR_DAYS]
 
 
-def sensitivity(sub: pd.DataFrame, n: int = 5000, seed: int = 11, exclude=()) -> pd.DataFrame:
+def sensitivity(sub: pd.DataFrame, n: int = N_SENSITIVITY, seed: int = 11, exclude=()) -> pd.DataFrame:
     """How often is each creator in the top 5 when weights are perturbed?
 
     local:  all four weight sets drawn around the base weights (Dirichlet, concentration 20 — typical
