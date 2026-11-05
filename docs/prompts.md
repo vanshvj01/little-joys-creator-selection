@@ -69,3 +69,20 @@ risk with explicit editable weights, run a sensitivity check, explain the 15 not
 
 **User decision at Phase 2 checkpoint (2026-11-05): "Exclude them"** — creators with a paid
 direct-competitor post in the last 120 days are excluded (COMPETITOR_RULE = "hard_exclude" confirmed).
+- Slot #5: user chose **ohmother.in** over livesimply_withkripa (model's #5 by 0.01) on fit grounds —
+  ohmother films kids 3-12 in 70% of posts; kripa has no child of product age. User override of model order.
+- storiesbyvihaa kept at #1; her brief is written in **Hindi/Hinglish** (her profile lists Hindi as
+  native), with the Telugu risk flagged and a Telugu A/B variant suggested.
+
+## Phase 3 — creator briefs
+Final five: storiesbyvihaa, hello_ps8, mumma_and_ridhu, the_mum_wife_playbook, ohmother.in.
+
+**Decisions taken during Phase 3 (assistant-proposed, flagged at checkpoint):**
+- Product per creator chosen by child age and evidence: Proteinmix for 3 creators (its claims come from
+  the cheapest ads: ₹160-290 per purchase), Nutrimix 2+ for 2 (taste-led; its nutrient claims come from
+  weaker ads, ₹500 per purchase, so the brief leads with the taste claim and drops the ragi/jaggery
+  ingredient-list template).
+- Expected performance is given as the CPA range of the 12 ads built the same way (with/without LJ-004)
+  plus the creator's typical reach, explicitly not a per-creator forecast.
+- Corrected during writing: removed an unsupported "child speaks → cheaper" claim (that feature was
+  "driven by one ad" in Phase 1); swapped a weak supporting ad (LJ-043, ₹770) out of a brief.
