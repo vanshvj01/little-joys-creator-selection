@@ -46,8 +46,14 @@ docs/prompts.md  running log of user prompts and decisions/overrides (append eve
   Paths are resolved relative to the repo root.
 - Metric definitions live in one place (`src/metrics.py`) and are unit-tested.
 - Ratios across groups are **spend-weighted / pooled** (sum numerator ÷ sum denominator), not means of
-  per-ad ratios. Uncertainty via bootstrap resampling of ads (resample creative clusters where a video
-  was run twice).
+  per-ad ratios. Uncertainty via bootstrap resampling of creative clusters (same video_url, or
+  transcripts >= 80% similar, count as one creative: 94 clusters from 99 ads).
+- Phase 1 analysis set excludes LJ-089 (decision 2); every finding is re-checked with LJ-089 back in,
+  and with LJ-004 (29% of all purchases) removed. A finding that disappears without LJ-004 is labelled
+  "driven by one ad".
+- Confounders adjusted for in every comparison: stop batch and product form (milk mix ≈ ₹318 CPA vs
+  ≈ ₹600 for the rest).
+- Hand annotations (label spot-checks) live in `annotations/` and are the only hand-entered data.
 - Multi-value label cells are `; `-separated; explode them explicitly.
 - Round for display only, at the presentation layer. Show ranges, not false precision.
 - Keep weights and thresholds as named constants at the top of the module so they're editable.
