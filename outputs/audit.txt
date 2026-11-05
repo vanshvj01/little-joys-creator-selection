@@ -1,0 +1,944 @@
+
+==============================================================================
+ads: 100 rows x 56 cols
+==============================================================================
+                       dtype  nulls  blank_str  n_unique
+ad_id                    str      0          0       100
+meta_ad_library_id     int64      0          0       100
+video_url                str      0          0        97
+launch_date              str      0          0        34
+stopped_date             str      0          0         8
+days_live              int64      0          0        37
+duration_s           float64      0          0        87
+language                 str      0          0         8
+ad_copy                  str     12          0        17
+transcript               str      0          0        97
+hook_line                str      0          0        97
+on_screen_text           str      0          0        97
+claims_made              str      0          0        97
+hook_type                str      2          0        10
+hook_driver              str      0          0         7
+hook_delivered_by        str      0          0         3
+hook_text_on_screen      str     15          0        82
+ad_format                str      2          0         7
+story_structure          str      2          0        12
+main_benefit             str      0          0        11
+performance_style        str      0          0         9
+humour                   str      0          0         4
+creator_type             str      0          0         8
+creator_gender           str      0          0         4
+creator_age              str      1          0         5
+people_on_screen         str      0          0         5
+child_on_screen          str      0          0         3
+child_age                str      0          0         5
+child_role               str      2          0        14
+child_in_first_3s        str      0          0         2
+brand_first_said         str      2          0         6
+brand_said_aloud         str      0          0         2
+product_form             str      0          0         3
+product_shown_as         str      0          0         6
+demo_shown               str      0          0        33
+proof_used               str      0          0        57
+persuasion               str      0          0        58
+production               str      0          0         4
+audio                    str      0          0         4
+music                    str      0          0         2
+captions                 str      0          0         5
+language_mixing          str      0          0         5
+first_frame              str      0          0         7
+setting                  str      0          0         9
+cta_type                 str      0          0         8
+offer                    str      0          0         2
+narratives               str      0          0        62
+ad_categories            str      0          0        31
+spend_inr              int64      0          0       100
+impressions            int64      0          0       100
+video_3s_views         int64      0          0       100
+thruplays              int64      0          0       100
+link_clicks            int64      0          0       100
+add_to_carts           int64      0          0        94
+purchases              int64      0          0        83
+revenue_inr            int64      0          0        99
+
+==============================================================================
+creators: 20 rows x 21 cols
+==============================================================================
+                         dtype  nulls  blank_str  n_unique
+creator_id                 str      0          0        20
+handle                     str      0          0        20
+name                       str      0          0        20
+profile_url                str      0          0        20
+bio                        str      3          0        17
+followers                int64      0          0        20
+following                int64      0          0        20
+total_posts              int64      0          0        20
+verified                   str      0          0         2
+posts_in_file            int64      0          0         2
+persona                    str      0          0        18
+persona_description        str      0          0        20
+feed_story                 str      0          0        20
+voice                      str      0          0        20
+language_use               str      0          0        20
+catchphrases               str      0          0        20
+themes                     str      0          0        20
+format_habits              str      0          0        20
+what_feels_native          str      0          0        20
+what_would_feel_foreign    str      0          0        20
+audience_read              str      0          0         9
+
+==============================================================================
+creator_posts: 392 rows x 32 cols
+==============================================================================
+                           dtype  nulls  blank_str  n_unique
+creator_id                   str      0          0        20
+handle                       str      0          0        20
+post_url                     str      0          0       392
+posted_on                    str      0          0       140
+type                         str      0          0         3
+duration_s               float64     39          0       297
+caption                      str      4          0       386
+plays                    float64     39          0       353
+likes                      int64      0          0       376
+comments                   int64      0          0       271
+reshares                   int64      0          0       309
+content_type                 str      0          0        13
+content_form                 str      0          0        11
+topic                        str      0          0       381
+hook_style                   str      1          0       370
+creator_on_camera            str      0          0         3
+children_on_camera           str      0          0         2
+child_ages                   str    142          0        26
+presenter_age                str      0          0         8
+presenter_gender             str      0          0         4
+language                     str      0          0        13
+setting                      str      0          0       282
+tone                         str      0          0       312
+product_shown                str      0          0         2
+is_sponsored                 str      0          0         3
+brands_visible               str    233          0       149
+production_quality_1to5    int64      0          0         4
+audience_signal              str      0          0       308
+on_screen_text               str     55          0       333
+what_stands_out              str      0          0       392
+transcript                   str    279          0       113
+transcript_language          str    278          0        10
+
+==============================================================================
+creator_audience: 3 rows x 10 cols
+==============================================================================
+                       dtype  nulls  blank_str  n_unique
+creator_id               str      0          0         3
+handle                   str      0          0         3
+platform                 str      0          0         2
+as_of                    str      0          0         1
+women_pct            float64      0          0         3
+men_pct              float64      0          0         3
+age_split                str      0          0         3
+top_cities               str      0          0         3
+top_countries            str      0          0         3
+brands_in_past_year      str      1          0         2
+
+==============================================================================
+ads: numeric summary
+==============================================================================
+                    count          mean           std           min           25%           50%           75%           max
+meta_ad_library_id  100.0  2.444325e+15  4.598782e+15  8.844216e+14  1.263264e+15  1.677063e+15  2.150767e+15  3.898363e+16
+days_live           100.0  2.006000e+01  1.702000e+01  1.000000e+00  7.000000e+00  1.750000e+01  2.500000e+01  7.400000e+01
+duration_s          100.0  3.963000e+01  1.699000e+01  1.230000e+01  2.635000e+01  3.670000e+01  4.825000e+01  8.220000e+01
+spend_inr           100.0  7.264228e+04  1.133251e+05  2.980000e+02  1.540800e+04  3.173700e+04  6.773475e+04  6.594940e+05
+impressions         100.0  5.403355e+05  8.852500e+05  2.095000e+03  9.774575e+04  2.273220e+05  5.193192e+05  5.718650e+06
+video_3s_views      100.0  1.693162e+05  3.160901e+05  3.210000e+02  2.285475e+04  6.129500e+04  1.459860e+05  1.957365e+06
+thruplays           100.0  4.263453e+04  8.760412e+04  1.010000e+02  5.563500e+03  1.312950e+04  3.548125e+04  5.559020e+05
+link_clicks         100.0  5.273590e+03  9.517980e+03  1.600000e+01  7.927500e+02  1.895000e+03  4.810250e+03  6.944300e+04
+add_to_carts        100.0  5.468600e+02  1.730180e+03  2.000000e+00  6.150000e+01  1.770000e+02  4.132500e+02  1.664500e+04
+purchases           100.0  1.685600e+02  5.137400e+02  0.000000e+00  2.175000e+01  5.700000e+01  1.232500e+02  4.868000e+03
+revenue_inr         100.0  1.087051e+05  3.461963e+05  0.000000e+00  1.330900e+04  3.345250e+04  8.096600e+04  3.298791e+06
+
+==============================================================================
+ads: categorical label distributions
+==============================================================================
+
+-- language
+language
+English      38
+Hinglish     25
+Hindi        10
+no speech     7
+Kannada       7
+Malayalam     6
+Tamil         5
+Punjabi       2
+
+-- hook_type
+hook_type
+question                 28
+story_open               22
+problem_statement        14
+visual_action             7
+educational_explainer     6
+personal_testimony        6
+direct_product            6
+pattern_interrupt         3
+bold_claim                3
+result_reveal             3
+NaN                       2
+
+-- hook_driver
+hook_driver
+curiosity_gap          34
+personal_experience    29
+fear_pain_point        19
+novelty_surprise        8
+aspiration_identity     4
+social_proof            3
+authority_expertise     3
+
+-- hook_delivered_by
+hook_delivered_by
+combination       85
+spoken            11
+on_screen_text     4
+
+-- hook_text_on_screen: 83 levels (top 25 shown)
+hook_text_on_screen
+NaN                                                                                     15
+Little Joys Nutrimix                                                                     2
+One of these pancakes is made with 12g of extra protein.                                 2
+विटामिन बी 12\nविटामिन डी 3                                                              2
+What I eat and how I move while losing my postpartum weight !!!                          1
+குழந்தைகளுக்கு புரோட்டீன் கம்மியா இருக்கிறத்துக்கான 3 அறிகுறிகள்                         1
+Aaj dekhte hain meri plate mein kya kya hai                                              1
+गर्मियों में बच्चों को दूध पिलाने की ट्रिक 🤌                                             1
+Vegetarian Protein Hack: Proteinmix Waffles                                              1
+POV: Cricket is basically your whole personality 🏏                                       1
+प्लेन दूध पीने 🥛 मैं बच्चा नखरे दिखाता है, तो इस मिल्क पाउडर को ट्राई करना न भूलें ❌     1
+3 hidden jobs magnesium does in your child's body                                        1
+குழந்தைகளுக்கான Super Protein                                                            1
+Humare Zamane main... 😅                                                                  1
+What does this Multivitamin Gummy actually give moms?                                    1
+Baccho ka Protein Powder                                                                 1
+உங்க குழந்தை தினமும் சாப்பிடுற ரொட்டியில தேவையான அளவு புரோட்டீன் இருக்கா?                1
+Yaar aaj na mere alarm ne dhokha de diya                                                 1
+ಮಕ್ಕಳಲ್ಲಿ ಕ್ಯಾಲ್ಸಿಯಂ ಕೊರತೆಯ 3 ಲಕ್ಷಣಗಳು                                                   1
+DOES YOUR CHILD'S LEAKY NOSE NEEDS LOTS OF TISSUES? 🤧🥺                                   1
+My picky son used to refuse oats because they are too soggy.                             1
+Here's how I support my child's immunity before school starts?                           1
+MULTIVITAMIN GUMMIES                                                                     1
+Along with my breakfast, I take Little Joys Nutrimix For Moms                            1
+WHAT IF I TOLD YOU THAT THE ROTIS                                                        1
+
+-- ad_format
+ad_format
+voiceover_montage      36
+explainer_to_camera    25
+skit                   15
+child_led               8
+silent_brand_film       6
+other                   5
+podcast_interview       3
+NaN                     2
+
+-- story_structure
+story_structure
+routine_integration      28
+problem_agitate_solve    25
+ingredient_deep_dive     16
+family_skit              10
+science_explainer         4
+myth_busting              3
+testimonial_review        3
+straight_pitch            3
+NaN                       2
+sensory_texture_focus     2
+other                     2
+listicle_tips             1
+day_in_life               1
+
+-- main_benefit
+main_benefit
+ingredient_led      24
+protein_intake      22
+fussy_eating        13
+immunity            12
+overall_growth       8
+taste                7
+problem_solution     5
+functional           5
+mixed                2
+educational          1
+sensory_texture      1
+
+-- performance_style
+performance_style
+demo_walkthrough     25
+earnest_talk         22
+storytelling         16
+instructional        16
+character_play        9
+none                  7
+myth_busting          3
+high_energy_pitch     1
+other                 1
+
+-- humour
+humour
+none            82
+situational     12
+character        3
+exaggeration     3
+
+-- creator_type
+creator_type
+parent_or_caregiver       57
+none_visible              15
+multiple                  10
+child_presenter            9
+professional_presenter     5
+peer_reviewer              2
+food_or_chef               1
+medical_professional       1
+
+-- creator_gender
+creator_gender
+female          62
+male            18
+none_visible    11
+multiple         9
+
+-- creator_age
+creator_age
+25_34           67
+none_visible    13
+under_18         8
+35_44            6
+multiple         5
+NaN              1
+
+-- people_on_screen
+people_on_screen
+two           37
+none          25
+one           20
+three_plus    13
+crowd          5
+
+-- child_on_screen
+child_on_screen
+one         52
+none        37
+multiple    11
+
+-- child_age
+child_age
+6_to_9      40
+none        37
+under_6     19
+10_to_12     3
+13_plus      1
+
+-- child_role [multi-value, exploded]
+child_role
+consumes_product    54
+reacts_to_taste     39
+none                37
+speaks              25
+on_screen_silent    23
+shows_result         2
+
+-- child_in_first_3s
+child_in_first_3s
+no     59
+yes    41
+
+-- brand_first_said
+brand_first_said
+under_3s     40
+15_to_30s    27
+5_to_10s     15
+10_to_15s     7
+3_to_5s       5
+over_30s      4
+NaN           2
+
+-- brand_said_aloud
+brand_said_aloud
+yes    70
+no     30
+
+-- product_form
+product_form
+milk_mix_powder    51
+other              26
+gummies            23
+
+-- product_shown_as
+product_shown_as
+held_by_creator      43
+in_use               37
+packshot             17
+label_closeup         1
+flat_lay              1
+broll_integration     1
+
+-- demo_shown [multi-value, exploded]
+demo_shown
+child_consuming         56
+mixing_prep             47
+product_feature_demo    27
+taste_test              25
+live_use                20
+none                    11
+tutorial                 7
+comparison               2
+
+-- proof_used [multi-value, exploded]
+proof_used
+ingredient_dosage          34
+ingredient_potency         33
+texture_demonstration      31
+creator_testimonial        23
+child_visible_result       14
+clinical_specifications    11
+texture_sensory_visuals     9
+scientific_lab_visuals      8
+data_statistics             6
+lab_tested_certified        6
+customer_review             6
+none                        5
+other                       1
+expert_endorsement          1
+
+-- persuasion [multi-value, exploded]
+persuasion
+identity_appeal              60
+storytelling                 51
+statistics_specificity       39
+authority_science            24
+contrast_with_competitors    21
+aesthetic_vibe_appeal        11
+fear_appeal                  10
+social_proof                  9
+humor                         8
+certification_endorsement     6
+empties_restock_narrative     2
+
+-- production
+production
+semi_pro    61
+ugc         26
+studio      12
+mixed        1
+
+-- audio
+audio
+voiceover           40
+mixed               28
+on_camera_speech    25
+music_driven         7
+
+-- music
+music
+yes    92
+no      8
+
+-- captions
+captions
+keyword_popups    42
+bold_subtitles    29
+minimal           23
+none               4
+caption_heavy      2
+
+-- language_mixing
+language_mixing
+occasional_borrowing        54
+single_language             25
+sentence_level_switching    12
+none                         6
+constant_switching           3
+
+-- first_frame
+first_frame
+face       37
+action     18
+child      17
+product    15
+text        5
+other       4
+scene       4
+
+-- setting
+setting
+indoor_home             42
+kitchen                 28
+other                    8
+retail_store             8
+studio                   7
+outdoor                  4
+school_or_playground     1
+bathroom                 1
+product_flat_lay         1
+
+-- cta_type
+cta_type
+buy_now                      58
+none                         32
+social_interface_referral     3
+comment_for_link              3
+visit_store                   1
+other                         1
+comment                       1
+learn_more                    1
+
+-- offer
+offer
+none      97
+bundle     3
+
+-- narratives [multi-value, exploded]
+narratives
+protein_intake                    53
+kids_overall_growth               47
+taste_better_than_other_brands    33
+recipe                            32
+fussy_eating                      30
+kids_immunity                     21
+label_check                       19
+other                             13
+mom_research_about_product         4
+brand_milk_vs_regular_milk         2
+
+-- ad_categories [multi-value, exploded]
+ad_categories
+lifestyle_kids_routine    53
+recipe                    38
+explainer                 34
+testimonial               31
+other                     20
+sibling_conversation       1
+podcast                    1
+
+==============================================================================
+ads: anomalies / integrity checks
+==============================================================================
+duplicate ad_id                          0
+duplicate meta_ad_library_id             0
+duplicate video_url                      3
+duplicate transcript (non-null)          3
+zero spend                               0
+zero impressions                         0
+zero purchases                           2
+3s views > impressions                   0
+thruplays > 3s views                     0
+clicks > impressions                     0
+ATC > clicks                             0
+purchases > ATC                          0
+purchases > clicks                       0
+revenue>0 but purchases==0               0
+purchases>0 but revenue==0               0
+negative perf values                     0
+
+launch_date range: 2026-06-10 -> 2026-10-09  (unparseable: 0)
+stopped_date range: 2026-08-23 -> 2026-10-23
+still live (blank stopped_date): 0
+stopped before launch: 0
+stopped after cap 2026-10-26: 0
+days_live vs (min(stop, cap) - launch): exact=26, off_by_1=74, other=0
+
+Account totals:
+spend_inr          7264228
+impressions       54033549
+video_3s_views    16931619
+thruplays          4263453
+link_clicks         527359
+add_to_carts         54686
+purchases            16856
+revenue_inr       10870509
+account ROAS = 1.50, CPA = ₹431, AOV = ₹645, CTR = 0.98%
+
+Per-ad derived metric spread:
+          roas      aov      ctr      cpm
+count  100.000   98.000  100.000  100.000
+mean     1.262  630.806    0.009  142.122
+std      0.690   50.128    0.002   24.478
+min      0.000  431.000    0.005   94.103
+25%      0.802  610.807    0.007  124.715
+50%      1.105  643.332    0.009  139.229
+75%      1.599  664.272    0.010  157.102
+max      5.002  711.167    0.016  205.398
+
+spend concentration: top 10 ads = 49% of spend, top 20 = 68%
+ads with < 20 purchases: 22  (< 5: 4)
+ads with blank transcript: 0, blank hook_line: 0
+
+Spearman corr (spend vs days_live, duration_s, roas):
+            spend_inr  days_live  duration_s  roas
+spend_inr        1.00       0.71        0.08 -0.11
+days_live        0.71       1.00       -0.04 -0.05
+duration_s       0.08      -0.04        1.00 -0.13
+roas            -0.11      -0.05       -0.13  1.00
+
+==============================================================================
+creator_posts: numeric summary
+==============================================================================
+                         count        mean         std    min        25%       50%         75%         max
+duration_s               353.0       57.20       29.13    1.0      37.90      56.0       74.50       162.6
+plays                    353.0  2464694.63  7449789.70  225.0  122183.00  431561.0  1509472.00  79103958.0
+likes                    392.0    86006.60   294053.54    3.0    1179.00    6384.0    44395.00   2983459.0
+comments                 392.0      891.91     3721.02    0.0      37.75     130.5      374.75     61684.0
+reshares                 392.0    21308.55   100140.07    0.0      42.75     526.5     3969.00   1353595.0
+production_quality_1to5  392.0        3.15        0.56    2.0       3.00       3.0        3.00         5.0
+
+==============================================================================
+creator_posts: categorical label distributions
+==============================================================================
+
+-- type
+type
+video       353
+carousel     34
+photo         5
+
+-- content_type
+content_type
+lifestyle            136
+expert_explainer      83
+comedy_skit           45
+tutorial              41
+promotional_ad        40
+day_in_life           18
+other                 11
+review                11
+devotional             2
+tribute                2
+get_ready_with_me      1
+news_commentary        1
+testimonial            1
+
+-- content_form
+content_form
+piece_to_camera      124
+voiceover_montage     73
+demo_or_haul          69
+skit                  46
+still_or_carousel     38
+music_edit            28
+other                  7
+reaction               3
+event_footage          2
+news_package           1
+interview              1
+
+-- topic: 381 levels (top 25 shown)
+topic
+birthday celebration                                                           5
+morning routine with children                                                  4
+family dynamics and communication                                              2
+travel and mountain scenery                                                    2
+Birthday celebration                                                           2
+Ganesh Chaturthi festival celebration                                          2
+Debunking the use of Calcarea Phosphorica for baby teething                    1
+Correct Vitamin D3 dosing for infants                                          1
+fever management in children                                                   1
+pediatric advice on bathing a baby with a fever                                1
+Essential documents for newborns in India                                      1
+baby fontanelle care and mundan safety                                         1
+pediatric medicine administration safety                                       1
+stem cell banking                                                              1
+newborn baby skin color changes and care                                       1
+newborn skin tone changes                                                      1
+Infant health and colic management                                             1
+Medical advice regarding the efficacy and safety of gripe water for infants    1
+pediatrician recommendation for baby skincare products                         1
+infant nutrition and risks of early cow milk consumption                       1
+Government schemes for girl child in India                                     1
+pediatric advice on managing baby vomiting                                     1
+breastfeeding and milk supply concerns                                         1
+Healthy weight gain recipes for children                                       1
+Nutritional analysis of packaged children's snacks                             1
+
+-- hook_style: 371 levels (top 25 shown)
+hook_style
+direct address to camera                                                             6
+text overlay and direct address to camera                                            5
+emotional statement text overlay                                                     3
+direct question addressing a common parenting mistake                                2
+text overlay stating the premise                                                     2
+text overlay stating the topic                                                       2
+text overlay with a relatable statement                                              2
+visual spectacle of a themed birthday party setup                                    2
+personal milestone announcement                                                      2
+personal anecdote about a common parenting mistake                                   2
+direct question to the audience                                                      2
+Direct question addressing a common parental concern                                 2
+visual interaction between adult and child                                           2
+Direct question addressing a common parenting myth about teething medicine.          1
+Direct address to parents about a common, potentially dangerous mistake.             1
+challenging a common parenting myth                                                  1
+direct address to a specific audience (new parents) with a listicle promise          1
+direct question addressing a specific parenting anxiety                              1
+a visual demonstration of a common mistake (using a spoon) paired with a question    1
+direct address to the viewer about a misconception                                   1
+direct address to parents about a common anxiety regarding baby skin color           1
+question-based text overlay addressing a common parental concern                     1
+Provocative question challenging common parenting practices                          1
+Direct question challenging a common parenting practice                              1
+emotional appeal with a baby in a bath                                               1
+
+-- creator_on_camera
+creator_on_camera
+yes        352
+partial     21
+no          19
+
+-- children_on_camera
+children_on_camera
+yes    250
+no     142
+
+-- child_ages [multi-value, exploded]
+child_ages
+3-7      168
+0-2      138
+8-12      26
+13-17     13
+
+-- presenter_age
+presenter_age
+25-34      280
+3-7         35
+35-44       30
+unclear     23
+18-24       20
+8-12         2
+13-17        1
+45+          1
+
+-- presenter_gender
+presenter_gender
+female     257
+male       115
+none        19
+unclear      1
+
+-- language
+language
+English                     233
+Hindi                        73
+Hindi and English            32
+none                         13
+English and Hindi            11
+Gujarati                     11
+Telugu                       10
+Hindi/English                 3
+English and Telugu            2
+Hindi/English (Hinglish)      1
+English and Gujarati          1
+telugu                        1
+Telugu/Hindi                  1
+
+-- setting: 282 levels (top 25 shown)
+setting
+home interior                                         16
+bedroom                                               13
+medical office or clinic                              12
+indoor home setting                                   11
+indoor home environment                                9
+indoor living room                                     9
+home kitchen                                           7
+office or clinic                                       6
+hospital room                                          6
+inside a car                                           4
+indoor bedroom                                         4
+home kitchen and living area                           3
+office or clinic desk with curtains in background      3
+indoor office or clinic setting with grey curtains     3
+living room                                            3
+office or clinic with wood-paneled wall                3
+office or clinic with curtains and a plant             2
+home kitchen and dining area                           2
+indoor, likely a living room                           2
+modern home interior                                   2
+bedroom and bathroom                                   2
+indoor home environment and inside a car               2
+home bedroom and living area                           2
+bedroom, sitting on a bed                              2
+home kitchen and living room                           2
+
+-- tone: 312 levels (top 25 shown)
+tone
+humorous, lighthearted                    20
+informative, calm, professional           12
+calm clinical                              7
+playful, lighthearted                      5
+calm, informative, professional            4
+informative, professional, calm            4
+sentimental and celebratory                3
+joyful, celebratory                        3
+calm, domestic                             3
+informative, serious, professional         3
+enthusiastic and helpful                   3
+informative, professional, reassuring      2
+informative, professional, helpful         2
+informative, professional, and calm        2
+sentimental and lighthearted               2
+informative, calm, authoritative           2
+informative, professional, encouraging     2
+cheerful, playful                          2
+Lighthearted, humorous, playful.           2
+playful, humorous                          2
+humorous, satirical                        2
+calm, domestic, personal                   2
+playful, humorous, lighthearted            2
+calm, clinical, authoritative              2
+cheerful and promotional                   2
+
+-- product_shown
+product_shown
+no     223
+yes    169
+
+-- is_sponsored
+is_sponsored
+no         278
+yes        105
+unclear      9
+
+-- brands_visible [multi-value, exploded]: 195 levels (top 25 shown)
+brands_visible
+Gritzo            4
+Pampers           3
+Fixderma          3
+Woodwards         2
+Cadbury           2
+Mahindra          2
+Disney            2
+Amazon            2
+Kesh King         2
+FirstcryIndia     2
+flipkart          2
+KleeNest          2
+Good Knight       2
+Netflix           2
+Prega News        2
+Mamaearth         2
+Xiaomi            2
+Himalaya          2
+FCL               2
+Little Angel      2
+sowmyz_couture    2
+Cipla             1
+Alkem             1
+Dr. Reddy's       1
+LifeCell          1
+
+-- audience_signal: 308 levels (top 25 shown)
+audience_signal
+parents of infants                                                24
+parents of young children                                         17
+parents and caregivers                                            10
+parents of newborns                                                8
+parents of newborns and infants                                    5
+general family-oriented audience                                   5
+parents, families                                                  5
+parents of toddlers                                                4
+parents and families                                               3
+expectant parents                                                  2
+people who enjoy relatable family comedy content                   2
+new parents                                                        2
+parents and caregivers of infants                                  2
+general audience, fans of child-focused content                    2
+general entertainment, family-friendly                             2
+general entertainment, family-friendly content                     2
+parents interested in morning routines and family life             2
+parents, families, followers of lifestyle content                  2
+parents, specifically mothers                                      2
+parents of infants and toddlers                                    2
+tech-savvy consumers interested in budget-friendly smartphones     2
+new parents in India                                               1
+parents of infants and young children                              1
+new parents concerned about infant health and development          1
+parents and grandparents of newborns                               1
+
+-- transcript_language
+transcript_language
+NaN                                                                                                                                                                                                                                                                                          278
+Hinglish                                                                                                                                                                                                                                                                                      78
+English                                                                                                                                                                                                                                                                                       12
+Hindi                                                                                                                                                                                                                                                                                          8
+Telugu                                                                                                                                                                                                                                                                                         6
+Gujarati                                                                                                                                                                                                                                                                                       5
+Hinglish (Ayu, listen. Shall we go to the flat? Should I go? Should I go? You have changed in just one day. Wow, you look very different. Not on me, not on me. Brother, does mom look good? I look very good. Thank you. Happy 200k. Hello. Hi. Ayu. Har Har Mahadev. Ayu, please come.)      1
+Punjabi                                                                                                                                                                                                                                                                                        1
+Odia                                                                                                                                                                                                                                                                                           1
+Telugu and English                                                                                                                                                                                                                                                                             1
+Marathi                                                                                                                                                                                                                                                                                        1
+
+==============================================================================
+creators / posts / audience: anomalies
+==============================================================================
+duplicate creator_id: 0, duplicate handle: 0
+duplicate post_url: 0
+post creator_ids not in creators.csv: set()
+audience creator_ids not in creators.csv: set()
+
+posts_in_file vs actual rows:
+                           handle  followers  posts_in_file  posts_actual  mismatch
+creator_id                                                                         
+CR-01              drgarima_mehta      48906             20            20     False
+CR-02        livesimply_withkripa      67658             20            20     False
+CR-03              ekamichildcare     164333             20            20     False
+CR-04                   hello_ps8     216882             20            20     False
+CR-05                   sia_3vedi    2831180             20            20     False
+CR-06            thatkushalmistry    1706047             20            20     False
+CR-07                 ohmother.in      34672             20            20     False
+CR-08       the_mum_wife_playbook      39571             20            20     False
+CR-09         doc_mama_and_babies     153896             20            20     False
+CR-10              couple_adishiv      48934             20            20     False
+CR-11            raja_choudhary04     196955             20            20     False
+CR-12              raising_zohran      22659             20            20     False
+CR-13             mumma_and_ridhu     115612             20            20     False
+CR-14         parentingtips_surat    1120817             20            20     False
+CR-15               tej.lil.diary      35280             20            20     False
+CR-16         paediatrics_decoded     263188             20            20     False
+CR-17           radhikabansal0908     395569             20            20     False
+CR-18             foodies_by_neha    1009385             12            12     False
+CR-19            instamommy_suchi     288693             20            20     False
+CR-20              storiesbyvihaa     827496             20            20     False
+
+posted_on range: 2022-03-03 00:00:00 -> 2026-10-27 00:00:00 (unparseable: 0)
+
+Likes hidden / tiny (likes <= 5), by creator:
+                       posts  hidden_like_posts  median_likes  median_plays  median_comments
+handle                                                                                      
+radhikabansal0908         20                  6        4518.5     1023759.0            148.0
+doc_mama_and_babies       20                  3        9316.5      227438.0             98.5
+livesimply_withkripa      20                  1       40589.0     1040230.0             92.0
+couple_adishiv            20                  0        9372.0      582172.0            402.5
+ekamichildcare            20                  0        4524.5      280322.0             50.0
+drgarima_mehta            20                  0         618.0       89063.0              1.5
+hello_ps8                 20                  0       44471.0      731154.0            265.5
+foodies_by_neha           12                  0        3396.0      276308.0            196.0
+mumma_and_ridhu           20                  0        3249.0      131977.5            297.5
+ohmother.in               20                  0         295.0       43325.0             25.0
+paediatrics_decoded       20                  0        2128.0      227893.5             10.5
+instamommy_suchi          20                  0        5409.0      925519.0            168.5
+parentingtips_surat       20                  0        2508.0      306092.0             68.5
+raising_zohran            20                  0         143.5       14310.0             41.0
+raja_choudhary04          20                  0       20415.5      745195.0             57.5
+sia_3vedi                 20                  0      220129.5     5364127.5           3567.5
+storiesbyvihaa            20                  0      136846.0     2214729.0            303.0
+tej.lil.diary             20                  0         471.0       63207.0            114.0
+thatkushalmistry          20                  0      205862.5     4258620.0            734.0
+the_mum_wife_playbook     20                  0        1600.5       37857.0             86.0
+
+posts with plays null/0: 39  (by type: {'carousel': 34, 'photo': 5})
+posts with likes > plays (where plays>0): 0
+posts with transcript: 113
+sponsored posts: {'no': 278, 'yes': 105, 'unclear': 9}
+
+Audience file:
+  creator_id               handle   platform       as_of  women_pct  men_pct                              age_split                                                          top_cities                                                                    top_countries              brands_in_past_year
+0      CR-14  parentingtips_surat   facebook  2026-10-29       65.0     35.0   25-34 48.3%; 35-44 40.1%; 18-24 4.6%                  Delhi 3.4%; Kolkata 2.9%; Dhaka 2.8%; Karachi 2.6%                 India 64.4%; Pakistan 10.3%; Bangladesh 6.5%; United States 2.8%                              NaN
+1      CR-15        tej.lil.diary  instagram  2026-10-29       83.4     16.6   25-34 71.9%; 35-44 19.6%; 18-24 5.1%     Hyderabad 8.4%; Bangalore 7.1%; Chanda Nagar 6.7%; Chennai 5.6%  India 88.3%; United States 5.0%; United Arab Emirates 1.2%; United Kingdom 1.0%  Himalaya Babycare; cocoon care®
+2      CR-20       storiesbyvihaa  instagram  2026-10-29       29.9     70.1  25-34 44.4%; 18-24 30.5%; 35-44 13.5%  Hyderabad 7.3%; Bangalore 4.7%; Chanda Nagar 4.0%; Vijayawada 2.6%  India 95.7%; United States 1.5%; United Arab Emirates 0.7%; United Kingdom 0.4%                      Little Joys
