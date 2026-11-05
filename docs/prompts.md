@@ -66,3 +66,6 @@ risk with explicit editable weights, run a sensitivity check, explain the 15 not
   direct-competitor post in the last 120 days (6 creators). The penalty-only alternative is computed too.
 - Telugu / Gujarati get no language credit (no ad in those languages; regional languages ×2.0 CPA).
 - Audience data shown as text only; not in any score.
+
+**User decision at Phase 2 checkpoint (2026-11-05): "Exclude them"** — creators with a paid
+direct-competitor post in the last 120 days are excluded (COMPETITOR_RULE = "hard_exclude" confirmed).
