@@ -47,3 +47,22 @@ spot-check (~15–20) with agreement rate. Output: ranked "winning ingredients" 
 - Post-hoc text features (taste-unchanged claim, ragi/jaggery template, etc.) were added after reading
   top/bottom ads and are labelled "posthoc" — hypothesis-generating only.
 - Video spot-check done by viewing frames in the browser (no files downloaded).
+
+**User decision at Phase 1 checkpoint (2026-11-05): "Accept, start Phase 2"** — Phase 1 ingredients,
+verdicts and the product/batch adjustment accepted as the basis for creator scoring.
+
+## Phase 2 — creator fit scoring
+
+**Prompt (summary):** Build creator features (engagement robust to hidden likes, consistency, kids on
+camera, language, sponsored vs organic, competitor conflicts, audience as bonus only). Score fit / reach /
+risk with explicit editable weights, run a sensitivity check, explain the 15 not picked.
+
+**Decisions taken during Phase 2 (assistant-proposed, flagged for user review at checkpoint):**
+- Spoken language taken from post transcripts, not the post `language` label: that label matches the
+  transcript language in only 17% of transcribed posts (it appears to describe the caption).
+- Brand categories (which brands are direct kids-nutrition competitors) are a hand annotation in
+  `annotations/brand_categories.csv`; the data doesn't say what a brand sells.
+- **Competitor rule (pending user decision):** default set to hard exclusion of any creator with a paid
+  direct-competitor post in the last 120 days (6 creators). The penalty-only alternative is computed too.
+- Telugu / Gujarati get no language credit (no ad in those languages; regional languages ×2.0 CPA).
+- Audience data shown as text only; not in any score.
